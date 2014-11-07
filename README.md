@@ -1,4 +1,0 @@
-MouretsuNinja
-=============
-
-Game
