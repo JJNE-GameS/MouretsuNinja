@@ -37,12 +37,12 @@ public class Splash implements Screen {
 		splashImage.setWidth(MouretsuNinja.WIDTH);
 		splashImage.setHeight(MouretsuNinja.HEIGHT);
 		stage.addActor(splashImage);
-		splashImage.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(2f),Actions.delay(2),
+		splashImage.addAction(Actions.sequence(Actions.alpha(0),Actions.fadeIn(1f),Actions.delay(0.5f),
 				Actions.run(new Runnable(){
 					@Override 
 					public void run(){
 						
-						((Game)Gdx.app.getApplicationListener()).setScreen(new Splash());
+						((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
 						
 					}
 					

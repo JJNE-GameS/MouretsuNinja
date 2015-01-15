@@ -16,6 +16,7 @@ public class MouretsuNinja extends Game {
 	@Override
 	public void create () {
 		setScreen(new Splash());
+		
 //		batch = new SpriteBatch();
 //		img = new Texture("badlogic.jpg");
 	}
