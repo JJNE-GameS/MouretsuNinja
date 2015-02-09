@@ -17,7 +17,7 @@ import com.jjnegames.mouretsu.game.objects.GameObject;
 
 public abstract class Char extends GameObject {
 
-	boolean ableToJump = true;
+	public boolean ableToJump = true;
 	
 	public Char(Body body, Texture texture) {
 		super(body,texture);
