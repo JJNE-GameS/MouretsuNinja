@@ -24,12 +24,12 @@ public class GameScreen implements Screen {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		game.draw();
-		
 	}
 
 	@Override
 	public void resize(int width, int height) {
-		game.camera.setToOrtho(false, 50, 50);
+		// isompi numero, pienempi zoomi
+		game.camera.setToOrtho(false, 32, 32);
 	}
 
 	@Override

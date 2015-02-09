@@ -11,22 +11,18 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.jjnegames.mouretsu.MouretsuNinja;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
+import com.jjnegames.mouretsu.game.objects.characters.Char;
+import com.jjnegames.mouretsu.game.objects.characters.Player;
 
 
 public class MGame {
 	
 	public ArrayList<GameObject> objects;
-	World world;
+	public static World world;
 	private Stage stage;
-	private Stage background;
-	private Stage hud;
-	private Texture texture;
-	private Image splashImage;
 	public OrthographicCamera camera = new OrthographicCamera(64,64);
 	public FitViewport fvp = new FitViewport(1,1,camera);
 	
@@ -35,61 +31,52 @@ public class MGame {
 		objects = new ArrayList<GameObject>();
 		world = new World(new Vector2(0, -8.89f), true);
 		stage = new Stage();
-		background = new Stage();
-		hud = new Stage();
 		
 		stage.setViewport(fvp);
 		
         
 		Texture alus = new Texture(Gdx.files.internal("alus.png"), true);
 		
+		//Nearest on terävämpi mutta ei toimi hyvin pyöriessä ja Linear on epäselvempi mutta parempi vaihtoehto pyörivälle objektille
 		alus.setFilter(TextureFilter.MipMapLinearNearest, TextureFilter.Linear);
 		
-		Texture ground = new Texture(Gdx.files.internal("ground.jpg"), true);
 		
-		texture = new Texture (Gdx.files.internal("woods.jpg"), true);
-		
-		splashImage = new Image(texture);
-		splashImage.setWidth(MouretsuNinja.WIDTH);
-		splashImage.setHeight(MouretsuNinja.HEIGHT);
-		background.addActor(splashImage);
-		
-		
-			
-			BodyDef bodyDef = new BodyDef();
-	        bodyDef.type = BodyDef.BodyType.DynamicBody;
-	        bodyDef.position.set(25f, 3f*1.1f);
-	        bodyDef.angularVelocity=10.1f;
-	        
-	        
-			Rect rectangle_1 = Rect.create(world, bodyDef,5f, 5f, alus);
-	        stage.addActor(rectangle_1);
-			
-		
+		/*
+		for(int x=0;x<20;x++){
+			for(int y=0;y<20;y++){
+				BodyDef bodyDef = new BodyDef();
+				//DynamicBodylla luotu objekti voi liikkua
+		        bodyDef.type = BodyDef.BodyType.DynamicBody;
+		        
+		        //Spawnpoint
+		        bodyDef.position.set(1f+x*2.01f, 3f+y*2.01f);
+		        //Rotation speed when spawned
+		        bodyDef.angularVelocity=-2.1f;
+		       
+		        
+		        //Luodaan rectangle jolle kerrotaan pelimaailma johon spawnataan, sijainti&pyörimisnopeus jne, leveys, korkeus, kuva joka kertoo miltä objekti näyttää
+				Rect rectangle_1 = Rect.create(world, bodyDef, 1f, 1f, alus);
+		        stage.addActor(rectangle_1);
+			}
+		}*/
+        
         BodyDef bodyDef2 = new BodyDef();
+        //KinematicBodylla luotu objekti ei voi liikkua
         bodyDef2.type=BodyType.KinematicBody;
-        bodyDef2.position.set(1f, 0.5f);
+        bodyDef2.position.set(25f, 0.2f);
         bodyDef2.angularVelocity=0;
         
-        Rect rectangle_2 = Rect.create(world, bodyDef2, 100f, 1f, ground);
+        Rect rectangle_2 = Rect.create(world, bodyDef2, 50f, 1f, alus);
         stage.addActor(rectangle_2);
         
-        BodyDef bodyDef3 = new BodyDef();
-        bodyDef3.type=BodyType.KinematicBody;
-        bodyDef3.position.set(1f, 25f);
-        bodyDef3.angularVelocity=0;
-        
-        Rect rectangle_3 = Rect.create(world, bodyDef3, 0f, 5000f, ground);
-        stage.addActor(rectangle_3);
 		
-        
-        BodyDef bodyDef4 = new BodyDef();
-        bodyDef4.type=BodyType.KinematicBody;
-        bodyDef4.position.set(50f, 25f);
-        bodyDef4.angularVelocity=0;
-        
-        Rect rectangle_4 = Rect.create(world, bodyDef4, 1f, 5000f, ground);
-        stage.addActor(rectangle_3);
+		BodyDef bodyDef3 = new BodyDef();
+		bodyDef3.type=BodyType.DynamicBody;
+		bodyDef3.position.set(3f, 3f);
+		bodyDef3.angularVelocity=0;
+		
+		Char character_1 = Player.create(world, bodyDef3, 2f, 2f, alus);
+		stage.addActor(character_1);
 		
 	}
 	
@@ -99,18 +86,10 @@ public class MGame {
 		
 		world.step(delta, 6, 2);
 		
-		background.act();
-		background.draw();
-		
 		stage.act();
 		stage.draw();
-		
-		hud.act();
-		hud.draw();
 	}
 	
 	public void dispose() {
 		
 	}
-
-}
