@@ -11,7 +11,7 @@ public class MouretsuNinja extends Game {
 	SpriteBatch batch;
 	Texture img;
 	public static final String TITLE="Game Project"; 
-    public static final int WIDTH=800,HEIGHT=480; // used later to set window size
+    public static final int WIDTH=1366,HEIGHT=768; // used later to set window size
 	
 	@Override
 	public void create () {
