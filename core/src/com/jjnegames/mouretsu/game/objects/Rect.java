@@ -33,6 +33,7 @@ public class Rect extends GameObject{
 		if(Gdx.input.isKeyPressed(Keys.W)){
         	body.applyForceToCenter(new Vector2(0f*delta,500f*delta), true);
         }
+		
 	}
 
 	public static Rect create(World world, BodyDef bodyDef, float w, float h, Texture texture) {

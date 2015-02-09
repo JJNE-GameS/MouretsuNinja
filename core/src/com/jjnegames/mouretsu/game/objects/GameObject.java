@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public abstract class GameObject extends Image{
 	
-	Body body;
+	protected Body body;
 	
 	public GameObject(Body body, Texture texture){
 		super(texture);
@@ -21,8 +21,10 @@ public abstract class GameObject extends Image{
 		Vector2 pos = tf.getPosition();
 		float ang = tf.getRotation();
 		ang*=180/Math.PI;
-		this.setPosition(pos.x, pos.y);
+		this.setPosition((pos.x-(getWidth()/2)), pos.y-(getHeight()/2));
 		this.setRotation(ang);
+		
+	
 		
 		childUpdate(delta);
 		
