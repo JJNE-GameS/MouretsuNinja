@@ -5,16 +5,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 
 public class MapFileReader {
 
 
 	public static int[][] Loadmap() {
 		
-		File csvFile = Gdx.files.internal("map.csv").file();
+		FileHandle csvFile = Gdx.files.internal("map.csv");
 				
 		BufferedReader br = null;
 		String line = "";
@@ -24,7 +26,7 @@ public class MapFileReader {
 	 
 		try {
 	 
-			br = new BufferedReader(new FileReader(csvFile));
+			br = new BufferedReader(new InputStreamReader(csvFile.read()));
 			
 			while ((line = br.readLine()) != null) {
 	 
@@ -56,7 +58,7 @@ public class MapFileReader {
 		int cc = 0;
 		try {
 			 
-			br = new BufferedReader(new FileReader(csvFile));
+			br = new BufferedReader(new InputStreamReader(csvFile.read()));
 			
 			while ((line = br.readLine()) != null) {
 	 
