@@ -31,7 +31,7 @@ public class Player extends Char {
 	@Override
 	protected void childUpdate(float delta) {
 		if(Gdx.input.isKeyPressed(Keys.W)&&ableToJump){
-        	body.applyForceToCenter(new Vector2(0,300), true);
+        	body.applyForceToCenter(new Vector2(0,400), true);
         	ableToJump = false;
 		} if (Gdx.input.isKeyPressed(Keys.A)){
 			body.setLinearVelocity(new Vector2(-4,body.getLinearVelocity().y));

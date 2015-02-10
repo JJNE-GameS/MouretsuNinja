@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
+import com.jjnegames.mouretsu.game.objects.characters.Enemy;
 import com.jjnegames.mouretsu.game.objects.characters.Player;
 import com.jjnegames.mouretsu.game.utils.MapFileReader;
 
@@ -45,6 +46,14 @@ public class WorldGenerator {
 		// objekti n‰ytt‰‰
 		Char character_1 = Player.create(world, bodyDef, 1f, 1f,TextureBank.alus);
 		stage.addActor(character_1);
+		
+
+		BodyDef bodyDef3 = new BodyDef();
+		bodyDef3.type = BodyDef.BodyType.DynamicBody;
+		bodyDef3.position.set(25f, 25f);
+		bodyDef3.angularVelocity = 0;
+		Char character_2 = Enemy.create(world, bodyDef3, 4f, 4f,TextureBank.vihollinen);
+		stage.addActor(character_2);
 
 		
 		
