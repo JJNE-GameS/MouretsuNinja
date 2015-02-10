@@ -1,17 +1,21 @@
 package com.jjnegames.mouretsu.game.utils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+
+import com.badlogic.gdx.Gdx;
 
 public class MapFileReader {
 
 
 	public static int[][] Loadmap() {
 		
-		String csvFile = "C:/Pelituotannon_projekti/map.csv";
+		File csvFile = Gdx.files.internal("map.csv").file();
+				
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ";";
