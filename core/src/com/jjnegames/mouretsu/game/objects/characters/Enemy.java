@@ -51,13 +51,13 @@ import com.jjnegames.mouretsu.game.objects.Rect;
 		
 	counter += delta;
 		
-		 if (counter>3){
+		 if (counter<3){
 			// oikeelle = !oikeelle;
-			body.setLinearVelocity(new Vector2(-4,body.getLinearVelocity().y));
-		} if (counter>6) {
+			body.setLinearVelocity(new Vector2(-3,body.getLinearVelocity().y));
+		} if (counter>3) {
 			
-			body.setLinearVelocity(new Vector2(4,body.getLinearVelocity().y));
-		} if (counter>8) {
+			body.setLinearVelocity(new Vector2(3,body.getLinearVelocity().y));
+		} if (counter>6) {
 			counter = 0;
 		}
 		

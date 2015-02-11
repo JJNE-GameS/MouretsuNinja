@@ -1,7 +1,7 @@
 package com.jjnegames.mouretsu.game;
 
 import java.util.ArrayList;
-
+	
 import javafx.event.Event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
