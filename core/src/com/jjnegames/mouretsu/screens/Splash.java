@@ -22,7 +22,7 @@ public class Splash implements Screen {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act();
 		stage.draw();
-		if(Gdx.input.isKeyPressed(Keys.ESCAPE)){
+		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)){
 			((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
 		}
 	}

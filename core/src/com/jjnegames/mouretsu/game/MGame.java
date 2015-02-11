@@ -1,6 +1,7 @@
 package com.jjnegames.mouretsu.game;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,11 +21,13 @@ import com.jjnegames.mouretsu.game.objects.characters.Player;
 
 public class MGame {
 	
-	public ArrayList<GameObject> objects;
+	public static volatile LinkedList<Function> functions = new LinkedList<Function>();
+	public static ArrayList<GameObject> objects;
 	public static World world;
-	private Stage stage;
-	public OrthographicCamera camera = new OrthographicCamera(64,64);
-	public FitViewport fvp = new FitViewport(1,1,camera);
+	public static Stage stage;
+	public static OrthographicCamera camera = new OrthographicCamera(64,64);
+	public static FitViewport fvp = new FitViewport(1,1,camera);
+	public static Player player;
 	
 	
 	public MGame(){
@@ -44,9 +47,12 @@ public class MGame {
 		float delta =  Gdx.graphics.getDeltaTime();
 		
 		world.step(delta, 6, 2);
-		
+		if(!functions.isEmpty())
+			functions.remove().exec();
 		stage.act();
 		stage.draw();
+		camera.position.set(player.getX()+3, player.getY()+4, 0);
+		camera.update();
 	}
 	
 	public void dispose() {

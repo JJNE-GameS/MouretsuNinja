@@ -8,6 +8,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 public abstract class GameObject extends Image{
 	
+	
+	public static final short CATEGORY_PLAYER = -1;  
+	public static final short CATEGORY_ENEMY = -2; 
+	public static final short CATEGORY_SCENERY = -3; 
+	
 	protected Body body;
 	
 	public GameObject(Body body, Texture texture){
@@ -33,6 +38,10 @@ public abstract class GameObject extends Image{
 	}
 	
 	protected abstract void childUpdate(float delta);
+
+	public Body getBody() {
+		return body;
+	}
 	
 	
 }

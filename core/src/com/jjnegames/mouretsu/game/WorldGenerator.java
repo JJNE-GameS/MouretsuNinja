@@ -2,6 +2,8 @@ package com.jjnegames.mouretsu.game;
 
 import java.util.ArrayList;
 
+import javafx.event.Event;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -12,10 +14,15 @@ import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.jjnegames.mouretsu.game.objects.Ball;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
+import com.jjnegames.mouretsu.game.objects.characters.GrapplingHook;
 import com.jjnegames.mouretsu.game.objects.characters.Player;
 import com.jjnegames.mouretsu.game.utils.MapFileReader;
 
@@ -43,7 +50,8 @@ public class WorldGenerator {
 		// Luodaan rectangle jolle kerrotaan pelimaailma johon spawnataan,
 		// sijainti&pyörimisnopeus jne, leveys, korkeus, kuva joka kertoo miltä
 		// objekti näyttää
-		Char character_1 = Player.create(world, bodyDef, 1f, 1f,TextureBank.alus);
+		Player character_1 = (Player) Player.create(world, bodyDef, 1f, 1f,TextureBank.alus);
+		MGame.player=character_1;
 		stage.addActor(character_1);
 
 		
@@ -58,6 +66,8 @@ public class WorldGenerator {
 				bodyDef2.angularVelocity = 0;
 
 				Rect rectangle_2 = Rect.create(world, bodyDef2, 1f, 1f,TextureBank.alus);
+//				Ball rectangle_2 = Ball.create(world, bodyDef2, 0.5f, TextureBank.alus);
+
 				stage.addActor(rectangle_2);
 				}
 			}
@@ -83,17 +93,57 @@ public class WorldGenerator {
 	        @Override
 	        public void beginContact(Contact contact)
 	        {
+
 	        	final Fixture x1 = contact.getFixtureA();
 	            final Fixture x2 = contact.getFixtureB();
 	            
-	            if(x1.getBody().getUserData()!= null)
-	            if(x1.getBody().getUserData() instanceof Player && x2.getBody().getType().equals(BodyType.KinematicBody))
-	            {
-	            	Player p = (Player) x1.getBody().getUserData();
-	            	if(!p.ableToJump){
-	            		p.ableToJump = true;
-	            	}
+
+	            if(x1.getBody().getUserData()!= null){
+		            if(x1.getBody().getUserData() instanceof Player && x2.getBody().getType().equals(BodyType.KinematicBody))
+		            {
+		            	Player p = (Player) x1.getBody().getUserData();
+		            	if(!p.ableToJump){
+		            		p.ableToJump = true;
+		            	}
+		            }else if (x1.getBody().getUserData() instanceof GrapplingHook){
+		            	GrapplingHook hook = (GrapplingHook) x1.getBody().getUserData();
+		            	WeldJointDef wj = new WeldJointDef();
+		            	wj.initialize(x1.getBody(), x2.getBody(), x1.getBody().getWorldCenter());
+		            	MGame.world.createJoint(wj);
+		            }else{
+		            }
 	            }
+	            
+	            if(x2.getBody().getUserData()!= null){
+		            if(x2.getBody().getUserData() instanceof Player && x1.getBody().getType().equals(BodyType.KinematicBody))
+		            {
+		            	Player p = (Player) x2.getBody().getUserData();
+		            	if(!p.ableToJump){
+		            		p.ableToJump = true;
+		            	}
+		            }else if (x2.getBody().getUserData() instanceof GrapplingHook){
+		            	
+		            	MGame.functions.add(new Function(){
+		            		public void exec(){
+		            			GrapplingHook hook = (GrapplingHook) x2.getBody().getUserData();
+				            	if(hook.limiter!=null)
+				            		return;
+			            		System.out.println("excuting");
+			            		hook.createRope(0.5f);
+			            		WeldJointDef wj = new WeldJointDef();
+			                	wj.initialize(x2.getBody(), x1.getBody(), x2.getBody().getWorldCenter());
+			                	MGame.world.createJoint(wj);
+			                	
+		            			
+		            		}
+		            		
+		            	});
+		            }else{
+		            }
+	            }
+	            
+            	
+
 	        }
 
 	        @Override

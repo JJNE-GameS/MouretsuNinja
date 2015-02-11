@@ -17,7 +17,6 @@ public class MapFileReader {
 	public static int[][] Loadmap() {
 		
 		FileHandle csvFile = Gdx.files.internal("map.csv");
-				
 		BufferedReader br = null;
 		String line = "";
 		String cvsSplitBy = ";";

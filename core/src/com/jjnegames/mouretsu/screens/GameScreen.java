@@ -29,7 +29,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		// isompi numero, pienempi zoomi
-		game.camera.setToOrtho(false, 32, 32);
+		game.camera.setToOrtho(false, 16, 16);
 	}
 
 	@Override
