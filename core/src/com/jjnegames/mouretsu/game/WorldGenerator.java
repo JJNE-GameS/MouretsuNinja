@@ -22,6 +22,7 @@ import com.jjnegames.mouretsu.game.objects.Ball;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
+import com.jjnegames.mouretsu.game.objects.characters.Enemy;
 import com.jjnegames.mouretsu.game.objects.characters.GrapplingHook;
 import com.jjnegames.mouretsu.game.objects.characters.Player;
 import com.jjnegames.mouretsu.game.utils.MapFileReader;
@@ -53,6 +54,13 @@ public class WorldGenerator {
 		Player character_1 = (Player) Player.create(world, bodyDef, 1f, 1f,TextureBank.alus);
 		MGame.player=character_1;
 		stage.addActor(character_1);
+		
+		BodyDef bodyDef3 = new BodyDef();
+		bodyDef3.type = BodyDef.BodyType.DynamicBody;
+		bodyDef3.position.set(10f, 3f);
+		bodyDef3.angularVelocity = 0;
+		Char character_2 = Enemy.create(world, bodyDef3, 1f, 1f,TextureBank.vihollinen);
+		stage.addActor(character_2);
 
 		
 		

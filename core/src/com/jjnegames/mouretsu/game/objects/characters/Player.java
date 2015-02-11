@@ -10,11 +10,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.jjnegames.mouretsu.game.MGame;
@@ -52,10 +54,6 @@ public class Player extends Char {
 		if(Gdx.input.isKeyJustPressed(Keys.Q)){
 			grapple();
 		}
-		
-		
-
-
 		
     }
 	
@@ -99,10 +97,13 @@ public class Player extends Char {
         Body body = world.createBody(bodyDef);
 
         // Now define the dimensions of the physics shape
-        PolygonShape shape = new PolygonShape();
-        // We are a box, so this makes sense, no?
-        // Basically set the physics polygon to a box with the same dimensions 
-        shape.setAsBox(w/2, h/2);
+//        PolygonShape shape = new PolygonShape();
+//        // We are a box, so this makes sense, no?
+//        // Basically set the physics polygon to a box with the same dimensions 
+//        shape.setAsBox(w/2, h/2);
+        
+        Shape shape = new CircleShape();
+        shape.setRadius(w*0.5f);
         
         FixtureDef fdef= new FixtureDef();
         fdef.shape=shape;
@@ -114,6 +115,8 @@ public class Player extends Char {
         // We are a box, so this makes sense, no?
         // Basically set the physics polygon to a box with the same dimensions 
         feet.setAsBox(w/2*0.6f, h/2*1.01f);
+        
+       
         FixtureDef feetfix = new FixtureDef();
         feetfix.shape = feet;
         feetfix.isSensor = true;
@@ -122,7 +125,7 @@ public class Player extends Char {
         body.createFixture(feetfix);
         
         
-        
+        body.setFixedRotation(true);
         
         Player p = new Player(body, texture, w, h);
         body.setUserData(p);
