@@ -19,17 +19,19 @@ import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.jjnegames.mouretsu.game.MGame;
 import com.jjnegames.mouretsu.game.TextureBank;
 
 public class Player extends Char {
 	
 	private GrapplingHook hook = null;
+	public float jumpCooldown = 0f;
 
-	public Player(Body body, Texture texture, float width, float height) {
+	public Player(Body body, Body feet, Texture texture, float width, float height) {
 		super(body, texture);
 
-
+		this.feet=feet;
 		this.setOriginX(width/2);
 		this.setOriginY(height/2);
 		this.setWidth(width);
@@ -38,9 +40,13 @@ public class Player extends Char {
 
 	@Override
 	protected void childUpdate(float delta) {
+		if(jumpCooldown>0){
+			jumpCooldown-=delta;
+		}
 		if(Gdx.input.isKeyPressed(Keys.W)&&ableToJump){
-        	body.applyForceToCenter(new Vector2(0,300), true);
+        	body.applyForceToCenter(new Vector2(0,500), true);
         	ableToJump = false;
+        	jumpCooldown=0.5f;
 		}else if(Gdx.input.isKeyPressed(Keys.W) && hook!=null){
         	hook.isReeling=true;
 		}else if(hook!=null){
@@ -95,6 +101,14 @@ public class Player extends Char {
 
 		
         Body body = world.createBody(bodyDef);
+        
+        
+        BodyDef feetdef = new BodyDef();
+        feetdef.type=BodyType.DynamicBody;
+        feetdef.position.set(body.getPosition());
+        feetdef.position.y-=0.1f;
+        Body feet = world.createBody(feetdef);
+        
 
         // Now define the dimensions of the physics shape
 //        PolygonShape shape = new PolygonShape();
@@ -111,24 +125,30 @@ public class Player extends Char {
         fdef.filter.groupIndex=CATEGORY_PLAYER;
         
         Fixture f = body.createFixture(fdef);
-        PolygonShape feet = new PolygonShape();
+        
+        PolygonShape feetShape = new PolygonShape();
         // We are a box, so this makes sense, no?
         // Basically set the physics polygon to a box with the same dimensions 
-        feet.setAsBox(w/2*0.6f, h/2*1.01f);
+        feetShape.setAsBox(w*0.2f, h/2f);
         
        
         FixtureDef feetfix = new FixtureDef();
-        feetfix.shape = feet;
+        feetfix.shape = feetShape;
         feetfix.isSensor = true;
         feetfix.filter.groupIndex=CATEGORY_PLAYER;
         // Create a body in the world using our definition
-        body.createFixture(feetfix);
+        feet.createFixture(feetfix);
         
+        WeldJointDef wjd = new WeldJointDef();
+        wjd.initialize(body, feet, body.getWorldCenter());
+        
+        world.createJoint(wjd);
         
         body.setFixedRotation(true);
         
-        Player p = new Player(body, texture, w, h);
-        body.setUserData(p);
+        Player p = new Player(body, feet, texture, w, h);
+//        body.setUserData(p);
+        feet.setUserData(p);
 		return p;
 	}
 

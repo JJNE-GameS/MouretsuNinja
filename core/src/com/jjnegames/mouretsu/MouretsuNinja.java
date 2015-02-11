@@ -29,5 +29,4 @@ public class MouretsuNinja extends Game {
 //		batch.draw(img, 0, 0);
 //		batch.end();
 //	}
-	World world = new World(new Vector2(0,0), true);
 }

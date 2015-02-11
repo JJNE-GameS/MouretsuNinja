@@ -110,7 +110,7 @@ public class WorldGenerator {
 		            if(x1.getBody().getUserData() instanceof Player && x2.getBody().getType().equals(BodyType.KinematicBody))
 		            {
 		            	Player p = (Player) x1.getBody().getUserData();
-		            	if(!p.ableToJump){
+		            	if(!p.ableToJump && p.jumpCooldown<=0){
 		            		p.ableToJump = true;
 		            	}
 		            }else if (x1.getBody().getUserData() instanceof GrapplingHook){
