@@ -52,7 +52,7 @@ public class WorldGenerator {
 		bodyDef3.type = BodyDef.BodyType.DynamicBody;
 		bodyDef3.position.set(25f, 25f);
 		bodyDef3.angularVelocity = 0;
-		Char character_2 = Enemy.create(world, bodyDef3, 4f, 4f,TextureBank.vihollinen);
+		Char character_2 = Enemy.create(world, bodyDef3, 3f, 3f,TextureBank.vihollinen);
 		stage.addActor(character_2);
 
 		
