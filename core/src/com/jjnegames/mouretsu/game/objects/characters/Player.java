@@ -1,37 +1,56 @@
 package com.jjnegames.mouretsu.game.objects.characters;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.MassData;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.QueryCallback;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.jjnegames.mouretsu.game.MGame;
 import com.jjnegames.mouretsu.game.TextureBank;
+import com.jjnegames.mouretsu.game.utils.AnimationHandler;
 
 public class Player extends Char {
 	
 	private GrapplingHook hook = null;
 	public float jumpCooldown = 0f;
-
+	AnimationHandler animHandler;
+	public boolean movingRight=true;
+	
 	public Player(Body body, Body feet, Body attackConeRight, Body attackConeLeft, Texture texture, float width, float height) {
 		super(body, texture);
 
+		this.animHandler=new AnimationHandler(new Texture[]{
+//				TextureBank.pl_run7,
+//				TextureBank.pl_run6,
+//				TextureBank.pl_run5,
+//				TextureBank.pl_run4,
+//				TextureBank.pl_run3,
+//				TextureBank.pl_run2,
+//				TextureBank.pl_run1
+				
+				TextureBank.pl_atk1,
+				TextureBank.pl_atk2,
+				TextureBank.pl_atk3,
+				TextureBank.pl_atk4,
+				TextureBank.pl_atk5,
+				TextureBank.pl_atk6,
+				TextureBank.pl_atk7,
+				TextureBank.pl_atk8,
+				TextureBank.pl_atk9,
+				TextureBank.pl_atk10,
+				TextureBank.pl_atk11,
+				TextureBank.pl_atk12,
+				TextureBank.pl_atk13
+		}, 5);
 		this.feet=feet;
 		this.attackConeRight=attackConeRight;
 		this.attackConeLeft=attackConeLeft;
@@ -44,6 +63,8 @@ public class Player extends Char {
 
 	@Override
 	protected void childUpdate(float delta) {
+		setDrawable(animHandler.updateRun(delta, movingRight));
+		
 		if(jumpCooldown>0){
 			jumpCooldown-=delta;
 		}
@@ -57,8 +78,10 @@ public class Player extends Char {
 			hook.isReeling=false;
 		} if (Gdx.input.isKeyPressed(Keys.A)){
 			body.applyForceToCenter(new Vector2(-200*delta,0), true);
+			movingRight=false;
 		} if (Gdx.input.isKeyPressed(Keys.D)){
 			body.applyForceToCenter(new Vector2(200*delta,0), true);
+			movingRight=true;
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.Q)){

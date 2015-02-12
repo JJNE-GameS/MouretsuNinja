@@ -3,10 +3,11 @@ package com.jjnegames.mouretsu.game;
 import java.util.ArrayList;
 	
 
-import javafx.event.Event;
+
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -35,6 +36,7 @@ public class WorldGenerator {
 			Stage stage, OrthographicCamera camera) {
 		
 		 int[][] map = MapFileReader.Loadmap();
+		 
 			 
 		// Nearest on terävämpi mutta ei toimi hyvin pyöriessä ja Linear on
 		// epäselvempi mutta parempi vaihtoehto pyörivälle objektille
