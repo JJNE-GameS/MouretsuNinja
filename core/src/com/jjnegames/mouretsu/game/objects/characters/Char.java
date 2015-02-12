@@ -19,6 +19,9 @@ public abstract class Char extends GameObject {
 
 	public boolean ableToJump = true;
 	public Body feet;
+	public Body attackConeRight,
+	attackConeLeft;
+	public Char inAttackCone=null;
 	
 	public Char(Body body, Texture texture) {
 		super(body,texture);

@@ -2,6 +2,7 @@ package com.jjnegames.mouretsu.game;
 
 import java.util.ArrayList;
 	
+
 import javafx.event.Event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -21,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.jjnegames.mouretsu.game.objects.Ball;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
+import com.jjnegames.mouretsu.game.objects.characters.AttackCone;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
 import com.jjnegames.mouretsu.game.objects.characters.Enemy;
 import com.jjnegames.mouretsu.game.objects.characters.GrapplingHook;
@@ -51,7 +53,7 @@ public class WorldGenerator {
 		// Luodaan rectangle jolle kerrotaan pelimaailma johon spawnataan,
 		// sijainti&pyörimisnopeus jne, leveys, korkeus, kuva joka kertoo miltä
 		// objekti näyttää
-		Player character_1 = (Player) Player.create(world, bodyDef, 1f, 1f,TextureBank.alus);
+		Player character_1 = (Player) Player.create(world, bodyDef, 1.3f, 1.8f,TextureBank.pelaaja);
 		MGame.player=character_1;
 		stage.addActor(character_1);
 		
@@ -105,6 +107,7 @@ public class WorldGenerator {
 	        	final Fixture x1 = contact.getFixtureA();
 	            final Fixture x2 = contact.getFixtureB();
 	            
+	            
 
 	            if(x1.getBody().getUserData()!= null){
 		            if(x1.getBody().getUserData() instanceof Player && x2.getBody().getType().equals(BodyType.KinematicBody))
@@ -114,11 +117,35 @@ public class WorldGenerator {
 		            		p.ableToJump = true;
 		            	}
 		            }else if (x1.getBody().getUserData() instanceof GrapplingHook){
-		            	GrapplingHook hook = (GrapplingHook) x1.getBody().getUserData();
-		            	WeldJointDef wj = new WeldJointDef();
-		            	wj.initialize(x1.getBody(), x2.getBody(), x1.getBody().getWorldCenter());
-		            	MGame.world.createJoint(wj);
-		            }else{
+		            	
+		            	MGame.functions.add(new Function(){
+		            		public void exec(){
+		            			try{
+			            			GrapplingHook hook = (GrapplingHook) x1.getBody().getUserData();
+					            	if(hook.limiter!=null)
+					            		return;
+				            		System.out.println("excuting");
+				            		hook.createRope(0.5f);
+				            		WeldJointDef wj = new WeldJointDef();
+				                	wj.initialize(x1.getBody(), x2.getBody(), x1.getBody().getWorldCenter());
+				                	MGame.world.createJoint(wj);
+			            		}catch(NullPointerException ex){
+		            				System.err.println(ex.getStackTrace());
+		            			}
+		            			
+		            		}
+		            		
+		            	});
+		            }else if(x1.getBody().getUserData() instanceof AttackCone){
+		            	if(x2.getBody().getUserData()!=null){
+		            		if(x2.getBody().getUserData() instanceof Char){
+		            			Char target = (Char)x2.getBody().getUserData();
+		            			Char attacker = ((AttackCone)x1.getBody().getUserData()).chara;
+		            			
+		            			attacker.inAttackCone=target;
+		            			System.out.println("targetInAttackCone"+ target);
+		            		}
+		            	}
 		            }
 	            }
 	            
@@ -126,7 +153,7 @@ public class WorldGenerator {
 		            if(x2.getBody().getUserData() instanceof Player && x1.getBody().getType().equals(BodyType.KinematicBody))
 		            {
 		            	Player p = (Player) x2.getBody().getUserData();
-		            	if(!p.ableToJump){
+		            	if(!p.ableToJump && p.jumpCooldown<=0){
 		            		p.ableToJump = true;
 		            	}
 		            }else if (x2.getBody().getUserData() instanceof GrapplingHook){
@@ -134,19 +161,31 @@ public class WorldGenerator {
 		            	MGame.functions.add(new Function(){
 		            		public void exec(){
 		            			GrapplingHook hook = (GrapplingHook) x2.getBody().getUserData();
-				            	if(hook.limiter!=null)
-				            		return;
-			            		System.out.println("excuting");
-			            		hook.createRope(0.5f);
-			            		WeldJointDef wj = new WeldJointDef();
-			                	wj.initialize(x2.getBody(), x1.getBody(), x2.getBody().getWorldCenter());
-			                	MGame.world.createJoint(wj);
-			                	
+		            			try{
+					            	if(hook.limiter!=null)
+					            		return;
+				            		System.out.println("excuting");
+				            		hook.createRope(0.5f);
+				            		WeldJointDef wj = new WeldJointDef();
+				                	wj.initialize(x2.getBody(), x1.getBody(), x2.getBody().getWorldCenter());
+				                	MGame.world.createJoint(wj);
+		            			}catch(NullPointerException ex){
+		            				System.err.println(ex.getStackTrace());
+		            			}
 		            			
 		            		}
 		            		
 		            	});
-		            }else{
+		            }else if(x2.getBody().getUserData() instanceof AttackCone){
+		            	if(x1.getBody().getUserData()!=null){
+		            		if(x1.getBody().getUserData() instanceof Char){
+		            			Char target = (Char)x1.getBody().getUserData();
+		            			Char attacker = ((AttackCone)x2.getBody().getUserData()).chara;
+		            			
+		            			attacker.inAttackCone=target;
+		            			System.out.println("targetInAttackCone2"+ target);
+		            		}
+		            	}
 		            }
 	            }
 	            
@@ -157,7 +196,36 @@ public class WorldGenerator {
 	        @Override
 	        public void endContact(Contact contact)
 	        {
-	               
+	        	final Fixture x1 = contact.getFixtureA();
+	            final Fixture x2 = contact.getFixtureB();
+	            
+	            
+
+	            if(x1.getBody().getUserData()!= null){
+		            if(x1.getBody().getUserData() instanceof AttackCone){
+		            	if(x2.getBody().getUserData()!=null){
+		            		if(x2.getBody().getUserData() instanceof Char){
+		            			Char attacker = ((AttackCone)x1.getBody().getUserData()).chara;
+		            			
+		            			attacker.inAttackCone=null;
+		            		}
+		            	}
+		            }
+	            }
+	            
+	            if(x2.getBody().getUserData()!= null){
+		            if(x2.getBody().getUserData() instanceof AttackCone){
+		            	if(x1.getBody().getUserData()!=null){
+		            		if(x1.getBody().getUserData() instanceof Char){
+		            			Char attacker = ((AttackCone)x2.getBody().getUserData()).chara;
+		            			
+		            			attacker.inAttackCone=null;
+		            		}
+		            	}
+		            }
+	            }
+	            
+            	
 	        }
 
 	        @Override
