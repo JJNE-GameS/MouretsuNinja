@@ -2,8 +2,10 @@ package com.jjnegames.mouretsu.game;
 
 import java.util.ArrayList;
 	
-import javafx.event.Event;
 
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -77,7 +79,41 @@ public class WorldGenerator {
 //				Ball rectangle_2 = Ball.create(world, bodyDef2, 0.5f, TextureBank.alus);
 
 				stage.addActor(rectangle_2);
+				
+				}else if(map[x][y]== 2){
+					BodyDef bodyDef4 = new BodyDef();
+					bodyDef4.type = BodyType.KinematicBody;
+					bodyDef4.position.set(x, y);
+					bodyDef4.angularVelocity = 0;
+
+					Rect rectangle_3 = Rect.create(world, bodyDef4, 1f, 1f,TextureBank.esine1);
+
+					stage.addActor(rectangle_3);
+					
+				}else if(map[x][y]== 3){
+					BodyDef bodyDef5 = new BodyDef();
+					bodyDef5.type = BodyType.KinematicBody;
+					bodyDef5.position.set(x, y);
+					bodyDef5.angularVelocity = 0;
+
+					Rect rectangle_4 = Rect.create(world, bodyDef5, 1f, 1f,TextureBank.esine2);
+
+
+					stage.addActor(rectangle_4);
+					
+				}else if(map[x][y]== 4){
+					BodyDef bodyDef6 = new BodyDef();
+					bodyDef6.type = BodyType.KinematicBody;
+					bodyDef6.position.set(x, y);
+					bodyDef6.angularVelocity = 0;
+
+					Rect rectangle_5 = Rect.create(world, bodyDef6, 1f, 1f,TextureBank.esine3);
+
+
+					stage.addActor(rectangle_5);
+					
 				}
+			
 			}
 		}
 		
@@ -150,7 +186,6 @@ public class WorldGenerator {
 		            }
 	            }
 	            
-            	
 
 	        }
 

@@ -21,4 +21,6 @@ public class DesktopLauncher {
 		config.y=-1;
 		new LwjglApplication(new MouretsuNinja(), config);
 	}
+	
+	
 }

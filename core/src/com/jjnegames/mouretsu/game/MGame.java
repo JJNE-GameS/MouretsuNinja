@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -40,22 +41,28 @@ public class MGame {
         
 		WorldGenerator.createWorld(objects, world, stage, camera);
 		
+		
+		
 	}
 	
 	
-	public void draw(){
+	public void draw(boolean paused){
 		float delta =  Gdx.graphics.getDeltaTime();
-		
-		world.step(delta, 6, 2);
-		if(!functions.isEmpty())
-			functions.remove().exec();
-		stage.act();
+		if(!paused){
+			world.step(delta, 6, 2);
+			if(!functions.isEmpty())
+				functions.remove().exec();
+			stage.act();
+		}
 		stage.draw();
 		camera.position.set(player.getX()+3, player.getY()+4, 0);
 		camera.update();
 	}
 	
 	public void dispose() {
+        
+
 		
 	}
+	
 }

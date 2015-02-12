@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.jjnegames.mouretsu.screens.Splash;
+import com.jjnegames.mouretsu.screens.StartScreen;
 
 public class MouretsuNinja extends Game {
 	SpriteBatch batch;
@@ -15,7 +16,7 @@ public class MouretsuNinja extends Game {
 	
 	@Override
 	public void create () {
-		setScreen(new Splash());
+		setScreen(new StartScreen());
 		
 //		batch = new SpriteBatch();
 //		img = new Texture("badlogic.jpg");
@@ -29,5 +30,7 @@ public class MouretsuNinja extends Game {
 //		batch.draw(img, 0, 0);
 //		batch.end();
 //	}
+	
 	World world = new World(new Vector2(0,0), true);
+	
 }
