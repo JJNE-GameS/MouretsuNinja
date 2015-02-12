@@ -19,7 +19,7 @@ import com.jjnegames.mouretsu.game.objects.Ball;
 
 public class GrapplingHook extends Ball{
 	
-	public static final float SPEED = 2f, REEL_SPEED=20;
+	public static final float SPEED = 14f, REEL_SPEED=20;
 	public Char chara;
 	public boolean isReeling=true;
 	public DistanceJoint limiter;
@@ -89,7 +89,7 @@ public class GrapplingHook extends Ball{
 				chara.getBody().getWorldCenter(),
 				getBody().getWorldCenter());
 		rj.dampingRatio=0.5f;
-		rj.frequencyHz=1.4f;
+		rj.frequencyHz=1.6f;
 		DistanceJoint ropej = (DistanceJoint)body.getWorld().createJoint(rj);
 		
 		limiter=ropej;
