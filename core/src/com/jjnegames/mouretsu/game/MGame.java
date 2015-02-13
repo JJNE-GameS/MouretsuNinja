@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Buttons;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
@@ -27,6 +29,16 @@ public class MGame {
 	
 	
 	public MGame(){
+		Gdx.input.setInputProcessor(new InputAdapter() {
+			@Override
+		    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+		        if ( button == Buttons.LEFT) {
+		        	processClick();
+		        	return true;
+		        }
+		        return false;
+		    }
+		});
 		objects = new ArrayList<GameObject>();
 		world = new World(new Vector2(0, -8.89f), true);
 		stage = new Stage();
@@ -36,6 +48,7 @@ public class MGame {
         
 		WorldGenerator.createWorld(objects, world, stage, camera);
 		debugger = new Box2DDebugRenderer( true, true, true, true ,true, true);
+		
 		
 	}
 	
@@ -51,9 +64,14 @@ public class MGame {
 		stage.act();
 		stage.draw();
 		debugger.render(world, camera.combined);
+		justClicked=false;
 	}
 	
 	public void dispose() {
 		
+	}
+	public static boolean justClicked=false;
+	private static void processClick(){
+		justClicked=true;
 	}
 }

@@ -5,6 +5,8 @@ import java.util.ArrayList;
 
 
 
+
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,6 +16,8 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Joint;
+import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
@@ -118,7 +122,7 @@ public class WorldGenerator {
 		            	if(!p.ableToJump && p.jumpCooldown<=0){
 		            		p.ableToJump = true;
 		            	}
-		            }else if (x1.getBody().getUserData() instanceof GrapplingHook){
+		            }else if (x1.getBody().getUserData() instanceof GrapplingHook && !x2.isSensor()){
 		            	
 		            	MGame.functions.add(new Function(){
 		            		public void exec(){
@@ -158,7 +162,7 @@ public class WorldGenerator {
 		            	if(!p.ableToJump && p.jumpCooldown<=0){
 		            		p.ableToJump = true;
 		            	}
-		            }else if (x2.getBody().getUserData() instanceof GrapplingHook){
+		            }else if (x2.getBody().getUserData() instanceof GrapplingHook && !x1.isSensor()){
 		            	
 		            	MGame.functions.add(new Function(){
 		            		public void exec(){
@@ -185,7 +189,6 @@ public class WorldGenerator {
 		            			Char attacker = ((AttackCone)x2.getBody().getUserData()).chara;
 		            			
 		            			attacker.inAttackCone=target;
-		            			System.out.println("targetInAttackCone2"+ target);
 		            		}
 		            	}
 		            }
