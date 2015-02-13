@@ -47,6 +47,7 @@ public class WorldGenerator {
 		bodyDef.position.set(3f, 3f);
 		// Rotation speed when spawned
 		bodyDef.angularVelocity = 0;
+		bodyDef.linearDamping=0.5f;
 
 		// Luodaan rectangle jolle kerrotaan pelimaailma johon spawnataan,
 		// sijainti&pyörimisnopeus jne, leveys, korkeus, kuva joka kertoo miltä
@@ -144,7 +145,7 @@ public class WorldGenerator {
 		            if(x1.getBody().getUserData() instanceof Player && x2.getBody().getType().equals(BodyType.KinematicBody))
 		            {
 		            	Player p = (Player) x1.getBody().getUserData();
-		            	if(!p.ableToJump && p.jumpCooldown<=0){
+		            	if(!p.ableToJump){
 		            		p.ableToJump = true;
 		            	}
 		            }else if (x1.getBody().getUserData() instanceof GrapplingHook && !x2.isSensor()){
@@ -184,7 +185,7 @@ public class WorldGenerator {
 		            if(x2.getBody().getUserData() instanceof Player && x1.getBody().getType().equals(BodyType.KinematicBody))
 		            {
 		            	Player p = (Player) x2.getBody().getUserData();
-		            	if(!p.ableToJump && p.jumpCooldown<=0){
+		            	if(!p.ableToJump){
 		            		p.ableToJump = true;
 		            	}
 		            }else if (x2.getBody().getUserData() instanceof GrapplingHook && !x1.isSensor()){

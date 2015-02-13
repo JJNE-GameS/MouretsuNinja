@@ -30,108 +30,99 @@ public class Player extends Char {
 		super(body, texture);
 
 		this.animHandler=new AnimationHandler(new Texture[]{
-				TextureBank.pl_run7,
-				TextureBank.pl_run6,
-				TextureBank.pl_run5,
-				TextureBank.pl_run4,
-				TextureBank.pl_run3,
+				TextureBank.pl_run1,
 				TextureBank.pl_run2,
-				TextureBank.pl_run1
+				TextureBank.pl_run3,
+				TextureBank.pl_run4,
+				TextureBank.pl_run5,
+				TextureBank.pl_run6,
+				TextureBank.pl_run7,
+				TextureBank.pl_run8,
+				TextureBank.pl_run9,
+				TextureBank.pl_run10,
+				TextureBank.pl_run11,
+				TextureBank.pl_run12,
+				TextureBank.pl_run13,
+				TextureBank.pl_run14
+		}, 1f,
+		new Texture[]{
+				
+				TextureBank.pl_atk1,
+				TextureBank.pl_atk2,
+				TextureBank.pl_atk3,
+				TextureBank.pl_atk4,
+				TextureBank.pl_atk5,
+				TextureBank.pl_atk6,
+				TextureBank.pl_atk7,
+				TextureBank.pl_atk8,
+				TextureBank.pl_atk9,
+				TextureBank.pl_atk10
+		}, ATTACK_DURATION,
+		new Texture[]{
+				
+				TextureBank.pl_block1,
+				TextureBank.pl_block2,
+				TextureBank.pl_block3
+
+				
 		}, 0.5f,
 		new Texture[]{
 				
-				TextureBank.pl_atk1,
-				TextureBank.pl_atk2,
-				TextureBank.pl_atk3,
-				TextureBank.pl_atk4,
-				TextureBank.pl_atk5,
-				TextureBank.pl_atk6,
-				TextureBank.pl_atk7,
-				TextureBank.pl_atk8,
-				TextureBank.pl_atk9,
-				TextureBank.pl_atk10,
-				TextureBank.pl_atk11,
-				TextureBank.pl_atk12,
-				TextureBank.pl_atk13
-		}, 5,
+				TextureBank.pl_block1,
+				TextureBank.pl_block2,
+				TextureBank.pl_block3
+		}, 0.5f,
 		new Texture[]{
-				
-				TextureBank.pl_atk1,
-				TextureBank.pl_atk2,
-				TextureBank.pl_atk3,
-				TextureBank.pl_atk4,
-				TextureBank.pl_atk5,
-				TextureBank.pl_atk6,
-				TextureBank.pl_atk7,
-				TextureBank.pl_atk8,
-				TextureBank.pl_atk9,
-				TextureBank.pl_atk10,
-				TextureBank.pl_atk11,
-				TextureBank.pl_atk12,
-				TextureBank.pl_atk13
-		}, 5,
-		new Texture[]{
-				
-				TextureBank.pl_atk1,
-				TextureBank.pl_atk2,
-				TextureBank.pl_atk3,
-				TextureBank.pl_atk4,
-				TextureBank.pl_atk5,
-				TextureBank.pl_atk6,
-				TextureBank.pl_atk7,
-				TextureBank.pl_atk8,
-				TextureBank.pl_atk9,
-				TextureBank.pl_atk10,
-				TextureBank.pl_atk11,
-				TextureBank.pl_atk12,
-				TextureBank.pl_atk13
-		}, 5,
-		new Texture[]{
-				TextureBank.pl_run7,
-				TextureBank.pl_run6,
-				TextureBank.pl_run5,
-				TextureBank.pl_run4,
-				TextureBank.pl_run3,
-				TextureBank.pl_run2,
-				TextureBank.pl_run1
+				TextureBank.pl_jump1,
+				TextureBank.pl_jump2,
+				TextureBank.pl_jump3,
+				TextureBank.pl_jump4,
+				TextureBank.pl_jump5,
+				TextureBank.pl_jump6
 
-		}, 5,
+		}, 0.8f,
 		new Texture[]{
+				TextureBank.pl_jump1,
+				TextureBank.pl_jump2,
+				TextureBank.pl_jump3,
+				TextureBank.pl_jump4,
+				TextureBank.pl_jump5,
+				TextureBank.pl_jump6
+		}, 0.8f,
+		new Texture[]{
+				TextureBank.pl_idle1,
+				TextureBank.pl_idle2,
+				TextureBank.pl_idle3,
+				TextureBank.pl_idle4,
+				TextureBank.pl_idle5,
+				TextureBank.pl_idle6,
+				TextureBank.pl_idle7,
+				TextureBank.pl_idle8,
+				TextureBank.pl_idle9,
+				TextureBank.pl_idle10,
+				TextureBank.pl_idle11,
+				TextureBank.pl_idle12
 
-				TextureBank.pl_atk1,
-				TextureBank.pl_atk2,
-				TextureBank.pl_atk3,
-				TextureBank.pl_atk4,
-				TextureBank.pl_atk5,
-				TextureBank.pl_atk6,
-				TextureBank.pl_atk7,
-				TextureBank.pl_atk8,
-				TextureBank.pl_atk9,
-				TextureBank.pl_atk10,
-				TextureBank.pl_atk11,
-				TextureBank.pl_atk12,
-				TextureBank.pl_atk13
-		}, 5,
-		new Texture[]{
-				TextureBank.esine1,
-				TextureBank.esine2,
-				TextureBank.esine3
-		}, 5);
+		}, 1);
 		this.feet=feet;
 		this.attackConeRight=attackConeRight;
 		this.attackConeLeft=attackConeLeft;
 
 		this.setOriginX(width/2);
-		this.setOriginY(height/2);
+		this.setOriginY((height*1.4f)/2f);
 		this.setWidth(width);
-		this.setHeight(height);
+		this.setHeight((height*1.4f));
 	}
 
 	@Override
 	protected void childUpdate(float delta) {
 		setDrawable(animHandler.updateRun(delta, !movingRight));
 		
-		if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 ){
+		if(attackCooldown>0){
+			setDrawable(animHandler.updateAtk(delta, !movingRight));
+		}else if(blocking){
+			setDrawable(animHandler.updateBlock(delta, !movingRight));
+		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
 			setDrawable(animHandler.updateJump(delta, !movingRight));
 		}else if(body.getLinearVelocity().x < 0.5 && body.getLinearVelocity().x > -0.5 ){
 			setDrawable(animHandler.updateStand(delta, !movingRight));
@@ -143,10 +134,10 @@ public class Player extends Char {
 		}if(attackCooldown>0){
 			attackCooldown-=delta;
 		}
-		if(Gdx.input.isKeyPressed(Keys.W)&&ableToJump){
+		if((Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.SPACE))&&ableToJump&&jumpCooldown<=0){
         	body.applyForceToCenter(new Vector2(0,300), true);
         	ableToJump = false;
-        	jumpCooldown=0.5f;
+        	jumpCooldown=1f;
 		}else if(Gdx.input.isKeyPressed(Keys.W) && hook!=null){
         	hook.isReeling=true;
 		}else if(hook!=null){
@@ -177,7 +168,8 @@ public class Player extends Char {
 			System.out.println("hit "+inAttackCone.toString());
 			attackCooldown=ATTACK_DURATION;
 			inAttackCone.damage(attack_damage);
-		}
+		}else if(attackCooldown<=0)
+			attackCooldown=ATTACK_DURATION;
 	}
 
 	private void grapple(){
