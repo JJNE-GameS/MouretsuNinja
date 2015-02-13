@@ -53,15 +53,17 @@ public class MGame {
 	}
 	
 	
-	public void draw(){
+	public void draw(boolean paused){
 		float delta =  Gdx.graphics.getDeltaTime();
+				camera.position.set(player.getX()+2, player.getY()+3, 0);
+				camera.update();
 		
-		camera.position.set(player.getX()+2, player.getY()+3, 0);
-		camera.update();
-		world.step(delta, 6, 2);
-		if(!functions.isEmpty())
-			functions.remove().exec();
-		stage.act();
+		if(!paused){
+			world.step(delta, 6, 2);
+			if(!functions.isEmpty())
+				functions.remove().exec();
+			stage.act();
+		}
 		stage.draw();
 		debugger.render(world, camera.combined);
 		justClicked=false;

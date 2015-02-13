@@ -30,5 +30,7 @@ public class TextureBank {
 	public static Texture pl_atk11 = new Texture(Gdx.files.internal("player/anim11.png"));
 	public static Texture pl_atk12 = new Texture(Gdx.files.internal("player/anim12.png"));
 	public static Texture pl_atk13 = new Texture(Gdx.files.internal("player/anim13.png"));
-
+	public static Texture esine1 = new Texture(Gdx.files.internal("badlogic.jpg"), true);
+	public static Texture esine2 = new Texture(Gdx.files.internal("fedora.jpg"), true);
+	public static Texture esine3 = new Texture(Gdx.files.internal("spurdo.png"), true);
 }

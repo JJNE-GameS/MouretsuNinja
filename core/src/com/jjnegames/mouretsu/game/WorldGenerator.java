@@ -1,15 +1,11 @@
 package com.jjnegames.mouretsu.game;
 
 import java.util.ArrayList;
-	
-
-
 
 
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -20,11 +16,8 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
-import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.jjnegames.mouretsu.game.objects.Ball;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
 import com.jjnegames.mouretsu.game.objects.characters.AttackCone;
@@ -40,7 +33,6 @@ public class WorldGenerator {
 			Stage stage, OrthographicCamera camera) {
 		
 		 int[][] map = MapFileReader.Loadmap();
-		 
 			 
 		// Nearest on terävämpi mutta ei toimi hyvin pyöriessä ja Linear on
 		// epäselvempi mutta parempi vaihtoehto pyörivälle objektille
@@ -59,7 +51,7 @@ public class WorldGenerator {
 		// Luodaan rectangle jolle kerrotaan pelimaailma johon spawnataan,
 		// sijainti&pyörimisnopeus jne, leveys, korkeus, kuva joka kertoo miltä
 		// objekti näyttää
-		Player character_1 = (Player) Player.create(world, bodyDef, 1.3f, 1.8f,TextureBank.pelaaja);
+		Player character_1 = (Player) Player.create(world, bodyDef, 1f, 1f,TextureBank.alus);
 		MGame.player=character_1;
 		stage.addActor(character_1);
 		
@@ -85,7 +77,41 @@ public class WorldGenerator {
 //				Ball rectangle_2 = Ball.create(world, bodyDef2, 0.5f, TextureBank.alus);
 
 				stage.addActor(rectangle_2);
+				
+				}else if(map[x][y]== 2){
+					BodyDef bodyDef4 = new BodyDef();
+					bodyDef4.type = BodyType.KinematicBody;
+					bodyDef4.position.set(x, y);
+					bodyDef4.angularVelocity = 0;
+
+					Rect rectangle_3 = Rect.create(world, bodyDef4, 1f, 1f,TextureBank.esine1);
+
+					stage.addActor(rectangle_3);
+					
+				}else if(map[x][y]== 3){
+					BodyDef bodyDef5 = new BodyDef();
+					bodyDef5.type = BodyType.KinematicBody;
+					bodyDef5.position.set(x, y);
+					bodyDef5.angularVelocity = 0;
+
+					Rect rectangle_4 = Rect.create(world, bodyDef5, 1f, 1f,TextureBank.esine2);
+
+
+					stage.addActor(rectangle_4);
+					
+				}else if(map[x][y]== 4){
+					BodyDef bodyDef6 = new BodyDef();
+					bodyDef6.type = BodyType.KinematicBody;
+					bodyDef6.position.set(x, y);
+					bodyDef6.angularVelocity = 0;
+
+					Rect rectangle_5 = Rect.create(world, bodyDef6, 1f, 1f,TextureBank.esine3);
+
+
+					stage.addActor(rectangle_5);
+					
 				}
+			
 			}
 		}
 		
@@ -112,7 +138,6 @@ public class WorldGenerator {
 
 	        	final Fixture x1 = contact.getFixtureA();
 	            final Fixture x2 = contact.getFixtureB();
-	            
 	            
 
 	            if(x1.getBody().getUserData()!= null){
@@ -194,7 +219,6 @@ public class WorldGenerator {
 		            }
 	            }
 	            
-            	
 
 	        }
 

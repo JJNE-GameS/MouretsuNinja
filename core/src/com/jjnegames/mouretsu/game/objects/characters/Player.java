@@ -37,21 +37,86 @@ public class Player extends Char {
 				TextureBank.pl_run3,
 				TextureBank.pl_run2,
 				TextureBank.pl_run1
+		}, 0.5f,
+		new Texture[]{
 				
-//				TextureBank.pl_atk1,
-//				TextureBank.pl_atk2,
-//				TextureBank.pl_atk3,
-//				TextureBank.pl_atk4,
-//				TextureBank.pl_atk5,
-//				TextureBank.pl_atk6,
-//				TextureBank.pl_atk7,
-//				TextureBank.pl_atk8,
-//				TextureBank.pl_atk9,
-//				TextureBank.pl_atk10,
-//				TextureBank.pl_atk11,
-//				TextureBank.pl_atk12,
-//				TextureBank.pl_atk13
-		}, 0.5f);
+				TextureBank.pl_atk1,
+				TextureBank.pl_atk2,
+				TextureBank.pl_atk3,
+				TextureBank.pl_atk4,
+				TextureBank.pl_atk5,
+				TextureBank.pl_atk6,
+				TextureBank.pl_atk7,
+				TextureBank.pl_atk8,
+				TextureBank.pl_atk9,
+				TextureBank.pl_atk10,
+				TextureBank.pl_atk11,
+				TextureBank.pl_atk12,
+				TextureBank.pl_atk13
+		}, 5,
+		new Texture[]{
+				
+				TextureBank.pl_atk1,
+				TextureBank.pl_atk2,
+				TextureBank.pl_atk3,
+				TextureBank.pl_atk4,
+				TextureBank.pl_atk5,
+				TextureBank.pl_atk6,
+				TextureBank.pl_atk7,
+				TextureBank.pl_atk8,
+				TextureBank.pl_atk9,
+				TextureBank.pl_atk10,
+				TextureBank.pl_atk11,
+				TextureBank.pl_atk12,
+				TextureBank.pl_atk13
+		}, 5,
+		new Texture[]{
+				
+				TextureBank.pl_atk1,
+				TextureBank.pl_atk2,
+				TextureBank.pl_atk3,
+				TextureBank.pl_atk4,
+				TextureBank.pl_atk5,
+				TextureBank.pl_atk6,
+				TextureBank.pl_atk7,
+				TextureBank.pl_atk8,
+				TextureBank.pl_atk9,
+				TextureBank.pl_atk10,
+				TextureBank.pl_atk11,
+				TextureBank.pl_atk12,
+				TextureBank.pl_atk13
+		}, 5,
+		new Texture[]{
+				TextureBank.pl_run7,
+				TextureBank.pl_run6,
+				TextureBank.pl_run5,
+				TextureBank.pl_run4,
+				TextureBank.pl_run3,
+				TextureBank.pl_run2,
+				TextureBank.pl_run1
+
+		}, 5,
+		new Texture[]{
+
+				TextureBank.pl_atk1,
+				TextureBank.pl_atk2,
+				TextureBank.pl_atk3,
+				TextureBank.pl_atk4,
+				TextureBank.pl_atk5,
+				TextureBank.pl_atk6,
+				TextureBank.pl_atk7,
+				TextureBank.pl_atk8,
+				TextureBank.pl_atk9,
+				TextureBank.pl_atk10,
+				TextureBank.pl_atk11,
+				TextureBank.pl_atk12,
+				TextureBank.pl_atk13
+		}, 5,
+		new Texture[]{
+				TextureBank.esine1,
+				TextureBank.esine2,
+				TextureBank.esine3
+		}, 5);
 		this.feet=feet;
 		this.attackConeRight=attackConeRight;
 		this.attackConeLeft=attackConeLeft;
@@ -66,6 +131,13 @@ public class Player extends Char {
 	protected void childUpdate(float delta) {
 		setDrawable(animHandler.updateRun(delta, !movingRight));
 		
+		if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 ){
+			setDrawable(animHandler.updateJump(delta, !movingRight));
+		}else if(body.getLinearVelocity().x < 0.5 && body.getLinearVelocity().x > -0.5 ){
+			setDrawable(animHandler.updateStand(delta, !movingRight));
+		}else{
+		setDrawable(animHandler.updateRun(delta, !movingRight));
+		}
 		if(jumpCooldown>0){
 			jumpCooldown-=delta;
 		}if(attackCooldown>0){

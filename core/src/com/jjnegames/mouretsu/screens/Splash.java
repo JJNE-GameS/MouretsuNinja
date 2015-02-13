@@ -24,6 +24,7 @@ public class Splash implements Screen {
 		stage.draw();
 		if(Gdx.input.isKeyJustPressed(Keys.ESCAPE)){
 			((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
+			//((Game)Gdx.app.getApplicationListener()).setScreen(new StartScreen());
 		}
 	}
 
@@ -53,8 +54,8 @@ public class Splash implements Screen {
 		texture3 = new Texture(Gdx.files.internal("intro/pic1_4.bmp"));
 		texture4 = new Texture(Gdx.files.internal("intro/pic1_5.bmp"));
 		texture5 = new Texture(Gdx.files.internal("intro/pic1_6.bmp"));
-		texture6 = new Texture(Gdx.files.internal("intro/intro1_edited_1.png"));
-		texture7 = new Texture(Gdx.files.internal("intro/intro2_edited_2.png"));
+		texture6 = new Texture(Gdx.files.internal("intro/intro1_edited_4.png"));
+		texture7 = new Texture(Gdx.files.internal("intro/intro2_edited_6.png"));
 		splashImage1 = new Image(texture1);
 		splashImage2 = new Image(texture2);
 		splashImage3 = new Image(texture3);
@@ -95,7 +96,7 @@ public class Splash implements Screen {
 		splashImage6.setWidth(MouretsuNinja.WIDTH*1.1f);
 		splashImage6.setHeight(MouretsuNinja.HEIGHT*3f);
 		stage.addActor(splashImage6);
-		splashImage6.addAction(Actions.sequence(Actions.alpha(0),Actions.moveBy(-w*0.045f, -h*2.05f),Actions.delay(23f),Actions.fadeIn(1.5f),Actions.delay(2f),
+		splashImage6.addAction(Actions.sequence(Actions.alpha(0),Actions.moveBy(-w*0.045f, -h*2.05f),Actions.delay(23f),Actions.fadeIn(1.5f),Actions.delay(3.5f),
 				Actions.moveBy(0, +h*0.01f,0.111f),
 				Actions.moveBy(0, +h*0.02f,0.111f),
 				Actions.moveBy(0, +h*0.03f,0.111f),
@@ -114,7 +115,7 @@ public class Splash implements Screen {
 				Actions.moveBy(0, +h*0.03f,0.111f),
 				Actions.moveBy(0, +h*0.02f,0.111f),
 				Actions.moveBy(0, +h*0.01f,0.111f),
-				Actions.delay(2f),
+				Actions.delay(3.5f),
 				Actions.moveBy(0, +h*0.01f,0.111f),
 				Actions.moveBy(0, +h*0.02f,0.111f),
 				Actions.moveBy(0, +h*0.03f,0.111f),
@@ -133,7 +134,7 @@ public class Splash implements Screen {
 				Actions.moveBy(0, +h*0.03f,0.111f),
 				Actions.moveBy(0, +h*0.02f,0.111f),
 				Actions.moveBy(0, +h*0.01f,0.111f),
-				Actions.delay(2f),Actions.fadeOut(1.5f)));
+				Actions.delay(3.5f),Actions.fadeOut(1.5f)));
 		
 		splashImage7.setWidth(MouretsuNinja.WIDTH*1.1f);
 		splashImage7.setHeight(MouretsuNinja.HEIGHT*3f);
@@ -142,7 +143,7 @@ public class Splash implements Screen {
 //				Actions.moveBy(0, +h*1f,2f),Actions.delay(2f),
 //				Actions.moveBy(0, +h*1f,2f),Actions.delay(2f),Actions.fadeOut(1.5f)));
 		
-		splashImage7.addAction(Actions.sequence(Actions.alpha(0),Actions.moveBy(-w*0.045f, -h*2.05f),Actions.delay(37f),Actions.fadeIn(1.5f),Actions.delay(2f),
+		splashImage7.addAction(Actions.sequence(Actions.alpha(0),Actions.moveBy(-w*0.045f, -h*2.05f),Actions.delay(41.5f),Actions.fadeIn(1.5f),Actions.delay(3.5f),
 				Actions.moveBy(0, +h*0.01f,0.111f),
 				Actions.moveBy(0, +h*0.02f,0.111f),
 				Actions.moveBy(0, +h*0.03f,0.111f),
@@ -161,7 +162,7 @@ public class Splash implements Screen {
 				Actions.moveBy(0, +h*0.03f,0.111f),
 				Actions.moveBy(0, +h*0.02f,0.111f),
 				Actions.moveBy(0, +h*0.01f,0.111f),
-				Actions.delay(2f),
+				Actions.delay(3.5f),
 				Actions.moveBy(0, +h*0.01f,0.111f),
 				Actions.moveBy(0, +h*0.02f,0.111f),
 				Actions.moveBy(0, +h*0.03f,0.111f),
@@ -185,8 +186,10 @@ public class Splash implements Screen {
 					public void run(){
 						
 						((Game)Gdx.app.getApplicationListener()).setScreen(new GameScreen());
-						
+							
 					}
+					
+					
 					
 				})));
 		
