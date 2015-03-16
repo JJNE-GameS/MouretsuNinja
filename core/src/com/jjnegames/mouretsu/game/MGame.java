@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.characters.Player;
+import com.jjnegames.mouretsu.screens.GameHUD;
 
 
 public class MGame {
@@ -24,6 +25,7 @@ public class MGame {
 	public static FitViewport fvp = new FitViewport(1,1,camera);
 	public static Player player;
 	public Box2DDebugRenderer debugger;
+	public static GameHUD hud = new GameHUD();
 	
 	
 	public MGame(){
@@ -37,7 +39,7 @@ public class MGame {
 		WorldGenerator.createWorld(objects, world, stage, camera);
 		debugger = new Box2DDebugRenderer( true, true, true, true ,true, true);
 		
-		
+		hud.show();
 		
 	}
 	
@@ -46,7 +48,7 @@ public class MGame {
 		float delta =  Gdx.graphics.getDeltaTime();
 				camera.position.set(player.getX()+2, player.getY()+3, 0);
 				camera.update();
-		
+				
 		if(!paused){
 			world.step(delta, 6, 2);
 			if(!functions.isEmpty())
@@ -55,6 +57,7 @@ public class MGame {
 		}
 		stage.draw();
 		debugger.render(world, camera.combined);
+		hud.render(delta);
 	}
 	
 	public void dispose() {

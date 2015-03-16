@@ -24,6 +24,8 @@ public class Player extends Char {
 	public float jumpCooldown = 0f;
 	AnimationHandler animHandler;
 	public boolean movingRight=true;
+	public boolean skill1 = true,skill2 = true,skill3 = true, skill4 = true;
+	
 	
 	public Player(Body body, Body feet, Body attackConeRight, Body attackConeLeft, Texture texture, float width, float height) {
 		super(body, texture);
