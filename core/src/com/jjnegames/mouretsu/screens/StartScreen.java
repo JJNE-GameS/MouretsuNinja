@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.jjnegames.mouretsu.MouretsuNinja;
+import com.jjnegames.mouretsu.game.TextureBank;
 
 
 public class StartScreen implements Screen {
@@ -72,7 +73,14 @@ public class StartScreen implements Screen {
 		startImage3.setPosition(MouretsuNinja.WIDTH/2-startImage3.getWidth()/2, MouretsuNinja.HEIGHT/3);
 		stage1.addActor(startImage3);
 		
-		
+		Gdx.app.postRunnable(new Runnable(){
+			public void run(){
+				System.out.println("Initializing TextureBank");
+				Image a = new Image(TextureBank.alus);
+				System.out.println("TextureBank Loaded");
+
+			}
+		});
 	}
 
 	@Override
