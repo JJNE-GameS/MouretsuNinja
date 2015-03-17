@@ -25,6 +25,7 @@ public class Player extends Char {
 	public static float ATTACK_DURATION=0.7f;
 	
 	private GrapplingHook hook = null;
+	public boolean skill1 = true,skill2 = true,skill3 = true,skill4 = true;
 	
 	public Player(Body body, Body feet, Body attackConeRight, Body attackConeLeft, Texture texture, float width, float height) {
 		super(body, texture);
