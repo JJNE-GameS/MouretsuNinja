@@ -1,7 +1,7 @@
 package com.jjnegames.mouretsu.game;
 
 import java.util.ArrayList;
-
+	
 
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,10 +16,14 @@ import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
+import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.jjnegames.mouretsu.game.objects.Ball;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
+import com.jjnegames.mouretsu.game.objects.Triangle;
 import com.jjnegames.mouretsu.game.objects.characters.AttackCone;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
 import com.jjnegames.mouretsu.game.objects.characters.Enemy;
@@ -112,19 +116,18 @@ public class WorldGenerator {
 					stage.addActor(rectangle_5);
 					
 				}
-			
 			}
 		}
 		
 
-		// BodyDef bodyDef3 = new BodyDef();
-		// bodyDef3.type=BodyType.DynamicBody;
-		// bodyDef3.position.set(3f, 3f);
-		// bodyDef3.angularVelocity=0;
-		//
-		// Char character_1 = Player.create(world, bodyDef3, 2f, 2f, alus);
-		// stage.addActor(character_1);
-		//
+		 BodyDef bodyDef4 = new BodyDef();
+		 bodyDef4.type=BodyType.KinematicBody;
+		 bodyDef4.position.set(11f, 3f);
+		 bodyDef4.angularVelocity=0;
+		
+		 Triangle triangle = Triangle.create(world, bodyDef4, 0.5f, 0.5f, TextureBank.alus);
+		 stage.addActor(triangle);
+		
 
 		world.setContactListener(createContactListener());
 	}
@@ -139,6 +142,7 @@ public class WorldGenerator {
 
 	        	final Fixture x1 = contact.getFixtureA();
 	            final Fixture x2 = contact.getFixtureB();
+	            
 	            
 
 	            if(x1.getBody().getUserData()!= null){
@@ -215,11 +219,13 @@ public class WorldGenerator {
 		            			Char attacker = ((AttackCone)x2.getBody().getUserData()).chara;
 		            			
 		            			attacker.inAttackCone=target;
+		            			System.out.println("targetInAttackCone2"+ target);
 		            		}
 		            	}
 		            }
 	            }
 	            
+            	
 
 	        }
 

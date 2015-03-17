@@ -9,7 +9,8 @@ public class TextureBank extends AssetManager{
 	public static Texture alus = new Texture(Gdx.files.internal("alus.png"), true);
 	public static Texture vihollinen = new Texture(Gdx.files.internal("are-you-a-wizard.jpg"), true);
 	public static Texture pelaaja = new Texture(Gdx.files.internal("ninjatest.png"));
-	
+	public static Texture kolmio = new Texture (Gdx.files.internal("images.jpg"));
+
 	public static Texture pl_run1 = new Texture(Gdx.files.internal("alus.png"));
 	public static Texture pl_run2 = new Texture(Gdx.files.internal("alus.png"));
 	public static Texture pl_run3 = new Texture(Gdx.files.internal("alus.png"));
