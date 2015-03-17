@@ -3,7 +3,6 @@ package com.jjnegames.mouretsu.game;
 import java.util.ArrayList;
 	
 
-import javafx.event.Event;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
@@ -22,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.jjnegames.mouretsu.game.objects.Ball;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
+import com.jjnegames.mouretsu.game.objects.Triangle;
 import com.jjnegames.mouretsu.game.objects.characters.AttackCone;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
 import com.jjnegames.mouretsu.game.objects.characters.Enemy;
@@ -84,14 +84,14 @@ public class WorldGenerator {
 		}
 		
 
-		// BodyDef bodyDef3 = new BodyDef();
-		// bodyDef3.type=BodyType.DynamicBody;
-		// bodyDef3.position.set(3f, 3f);
-		// bodyDef3.angularVelocity=0;
-		//
-		// Char character_1 = Player.create(world, bodyDef3, 2f, 2f, alus);
-		// stage.addActor(character_1);
-		//
+		 BodyDef bodyDef4 = new BodyDef();
+		 bodyDef4.type=BodyType.KinematicBody;
+		 bodyDef4.position.set(11f, 3f);
+		 bodyDef4.angularVelocity=0;
+		
+		 Triangle triangle = Triangle.create(world, bodyDef4, 0.5f, 0.5f, TextureBank.alus);
+		 stage.addActor(triangle);
+		
 
 		world.setContactListener(createContactListener());
 	}
