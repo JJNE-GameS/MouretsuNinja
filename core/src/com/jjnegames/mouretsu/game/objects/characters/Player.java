@@ -29,7 +29,9 @@ public class Player extends Char {
 	
 	public Player(Body body, Body feet, Body attackConeRight, Body attackConeLeft, Texture texture, float width, float height) {
 		super(body, texture);
-
+		health=60;
+		
+		
 		this.animHandler=new AnimationHandler(new Texture[]{
 				TextureBank.pl_run1,
 				TextureBank.pl_run2,

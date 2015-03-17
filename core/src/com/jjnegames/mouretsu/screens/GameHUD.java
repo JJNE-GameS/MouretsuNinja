@@ -36,7 +36,13 @@ public class GameHUD {
 			skillImage4.setVisible(false);
 		}
 	
-		
+		healthImage.setWidth(380*(MGame.player.health/MGame.player.max_health));
+		if(MGame.player.blocking){
+			armorImage.setVisible(true);
+			armorImage.setWidth(380*(MGame.player.block_shield/MGame.player.max_block_shield));
+		}else{
+			armorImage.setVisible(false);
+		}
 		
 	}
 		
