@@ -14,11 +14,13 @@ public class DesktopLauncher {
 		
 		config.width=MouretsuNinja.WIDTH;
 		config.height=MouretsuNinja.HEIGHT;
-		config.fullscreen=true;
+		config.fullscreen=false;
 		config.backgroundFPS=15;
 		config.foregroundFPS=60;
 		config.x=-1;
 		config.y=-1;
 		new LwjglApplication(new MouretsuNinja(), config);
 	}
+	
+	
 }

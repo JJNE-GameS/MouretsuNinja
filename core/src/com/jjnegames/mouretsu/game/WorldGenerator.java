@@ -12,6 +12,8 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
+import com.badlogic.gdx.physics.box2d.Joint;
+import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
@@ -49,11 +51,12 @@ public class WorldGenerator {
 		bodyDef.position.set(3f, 3f);
 		// Rotation speed when spawned
 		bodyDef.angularVelocity = 0;
+		bodyDef.linearDamping=0.5f;
 
 		// Luodaan rectangle jolle kerrotaan pelimaailma johon spawnataan,
 		// sijainti&pyörimisnopeus jne, leveys, korkeus, kuva joka kertoo miltä
 		// objekti näyttää
-		Player character_1 = (Player) Player.create(world, bodyDef, 1.3f, 1.8f,TextureBank.pelaaja);
+		Player character_1 = (Player) Player.create(world, bodyDef, 1f, 1f,TextureBank.alus);
 		MGame.player=character_1;
 		stage.addActor(character_1);
 		
@@ -79,6 +82,39 @@ public class WorldGenerator {
 //				Ball rectangle_2 = Ball.create(world, bodyDef2, 0.5f, TextureBank.alus);
 
 				stage.addActor(rectangle_2);
+				
+				}else if(map[x][y]== 2){
+					BodyDef bodyDef4 = new BodyDef();
+					bodyDef4.type = BodyType.KinematicBody;
+					bodyDef4.position.set(x, y);
+					bodyDef4.angularVelocity = 0;
+
+					Rect rectangle_3 = Rect.create(world, bodyDef4, 1f, 1f,TextureBank.esine1);
+
+					stage.addActor(rectangle_3);
+					
+				}else if(map[x][y]== 3){
+					BodyDef bodyDef5 = new BodyDef();
+					bodyDef5.type = BodyType.KinematicBody;
+					bodyDef5.position.set(x, y);
+					bodyDef5.angularVelocity = 0;
+
+					Rect rectangle_4 = Rect.create(world, bodyDef5, 1f, 1f,TextureBank.esine2);
+
+
+					stage.addActor(rectangle_4);
+					
+				}else if(map[x][y]== 4){
+					BodyDef bodyDef6 = new BodyDef();
+					bodyDef6.type = BodyType.KinematicBody;
+					bodyDef6.position.set(x, y);
+					bodyDef6.angularVelocity = 0;
+
+					Rect rectangle_5 = Rect.create(world, bodyDef6, 1f, 1f,TextureBank.esine3);
+
+
+					stage.addActor(rectangle_5);
+					
 				}
 			}
 		}
@@ -113,10 +149,10 @@ public class WorldGenerator {
 		            if(x1.getBody().getUserData() instanceof Player && x2.getBody().getType().equals(BodyType.KinematicBody))
 		            {
 		            	Player p = (Player) x1.getBody().getUserData();
-		            	if(!p.ableToJump && p.jumpCooldown<=0){
+		            	if(!p.ableToJump){
 		            		p.ableToJump = true;
 		            	}
-		            }else if (x1.getBody().getUserData() instanceof GrapplingHook){
+		            }else if (x1.getBody().getUserData() instanceof GrapplingHook && !x2.isSensor()){
 		            	
 		            	MGame.functions.add(new Function(){
 		            		public void exec(){
@@ -153,10 +189,10 @@ public class WorldGenerator {
 		            if(x2.getBody().getUserData() instanceof Player && x1.getBody().getType().equals(BodyType.KinematicBody))
 		            {
 		            	Player p = (Player) x2.getBody().getUserData();
-		            	if(!p.ableToJump && p.jumpCooldown<=0){
+		            	if(!p.ableToJump){
 		            		p.ableToJump = true;
 		            	}
-		            }else if (x2.getBody().getUserData() instanceof GrapplingHook){
+		            }else if (x2.getBody().getUserData() instanceof GrapplingHook && !x1.isSensor()){
 		            	
 		            	MGame.functions.add(new Function(){
 		            		public void exec(){

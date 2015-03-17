@@ -9,9 +9,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public abstract class GameObject extends Image{
 	
 	
-	public static final short CATEGORY_PLAYER = -1;  
-	public static final short CATEGORY_ENEMY = -2; 
-	public static final short CATEGORY_SCENERY = -3; 
+	public static final short GROUP_PLAYER = -1;  
+	public static final short GROUP_ENEMY = -2; 
+	public static final short GROUP_SCENERY = -3;
+	
+	// 0000000000000001 in binary
+	final public static short CATEGORY_PLAYER_ATTACK_CONE = 0x0001;
+	  
+	// 0000000000000010 in binary
+	final public static short CATEGORY_ENEMY = 0x0002; 
+	
+	// 0000000000000001 in binary
+	final public static short CATEGORY_PLAYER = 0x0001;
+
+	
 	
 	protected Body body;
 	

@@ -1,72 +1,177 @@
 package com.jjnegames.mouretsu.game.objects.characters;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
-import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.MassData;
+import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.QueryCallback;
-import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.jjnegames.mouretsu.game.MGame;
 import com.jjnegames.mouretsu.game.TextureBank;
+import com.jjnegames.mouretsu.game.utils.AnimationHandler;
 
 public class Player extends Char {
 	
+	public static float ATTACK_DURATION=0.7f;
+	
 	private GrapplingHook hook = null;
-	public float jumpCooldown = 0f;
-
+	
 	public Player(Body body, Body feet, Body attackConeRight, Body attackConeLeft, Texture texture, float width, float height) {
 		super(body, texture);
 
+		this.animHandler=new AnimationHandler(new Texture[]{
+				TextureBank.pl_run1,
+				TextureBank.pl_run2,
+				TextureBank.pl_run3,
+				TextureBank.pl_run4,
+				TextureBank.pl_run5,
+				TextureBank.pl_run6,
+				TextureBank.pl_run7,
+				TextureBank.pl_run8,
+				TextureBank.pl_run9,
+				TextureBank.pl_run10,
+				TextureBank.pl_run11,
+				TextureBank.pl_run12,
+				TextureBank.pl_run13,
+				TextureBank.pl_run14
+		}, 1f,
+		new Texture[]{
+				
+				TextureBank.pl_atk1,
+				TextureBank.pl_atk2,
+				TextureBank.pl_atk3,
+				TextureBank.pl_atk4,
+				TextureBank.pl_atk5,
+				TextureBank.pl_atk6,
+				TextureBank.pl_atk7,
+				TextureBank.pl_atk8,
+				TextureBank.pl_atk9,
+				TextureBank.pl_atk10
+		}, ATTACK_DURATION,
+		new Texture[]{
+				
+				TextureBank.pl_block1,
+				TextureBank.pl_block2,
+				TextureBank.pl_block3
+
+				
+		}, 0.5f,
+		new Texture[]{
+				
+				TextureBank.pl_block1,
+				TextureBank.pl_block2,
+				TextureBank.pl_block3
+		}, 0.5f,
+		new Texture[]{
+				TextureBank.pl_jump1,
+				TextureBank.pl_jump2,
+				TextureBank.pl_jump3,
+				TextureBank.pl_jump4,
+				TextureBank.pl_jump5,
+				TextureBank.pl_jump6
+
+		}, 0.8f,
+		new Texture[]{
+				TextureBank.pl_jump1,
+				TextureBank.pl_jump2,
+				TextureBank.pl_jump3,
+				TextureBank.pl_jump4,
+				TextureBank.pl_jump5,
+				TextureBank.pl_jump6
+		}, 0.8f,
+		new Texture[]{
+				TextureBank.pl_idle1,
+				TextureBank.pl_idle2,
+				TextureBank.pl_idle3,
+				TextureBank.pl_idle4,
+				TextureBank.pl_idle5,
+				TextureBank.pl_idle6,
+				TextureBank.pl_idle7,
+				TextureBank.pl_idle8,
+				TextureBank.pl_idle9,
+				TextureBank.pl_idle10,
+				TextureBank.pl_idle11,
+				TextureBank.pl_idle12
+
+		}, 1);
 		this.feet=feet;
 		this.attackConeRight=attackConeRight;
 		this.attackConeLeft=attackConeLeft;
 
 		this.setOriginX(width/2);
-		this.setOriginY(height/2);
+		this.setOriginY((height*1.4f)/2f);
 		this.setWidth(width);
-		this.setHeight(height);
+		this.setHeight((height*1.4f));
 	}
 
 	@Override
 	protected void childUpdate(float delta) {
+		setDrawable(animHandler.updateRun(delta, !movingRight));
+		
+		if(attackCooldown>0){
+			setDrawable(animHandler.updateAtk(delta, !movingRight));
+		}else if(blocking){
+			setDrawable(animHandler.updateBlock(delta, !movingRight));
+		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
+			setDrawable(animHandler.updateJump(delta, !movingRight));
+		}else if(body.getLinearVelocity().x < 0.5 && body.getLinearVelocity().x > -0.5 ){
+			setDrawable(animHandler.updateStand(delta, !movingRight));
+		}else{
+		setDrawable(animHandler.updateRun(delta, !movingRight));
+		}
 		if(jumpCooldown>0){
 			jumpCooldown-=delta;
+		}if(attackCooldown>0){
+			attackCooldown-=delta;
 		}
-		if(Gdx.input.isKeyPressed(Keys.W)&&ableToJump){
+		if((Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.SPACE))&&ableToJump&&jumpCooldown<=0){
         	body.applyForceToCenter(new Vector2(0,300), true);
         	ableToJump = false;
-        	jumpCooldown=0.5f;
+        	jumpCooldown=1f;
 		}else if(Gdx.input.isKeyPressed(Keys.W) && hook!=null){
         	hook.isReeling=true;
 		}else if(hook!=null){
 			hook.isReeling=false;
 		} if (Gdx.input.isKeyPressed(Keys.A)){
 			body.applyForceToCenter(new Vector2(-200*delta,0), true);
+			movingRight=false;
 		} if (Gdx.input.isKeyPressed(Keys.D)){
 			body.applyForceToCenter(new Vector2(200*delta,0), true);
+			movingRight=true;
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.Q)){
 			grapple();
 		}
+		if(Gdx.input.isButtonPressed(Buttons.LEFT)){
+			attack();
+		}if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)){
+			blocking=true;
+		}else{
+			blocking=false;
+		}
 		
     }
 	
+	private void attack() {
+		if(inAttackCone!=null && attackCooldown<=0){
+			System.out.println("hit "+inAttackCone.toString());
+			attackCooldown=ATTACK_DURATION;
+			inAttackCone.damage(attack_damage);
+		}else if(attackCooldown<=0)
+			attackCooldown=ATTACK_DURATION;
+	}
+
 	private void grapple(){
 		if(hook==null){
 			Vector3 worldCoordinates = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
@@ -87,7 +192,7 @@ public class Player extends Char {
 			
 			float dist = (float)Math.sqrt((positionx-targetX)*(positionx-targetX)+(positiony-targetY)*(positiony-targetY));
 			Vector2 linearVelocity = new Vector2(vX*GrapplingHook.SPEED, vY*GrapplingHook.SPEED);
-			hook = GrapplingHook.create(body.getWorld(), bodyDef, 0.1f, TextureBank.alus, this, CATEGORY_PLAYER);
+			hook = GrapplingHook.create(body.getWorld(), bodyDef, 0.1f, TextureBank.alus, this, GROUP_PLAYER);
 			hook.getBody().setLinearVelocity(linearVelocity);
 			MGame.stage.addActor(hook);
 		}else{
@@ -140,12 +245,12 @@ public class Player extends Char {
         FixtureDef fdef= new FixtureDef();
         fdef.shape=circleShape1;
         fdef.density=1.3f;
-        fdef.filter.groupIndex=CATEGORY_PLAYER;
+        fdef.filter.groupIndex=GROUP_PLAYER;
         
         FixtureDef fdef2= new FixtureDef();
         fdef2.shape=circleShape2;
         fdef2.density=1.3f;
-        fdef2.filter.groupIndex=CATEGORY_PLAYER;
+        fdef2.filter.groupIndex=GROUP_PLAYER;
         
         Fixture f = body.createFixture(fdef);
         Fixture f2 = body.createFixture(fdef2);
@@ -159,7 +264,7 @@ public class Player extends Char {
         FixtureDef feetfix = new FixtureDef();
         feetfix.shape = feetShape;
         feetfix.isSensor = true;
-        feetfix.filter.groupIndex=CATEGORY_PLAYER;
+        feetfix.filter.groupIndex=GROUP_PLAYER;
         feetfix.density=0.0001f;
         // Create a body in the world using our definition
         feet.createFixture(feetfix);
@@ -190,7 +295,7 @@ public class Player extends Char {
         atrfdef.shape = atkrs;
         atrfdef.isSensor = true;
         atrfdef.density=0.0001f;
-        atrfdef.filter.groupIndex=CATEGORY_PLAYER;
+        atrfdef.filter.groupIndex=GROUP_PLAYER;
         // Create a body in the world using our definition
         atkrb.createFixture(atrfdef);
         
@@ -218,7 +323,7 @@ public class Player extends Char {
         atlfdef.shape = atkls;
         atlfdef.isSensor = true;
         atlfdef.density=0.0001f;
-        atlfdef.filter.groupIndex=CATEGORY_PLAYER;
+        atlfdef.filter.groupIndex=GROUP_PLAYER;
         // Create a body in the world using our definition
         atklb.createFixture(atlfdef);
         
@@ -245,5 +350,7 @@ public class Player extends Char {
 
 		return p;
 	}
+
+	
 
 }
