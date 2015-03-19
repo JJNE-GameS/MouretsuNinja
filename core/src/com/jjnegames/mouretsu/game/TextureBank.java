@@ -139,7 +139,6 @@ public class TextureBank extends AssetManager{
 	public static Texture pl_jump4 = new Texture(Gdx.files.internal("alus.png"));
 	public static Texture pl_jump5 = new Texture(Gdx.files.internal("alus.png"));
 	public static Texture pl_jump6 = new Texture(Gdx.files.internal("alus.png"));
-
 	
 	public static Texture esine1 = new Texture(Gdx.files.internal("badlogic.jpg"), true);
 	public static Texture esine2 = new Texture(Gdx.files.internal("fedora.jpg"), true);
