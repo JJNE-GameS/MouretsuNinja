@@ -55,8 +55,8 @@ public class GameHUD {
 			texture1 = new Texture(Gdx.files.internal("hud/background_hud.png"));
 			texture2 = new Texture(Gdx.files.internal("hud/skill1.png"));
 			texture3 = new Texture(Gdx.files.internal("hud/skill2.png"));
-			texture4 = new Texture(Gdx.files.internal("hud/skill3.png"));
-			texture5 = new Texture(Gdx.files.internal("hud/skill4.png"));
+			texture4 = new Texture(Gdx.files.internal("hud/smokebomb2.png"));
+			texture5 = new Texture(Gdx.files.internal("hud/dash.png"));
 			texture6 = new Texture(Gdx.files.internal("hud/nohealth.png"));
 			texture7 = new Texture(Gdx.files.internal("hud/health.png"));
 			texture8 = new Texture(Gdx.files.internal("hud/armor.png"));
@@ -78,42 +78,42 @@ public class GameHUD {
 			
 			skillImage1.setWidth(240);
 			skillImage1.setHeight(70);
-			skillImage1.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.427f, backgroundImage.getHeight()/3);
+			skillImage1.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.429f, backgroundImage.getHeight()*0.045f);
 			stage.addActor(skillImage1);
 			
 			skillImage2.setWidth(240);
 			skillImage2.setHeight(70);
-			skillImage2.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.27f, backgroundImage.getHeight()/3);
+			skillImage2.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.27f, backgroundImage.getHeight()*0.045f);
 			stage.addActor(skillImage2);
 			
 			skillImage3.setWidth(240);
 			skillImage3.setHeight(70);
-			skillImage3.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.11f, backgroundImage.getHeight()/3);
+			skillImage3.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.115f, backgroundImage.getHeight()*0.035f);
 			stage.addActor(skillImage3);
 			
 			skillImage4.setWidth(240);
 			skillImage4.setHeight(70);
-			skillImage4.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*-0.045f, backgroundImage.getHeight()/3);
+			skillImage4.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*-0.046f, backgroundImage.getHeight()*0.045f);
 			stage.addActor(skillImage4);
 			
 			noHealthImage.setWidth(380);
 			noHealthImage.setHeight(13);
-			noHealthImage.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.3f, backgroundImage.getHeight()*0.75f);
+			noHealthImage.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.3f, backgroundImage.getHeight()*0.44f);
 			stage.addActor(noHealthImage);
 			
 			healthImage.setWidth(380);
 			healthImage.setHeight(13);
-			healthImage.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.3f, backgroundImage.getHeight()*0.75f);
+			healthImage.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.3f, backgroundImage.getHeight()*0.44f);
 			stage.addActor(healthImage);
 			
 			armorImage.setWidth(380);
 			armorImage.setHeight(13);
-			armorImage.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.3f, backgroundImage.getHeight()*0.75f);
+			armorImage.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.3f, backgroundImage.getHeight()*0.44f);
 			stage.addActor(armorImage);
 			
 			backgroundImage.setWidth(700);
 			backgroundImage.setHeight(180);
-			backgroundImage.setPosition(MouretsuNinja.WIDTH/2- backgroundImage.getWidth()/2, 10);
+			backgroundImage.setPosition(MouretsuNinja.WIDTH/2- backgroundImage.getWidth()/2, -35);
 			stage.addActor(backgroundImage);
 			
 	}

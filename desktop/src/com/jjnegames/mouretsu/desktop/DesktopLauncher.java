@@ -14,7 +14,7 @@ public class DesktopLauncher {
 		
 		config.width=MouretsuNinja.WIDTH;
 		config.height=MouretsuNinja.HEIGHT;
-		config.fullscreen=false;
+		config.fullscreen=true;
 		config.backgroundFPS=15;
 		config.foregroundFPS=60;
 		config.x=-1;

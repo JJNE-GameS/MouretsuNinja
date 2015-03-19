@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
@@ -14,12 +16,16 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.jjnegames.mouretsu.game.MGame;
+import com.jjnegames.mouretsu.game.TextureBank;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
+import com.jjnegames.mouretsu.game.utils.AnimationHandler;
 
 
 public class Enemy extends Char	{
 		
+		private static final float ATTACK_DURATION = 1.5f;
+		private static final float ATTACK_DELAY = 1.2f;
 		float counter = 0;
 		boolean oikeelle = false;
 		
@@ -31,6 +37,82 @@ public class Enemy extends Char	{
 		this.setWidth(width);
 		this.setHeight(height);
 		
+
+		this.animHandler=new AnimationHandler(new Texture[]{
+				TextureBank.pl_run1,
+				TextureBank.pl_run2,
+				TextureBank.pl_run3,
+				TextureBank.pl_run4,
+				TextureBank.pl_run5,
+				TextureBank.pl_run6,
+				TextureBank.pl_run7,
+				TextureBank.pl_run8,
+				TextureBank.pl_run9,
+				TextureBank.pl_run10,
+				TextureBank.pl_run11,
+				TextureBank.pl_run12,
+				TextureBank.pl_run13,
+				TextureBank.pl_run14
+		}, 1f,
+		new Texture[]{
+				
+				TextureBank.pl_atk1,
+				TextureBank.pl_atk2,
+				TextureBank.pl_atk3,
+				TextureBank.pl_atk4,
+				TextureBank.pl_atk5,
+				TextureBank.pl_atk6,
+				TextureBank.pl_atk7,
+				TextureBank.pl_atk8,
+				TextureBank.pl_atk9,
+				TextureBank.pl_atk10
+		}, ATTACK_DURATION,
+		new Texture[]{
+				
+				TextureBank.pl_block1,
+				TextureBank.pl_block2,
+				TextureBank.pl_block3
+
+				
+		}, 0.5f,
+		new Texture[]{
+				
+				TextureBank.pl_block1,
+				TextureBank.pl_block2,
+				TextureBank.pl_block3
+		}, 0.5f,
+		new Texture[]{
+				TextureBank.pl_jump1,
+				TextureBank.pl_jump2,
+				TextureBank.pl_jump3,
+				TextureBank.pl_jump4,
+				TextureBank.pl_jump5,
+				TextureBank.pl_jump6
+
+		}, 0.8f,
+		new Texture[]{
+				TextureBank.pl_jump1,
+				TextureBank.pl_jump2,
+				TextureBank.pl_jump3,
+				TextureBank.pl_jump4,
+				TextureBank.pl_jump5,
+				TextureBank.pl_jump6
+		}, 0.8f,
+		new Texture[]{
+				TextureBank.pl_idle1,
+				TextureBank.pl_idle2,
+				TextureBank.pl_idle3,
+				TextureBank.pl_idle4,
+				TextureBank.pl_idle5,
+				TextureBank.pl_idle6,
+				TextureBank.pl_idle7,
+				TextureBank.pl_idle8,
+				TextureBank.pl_idle9,
+				TextureBank.pl_idle10,
+				TextureBank.pl_idle11,
+				TextureBank.pl_idle12
+
+		}, 1);
 		
 	}
 	
@@ -179,7 +261,36 @@ public class Enemy extends Char	{
 
 	@Override
 	protected void childUpdate(float delta) {
-		
+		if(dead){
+			counter += delta;
+			if(counter >= 5){
+				World world = MGame.world;
+				
+				if(body != null)
+				world.destroyBody(body);
+				if(attackConeLeft != null)
+				world.destroyBody(this.attackConeLeft);
+				if(attackConeRight != null)
+				world.destroyBody(this.attackConeRight);
+				if(feet != null)
+				world.destroyBody(this.feet);
+				
+				this.remove();
+			
+			}
+			return;
+		}
+		if(attackCooldown>0){
+			setDrawable(animHandler.updateAtk(delta, !movingRight));
+		}else if(blocking){
+			setDrawable(animHandler.updateBlock(delta, !movingRight));
+		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
+			setDrawable(animHandler.updateJump(delta, !movingRight));
+		}else if(body.getLinearVelocity().x < 0.5 && body.getLinearVelocity().x > -0.5 ){
+			setDrawable(animHandler.updateStand(delta, !movingRight));
+		}else{
+		setDrawable(animHandler.updateRun(delta, !movingRight));
+		}
 	counter += delta;
 		
 		 if (counter<3){
@@ -192,9 +303,54 @@ public class Enemy extends Char	{
 		} if (counter>6) {
 			counter = 0;
 		}
-		
+		if(inAttackCone!=null && attackCooldown<=0){
+			float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
+			if(distance <= 1 && inAttackCone instanceof Player){
+				attack();
+			}
+		}
 		World world = MGame.world;
 		
+		if(attackCooldown>0){
+			attackCooldown-=delta;
+			if(ATTACK_DURATION-attackCooldown >= ATTACK_DELAY && !attacked){
+				if(inAttackCone!=null){
+					attacked = true;
+					float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
+					if(distance <= 1){
+						inAttackCone.damage(attack_damage, attackingFromRight);
+						System.out.println("hit "+inAttackCone.toString());
+
+
+					}
+				}
+			}
+		}
+		
+		
+		
+	}
+	
+	private void attack() {
+		if(inAttackCone!=null && attackCooldown<=0){
+			attacked = false;
+			attackCooldown=ATTACK_DURATION;
+		}else if(attackCooldown<=0)
+			attackCooldown=ATTACK_DURATION;
+		
+	}
+	
+	@Override
+	public void die(){
+		counter = 0;
+		dead = true;
+		Filter f = new Filter();
+		f.categoryBits = 1;
+		f.groupIndex = 2;
+		f.maskBits = (short) 0;
+		
+		getBody().getFixtureList().get(0).setFilterData(f);
+		getBody().getFixtureList().get(1).setFilterData(f);
 	}
 
 }

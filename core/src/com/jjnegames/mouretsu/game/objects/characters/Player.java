@@ -1,5 +1,6 @@
 package com.jjnegames.mouretsu.game.objects.characters;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.Input.Keys;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.JointEdge;
@@ -19,9 +21,12 @@ import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.jjnegames.mouretsu.game.MGame;
 import com.jjnegames.mouretsu.game.TextureBank;
 import com.jjnegames.mouretsu.game.utils.AnimationHandler;
+import com.jjnegames.mouretsu.screens.Splash;
 
 public class Player extends Char {
 	
+	private static final float ATTACK_DELAY = 0.5f;
+
 	public static float ATTACK_DURATION=0.7f;
 	
 	private GrapplingHook hook = null;
@@ -30,7 +35,7 @@ public class Player extends Char {
 	
 	public Player(Body body, Body feet, Body attackConeRight, Body attackConeLeft, Texture texture, float width, float height) {
 		super(body, texture);
-		health=60;
+		health=100;
 		
 		
 		this.animHandler=new AnimationHandler(new Texture[]{
@@ -120,7 +125,6 @@ public class Player extends Char {
 
 	@Override
 	protected void childUpdate(float delta) {
-		setDrawable(animHandler.updateRun(delta, !movingRight));
 		
 		if(attackCooldown>0){
 			setDrawable(animHandler.updateAtk(delta, !movingRight));
@@ -137,6 +141,18 @@ public class Player extends Char {
 			jumpCooldown-=delta;
 		}if(attackCooldown>0){
 			attackCooldown-=delta;
+			if(ATTACK_DURATION-attackCooldown >= ATTACK_DELAY && !attacked){
+				if(inAttackCone!=null){
+					attacked = true;
+					float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
+					if(distance <= 1){
+						inAttackCone.damage(attack_damage, attackingFromRight);
+						System.out.println("hit "+inAttackCone.toString());
+
+
+					}
+				}
+			}
 		}
 		if((Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.SPACE))&&ableToJump&&jumpCooldown<=0){
         	body.applyForceToCenter(new Vector2(0,300), true);
@@ -165,15 +181,19 @@ public class Player extends Char {
 			blocking=false;
 		}
 		
+		if(block_shield < max_block_shield){
+			block_shield += block_shield_regen*delta;
+		}
+		
     }
 	
 	private void attack() {
 		if(inAttackCone!=null && attackCooldown<=0){
-			System.out.println("hit "+inAttackCone.toString());
+			attacked = false;
 			attackCooldown=ATTACK_DURATION;
-			inAttackCone.damage(attack_damage);
 		}else if(attackCooldown<=0)
 			attackCooldown=ATTACK_DURATION;
+		
 	}
 
 	private void grapple(){
@@ -353,6 +373,12 @@ public class Player extends Char {
         atklb.setUserData(new AttackCone(p, false));
 
 		return p;
+	}
+	
+	@Override
+	public void die(){
+		((Game)Gdx.app.getApplicationListener()).getScreen().pause();
+		MGame.gameover = true;
 	}
 
 	

@@ -22,25 +22,28 @@ public abstract class Char extends GameObject {
 	public Body feet;
 	public Body attackConeRight,
 	attackConeLeft;
+	public boolean attackingFromRight;
 	public Char inAttackCone=null;
 	public float max_health=100;
 	public float health=100;
-	public float max_block_shield=300;
-	public float block_shield=300;
-	public float block_shield_regen=30;
+	public float max_block_shield=100;
+	public float block_shield=100;
+	public float block_shield_regen=10;
 	public boolean blocking = false;
 	public float attack_damage=25;
 	public boolean movingRight=true;
 	public float jumpCooldown = 0f;
 	public float attackCooldown = 0f;
 	AnimationHandler animHandler;
+	public boolean attacked = false;
+	public boolean dead = false;
 	
 	
 	public Char(Body body, Texture texture) {
 		super(body,texture);
 	}
 	
-	public void damage(float amount) {
+	public void damage(float amount, boolean fromRight) {
 		if(blocking && attackCooldown<=0){
 			block_shield-=amount;
 			if(block_shield<0){
@@ -49,6 +52,12 @@ public abstract class Char extends GameObject {
 			}
 		}else{
 			health-=amount;
+		}
+		if(fromRight){
+			body.applyForceToCenter(new Vector2(-75,100), true );
+		}else{
+			body.applyForceToCenter(new Vector2(75,100), true );
+			
 		}
 		if(health<=0)
 			die();

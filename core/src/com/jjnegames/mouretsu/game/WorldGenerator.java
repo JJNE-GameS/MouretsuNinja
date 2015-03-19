@@ -4,10 +4,15 @@ import java.util.ArrayList;
 	
 
 
+
+
+
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
@@ -15,12 +20,15 @@ import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Joint;
 import com.badlogic.gdx.physics.box2d.JointEdge;
 import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.jjnegames.mouretsu.game.objects.Ball;
+import com.jjnegames.mouretsu.game.objects.Buddha;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.Rect;
 import com.jjnegames.mouretsu.game.objects.Triangle;
@@ -46,9 +54,9 @@ public class WorldGenerator {
 		BodyDef bodyDef = new BodyDef();
 		// DynamicBodylla luotu objekti voi liikkua
 		bodyDef.type = BodyDef.BodyType.DynamicBody;
-
+		
 		// Spawnpoint
-		bodyDef.position.set(3f, 3f);
+		bodyDef.position.set(3f, 20f);
 		// Rotation speed when spawned
 		bodyDef.angularVelocity = 0;
 		bodyDef.linearDamping=0.5f;
@@ -62,58 +70,122 @@ public class WorldGenerator {
 		
 		BodyDef bodyDef3 = new BodyDef();
 		bodyDef3.type = BodyDef.BodyType.DynamicBody;
-		bodyDef3.position.set(10f, 3f);
+		bodyDef3.position.set(10f, 20f);
 		bodyDef3.angularVelocity = 0;
 		Char character_2 = Enemy.create(world, bodyDef3, 1f, 1f,TextureBank.vihollinen);
 		stage.addActor(character_2);
+		
+		BodyDef bodyDef7 = new BodyDef();
+		bodyDef7.type = BodyDef.BodyType.DynamicBody;
+		bodyDef7.position.set(15f, 20f);
+		bodyDef7.angularVelocity = 0;
+		Char character_3 = Enemy.create(world, bodyDef7, 1f, 1f,TextureBank.vihollinen);
+		stage.addActor(character_3);
+		
+		
+		BodyDef bodyDef6 = new BodyDef();
+		bodyDef6.type = BodyDef.BodyType.StaticBody;
+		bodyDef6.position.set(-1f, 50f);
+		bodyDef6.angularVelocity = 0;
+		PolygonShape s = new PolygonShape();
+		s.setAsBox(1, 100);
+		world.createBody(bodyDef6).createFixture(s,1f);
 
 		
 		
 		for(int x=0;x<map.length;x++){
 			for(int y=0;y<map[x].length;y++){
+				
 				if(map[x][y]== 1){
+					int bit = 0;
+					
+					if(y>0 && map[x][y-1] == 1){
+						bit += 4;
+					}if(y<map[x].length-1 && map[x][y+1]== 1){
+						bit += 1;
+					}if(x>0 && map[x-1][y]== 1){
+						bit += 8;
+					}if(x<map.length-1 && map[x+1][y]== 1){
+						bit += 2;
+					}
 				BodyDef bodyDef2 = new BodyDef();
 				// KinematicBodylla luotu objekti ei voi liikkua
 				bodyDef2.type = BodyType.KinematicBody;
 				bodyDef2.position.set(x, y);
 				bodyDef2.angularVelocity = 0;
 
-				Rect rectangle_2 = Rect.create(world, bodyDef2, 1f, 1f,TextureBank.alus);
+				Rect rectangle_2 = Rect.create(world, bodyDef2, 1f, 1f,TextureBank.housetiles[bit]);
 //				Ball rectangle_2 = Ball.create(world, bodyDef2, 0.5f, TextureBank.alus);
 
 				stage.addActor(rectangle_2);
 				
-				}else if(map[x][y]== 2){
+				}else if(map[x][y]== 5){
+					int bit = 0;
+					if(map[x][y]== 5){
+						
+						if(y>0 && map[x][y-1] == 5){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1] == 5 ){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 5){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 5){
+							bit += 2;
+						}
+					}
+					
 					BodyDef bodyDef4 = new BodyDef();
 					bodyDef4.type = BodyType.KinematicBody;
 					bodyDef4.position.set(x, y);
 					bodyDef4.angularVelocity = 0;
 
-					Rect rectangle_3 = Rect.create(world, bodyDef4, 1f, 1f,TextureBank.esine1);
+					Rect rectangle_3 = Rect.create(world, bodyDef4, 1f, 1f,TextureBank.groundtiles[bit]);
 
 					stage.addActor(rectangle_3);
 					
 				}else if(map[x][y]== 3){
+					int bit = 0;
+					if(map[x][y]== 3){
+						
+						if(y>0 && map[x][y-1] == 3){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 3){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 3){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 3){
+							bit += 2;
+						}
+				}
 					BodyDef bodyDef5 = new BodyDef();
 					bodyDef5.type = BodyType.KinematicBody;
 					bodyDef5.position.set(x, y);
 					bodyDef5.angularVelocity = 0;
 
-					Rect rectangle_4 = Rect.create(world, bodyDef5, 1f, 1f,TextureBank.esine2);
+					Rect rectangle_4 = Rect.create(world, bodyDef5, 1f, 1f,TextureBank.groundtiles[bit]);
 
 
 					stage.addActor(rectangle_4);
 					
-				}else if(map[x][y]== 4){
-					BodyDef bodyDef6 = new BodyDef();
-					bodyDef6.type = BodyType.KinematicBody;
-					bodyDef6.position.set(x, y);
-					bodyDef6.angularVelocity = 0;
-
-					Rect rectangle_5 = Rect.create(world, bodyDef6, 1f, 1f,TextureBank.esine3);
-
-
-					stage.addActor(rectangle_5);
+				}else if(map[x][y]== 18){
+					int bit = 0;
+					if(map[x][y]== 18){
+						
+						if(y>0 && map[x][y-1] == 18){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 18){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 18){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 18){
+							bit += 2;
+						}
+					}
+					
+					Buddha b = Buddha.create(x, y, 1, 1, TextureBank.buddhatiles[bit]);
+					MGame.backgroundObjects.addActor(b);
+					
+					
 					
 				}
 			}
@@ -178,6 +250,7 @@ public class WorldGenerator {
 		            			Char target = (Char)x2.getBody().getUserData();
 		            			Char attacker = ((AttackCone)x1.getBody().getUserData()).chara;
 		            			
+		            			attacker.attackingFromRight = !((AttackCone)x1.getBody().getUserData()).directionRight;
 		            			attacker.inAttackCone=target;
 		            			System.out.println("targetInAttackCone"+ target);
 		            		}
@@ -218,6 +291,7 @@ public class WorldGenerator {
 		            			Char target = (Char)x1.getBody().getUserData();
 		            			Char attacker = ((AttackCone)x2.getBody().getUserData()).chara;
 		            			
+		            			attacker.attackingFromRight = !((AttackCone)x2.getBody().getUserData()).directionRight;
 		            			attacker.inAttackCone=target;
 		            			System.out.println("targetInAttackCone2"+ target);
 		            		}
@@ -237,29 +311,29 @@ public class WorldGenerator {
 	            
 	            
 
-	            if(x1.getBody().getUserData()!= null){
-		            if(x1.getBody().getUserData() instanceof AttackCone){
-		            	if(x2.getBody().getUserData()!=null){
-		            		if(x2.getBody().getUserData() instanceof Char){
-		            			Char attacker = ((AttackCone)x1.getBody().getUserData()).chara;
-		            			
-		            			attacker.inAttackCone=null;
-		            		}
-		            	}
-		            }
-	            }
-	            
-	            if(x2.getBody().getUserData()!= null){
-		            if(x2.getBody().getUserData() instanceof AttackCone){
-		            	if(x1.getBody().getUserData()!=null){
-		            		if(x1.getBody().getUserData() instanceof Char){
-		            			Char attacker = ((AttackCone)x2.getBody().getUserData()).chara;
-		            			
-		            			attacker.inAttackCone=null;
-		            		}
-		            	}
-		            }
-	            }
+//	            if(x1.getBody().getUserData()!= null){
+//		            if(x1.getBody().getUserData() instanceof AttackCone){
+//		            	if(x2.getBody().getUserData()!=null){
+//		            		if(x2.getBody().getUserData() instanceof Char){
+//		            			Char attacker = ((AttackCone)x1.getBody().getUserData()).chara;
+//		            			
+//		            			attacker.inAttackCone=null;
+//		            		}
+//		            	}
+//		            }
+//	            }
+//	            
+//	            if(x2.getBody().getUserData()!= null){
+//		            if(x2.getBody().getUserData() instanceof AttackCone){
+//		            	if(x1.getBody().getUserData()!=null){
+//		            		if(x1.getBody().getUserData() instanceof Char){
+//		            			Char attacker = ((AttackCone)x2.getBody().getUserData()).chara;
+//		            			
+//		            			attacker.inAttackCone=null;
+//		            		}
+//		            	}
+//		            }
+//	            }
 	            
             	
 	        }

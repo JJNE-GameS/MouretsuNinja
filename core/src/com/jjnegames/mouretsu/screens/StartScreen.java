@@ -78,7 +78,6 @@ public class StartScreen implements Screen {
 				System.out.println("Initializing TextureBank");
 				Image a = new Image(TextureBank.alus);
 				System.out.println("TextureBank Loaded");
-
 			}
 		});
 	}
