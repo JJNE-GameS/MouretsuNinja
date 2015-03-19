@@ -22,16 +22,20 @@ import com.jjnegames.mouretsu.game.objects.Rect;
 import com.jjnegames.mouretsu.game.utils.AnimationHandler;
 
 
-public class Enemy extends Char	{
+public class Boss extends Char	{
 		
-		private static final float ATTACK_DURATION = 1.5f;
-		private static final float ATTACK_DELAY = 1.2f;
+		private static final float ATTACK_DURATION = 2f;
+		private static final float ATTACK_DELAY = 1.5f;
 		float counter = 0;
 		boolean oikeelle = false;
 		
-	public Enemy(Body body, Texture texture, float width, float height) {
+	public Boss(Body body, Texture texture, float width, float height) {
 		super(body,texture);
 		
+		max_health = 300;
+		health = 300;
+		this.attack_damage = 50;
+		attackrange = 2f;
 		this.setOriginX(width/2);
 		this.setOriginY(height/2);
 		this.setWidth(width);
@@ -112,11 +116,24 @@ public class Enemy extends Char	{
 				TextureBank.pl_idle11,
 				TextureBank.pl_idle12
 
+		}, 1f,
+		new Texture[]{
+				TextureBank.pl_spatk1,
+				TextureBank.pl_spatk2,
+				TextureBank.pl_spatk3,
+				TextureBank.pl_spatk4,
+				TextureBank.pl_spatk5,
+				TextureBank.pl_spatk6,
+				TextureBank.pl_spatk7,
+				TextureBank.pl_spatk8,
+				TextureBank.pl_spatk9,
+				TextureBank.pl_spatk10,
+
 		}, 1);
 		
 	}
 	
-	public static Enemy create(World world, BodyDef bodyDef, float w, float h,Texture texture
+	public static Boss create(World world, BodyDef bodyDef, float w, float h,Texture texture
 
 			){
 	        Body body = world.createBody(bodyDef);
@@ -251,7 +268,7 @@ public class Enemy extends Char	{
 //	        atkrb.getMassData().I=0;
 //	        atklb.getMassData().I=0;
 			
-			Enemy e = new Enemy(body, texture, w, h);
+			Boss e = new Boss(body, texture, w, h);
 		    body.setUserData(e);
 		    feet.setUserData(e);
 		    atkrb.setUserData(new AttackCone(e, true));
@@ -305,7 +322,7 @@ public class Enemy extends Char	{
 		}
 		if(inAttackCone!=null && attackCooldown<=0){
 			float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
-			if(distance <= 1 && inAttackCone instanceof Player){
+			if(distance <= inAttackCone.getWidth()/4+attackrange+this.getWidth()/4 && inAttackCone instanceof Player){
 				attack();
 			}
 		}
@@ -317,7 +334,7 @@ public class Enemy extends Char	{
 				if(inAttackCone!=null){
 					attacked = true;
 					float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
-					if(distance <= 1){
+					if(distance <= inAttackCone.getWidth()/4+attackrange+this.getWidth()/4){
 						inAttackCone.damage(attack_damage, attackingFromRight);
 						System.out.println("hit "+inAttackCone.toString());
 

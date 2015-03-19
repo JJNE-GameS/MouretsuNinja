@@ -36,12 +36,16 @@ public class AnimationHandler {
 	TextureRegionDrawable[] standAnimation;
 	TextureRegionDrawable[] standAnimationFlipped;
 	
+	float spatkDuration;
+	TextureRegionDrawable[] spatkAnimation;
+	TextureRegionDrawable[] spatkAnimationFlipped;
+	
 	
 	
 	
 	public AnimationHandler(Texture[] runAnimation, float runDuration, Texture[] atkAnimation, float atkDuration,
 		Texture[] blockAnimation, float blockDuration, Texture[] criticalBlockAnimation, float criticalBlockDuration,
-		Texture[] jumpAnimation, float jumpDuration, Texture[] climbAnimation, float climbDuration, Texture[] standAnimation, float standDuration){
+		Texture[] jumpAnimation, float jumpDuration, Texture[] climbAnimation, float climbDuration, Texture[] standAnimation, float standDuration, Texture[] spatkAnimation, float spatkDuration){
 		
 		this.runAnimation = new TextureRegionDrawable[runAnimation.length];
 		this.runAnimationFlipped = new TextureRegionDrawable[runAnimation.length];
@@ -63,6 +67,9 @@ public class AnimationHandler {
 		
 		this.standAnimation = new TextureRegionDrawable[standAnimation.length];
 		this.standAnimationFlipped = new TextureRegionDrawable[standAnimation.length];
+		
+		this.spatkAnimation = new TextureRegionDrawable[spatkAnimation.length];
+		this.spatkAnimationFlipped = new TextureRegionDrawable[spatkAnimation.length];
 		
 		for(int i=0;i<runAnimation.length;i++){
 			this.runAnimation[i] = new TextureRegionDrawable(new TextureRegion(runAnimation[i]));
@@ -106,6 +113,12 @@ public class AnimationHandler {
 			flipped.flip(true, false);
 			this.standAnimationFlipped[i] = new TextureRegionDrawable(flipped);
 		}
+		for(int i=0;i<spatkAnimation.length;i++){
+			this.spatkAnimation[i] = new TextureRegionDrawable(new TextureRegion(spatkAnimation[i]));
+			TextureRegion flipped = new TextureRegion(spatkAnimation[i]);
+			flipped.flip(true, false);
+			this.spatkAnimationFlipped[i] = new TextureRegionDrawable(flipped);
+		}
 		
 		this.runDuration=runDuration;
 		this.atkDuration=atkDuration;
@@ -114,6 +127,7 @@ public class AnimationHandler {
 		this.jumpDuration=jumpDuration;
 		this.climbDuration=climbDuration;
 		this.standDuration=standDuration;
+		this.spatkDuration=spatkDuration;
 	}
 	
 	private float runFrame=0f;
@@ -232,6 +246,23 @@ public class AnimationHandler {
 			return standAnimation[frame];
 		}else{
 			return standAnimationFlipped[frame];
+		}
+	}
+	
+	private float spatkFrame=0f;
+	public Drawable updateSpatk(float delta, boolean flipped){
+		while(spatkFrame>=spatkDuration){
+			spatkFrame-=spatkDuration;
+		}
+		spatkFrame+=delta;
+		
+		int frame = (int) ((spatkFrame/spatkDuration)*(spatkAnimation.length));
+		if(frame==spatkAnimation.length)
+			frame=0;
+		if(!flipped){
+			return spatkAnimation[frame];
+		}else{
+			return spatkAnimationFlipped[frame];
 		}
 	}
 

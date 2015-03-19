@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 
 
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -34,7 +35,8 @@ import com.jjnegames.mouretsu.game.objects.Rect;
 import com.jjnegames.mouretsu.game.objects.Triangle;
 import com.jjnegames.mouretsu.game.objects.characters.AttackCone;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
-import com.jjnegames.mouretsu.game.objects.characters.Enemy;
+import com.jjnegames.mouretsu.game.objects.characters.Juggernaut;
+import com.jjnegames.mouretsu.game.objects.characters.SmallEnemy;
 import com.jjnegames.mouretsu.game.objects.characters.GrapplingHook;
 import com.jjnegames.mouretsu.game.objects.characters.Player;
 import com.jjnegames.mouretsu.game.utils.MapFileReader;
@@ -72,15 +74,30 @@ public class WorldGenerator {
 		bodyDef3.type = BodyDef.BodyType.DynamicBody;
 		bodyDef3.position.set(10f, 20f);
 		bodyDef3.angularVelocity = 0;
-		Char character_2 = Enemy.create(world, bodyDef3, 1f, 1f,TextureBank.vihollinen);
+		Char character_2 = SmallEnemy.create(world, bodyDef3, 1f, 1f,TextureBank.vihollinen);
 		stage.addActor(character_2);
 		
 		BodyDef bodyDef7 = new BodyDef();
 		bodyDef7.type = BodyDef.BodyType.DynamicBody;
 		bodyDef7.position.set(15f, 20f);
 		bodyDef7.angularVelocity = 0;
-		Char character_3 = Enemy.create(world, bodyDef7, 1f, 1f,TextureBank.vihollinen);
+		Char character_3 = SmallEnemy.create(world, bodyDef7, 1f, 1f,TextureBank.vihollinen);
 		stage.addActor(character_3);
+		
+		BodyDef bodyDef8 = new BodyDef();
+		bodyDef8.type = BodyDef.BodyType.DynamicBody;
+		bodyDef8.position.set(35f, 20f);
+		bodyDef8.angularVelocity = 0;
+		Char character_4 = Juggernaut.create(world, bodyDef8, 2f, 2f,TextureBank.vihollinen);
+		stage.addActor(character_4);
+		
+
+		BodyDef bodyDef9 = new BodyDef();
+		bodyDef9.type = BodyDef.BodyType.DynamicBody;
+		bodyDef9.position.set(50f, 20f);
+		bodyDef9.angularVelocity = 0;
+		Char character_5 = Juggernaut.create(world, bodyDef9, 3f, 3f,TextureBank.vihollinen);
+		stage.addActor(character_5);
 		
 		
 		BodyDef bodyDef6 = new BodyDef();
