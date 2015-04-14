@@ -307,10 +307,10 @@ public class SmallEnemy extends Char	{
 		}
 	counter += delta;
 		
-		 if (counter<3){
+		 if (counter<3 && !(attackCooldown>0)){
 			 body.applyForceToCenter(new Vector2(-150*delta,0), true);
 			 movingRight=false;
-		} if (counter>3) {
+		} if (counter>3 && !(attackCooldown>0)) {
 			
 			body.applyForceToCenter(new Vector2(150*delta,0), true);
 			movingRight=true;
@@ -332,8 +332,12 @@ public class SmallEnemy extends Char	{
 					attacked = true;
 					float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
 					if(distance <= inAttackCone.getWidth()/4+attackrange+this.getWidth()/4){
-						inAttackCone.damage(attack_damage, attackingFromRight);
+						if(specialatk)
+							inAttackCone.damage(special_attack_damage, attackingFromRight);
+						else
+							inAttackCone.damage(attack_damage, attackingFromRight);
 						System.out.println("hit "+inAttackCone.toString());
+						
 
 
 					}

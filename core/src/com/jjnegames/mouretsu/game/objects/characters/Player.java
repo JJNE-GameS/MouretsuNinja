@@ -124,7 +124,7 @@ public class Player extends Char {
 				TextureBank.pl_spatk9,
 				TextureBank.pl_spatk10,
 
-		}, 1);
+		}, ATTACK_DURATION);
 		this.feet=feet;
 		this.attackConeRight=attackConeRight;
 		this.attackConeLeft=attackConeLeft;
@@ -174,6 +174,8 @@ public class Player extends Char {
 					}
 				}
 			}
+		}if(special_attack_cooldown > 0){
+			special_attack_cooldown -= delta;
 		}
 		if((Gdx.input.isKeyPressed(Keys.W)||Gdx.input.isKeyPressed(Keys.SPACE))&&ableToJump&&jumpCooldown<=0){
         	body.applyForceToCenter(new Vector2(0,300), true);
@@ -214,7 +216,7 @@ public class Player extends Char {
 	
 	
 
-	private void grapple(){
+	public void grapple(){
 		if(hook==null){
 			Vector3 worldCoordinates = new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0);
 			Vector3 gameCoord = MGame.camera.unproject(worldCoordinates);

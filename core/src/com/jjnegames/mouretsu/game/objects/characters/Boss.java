@@ -335,7 +335,10 @@ public class Boss extends Char	{
 					attacked = true;
 					float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
 					if(distance <= inAttackCone.getWidth()/4+attackrange+this.getWidth()/4){
-						inAttackCone.damage(attack_damage, attackingFromRight);
+						if(specialatk)
+							inAttackCone.damage(special_attack_damage, attackingFromRight);
+						else
+							inAttackCone.damage(attack_damage, attackingFromRight);
 						System.out.println("hit "+inAttackCone.toString());
 
 

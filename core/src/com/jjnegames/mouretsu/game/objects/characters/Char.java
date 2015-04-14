@@ -32,6 +32,7 @@ public abstract class Char extends GameObject {
 	public boolean blocking = false;
 	public float attack_damage=35;
 	public float special_attack_damage=70;
+	public float special_attack_cooldown = 0f; 
 	public boolean movingRight=true;
 	public float jumpCooldown = 0f;
 	public float attackCooldown = 0f;
@@ -72,6 +73,9 @@ public abstract class Char extends GameObject {
 	public static float ATTACK_DURATION=0.7f;
 
 	protected void attack(boolean special) {
+		if(special && special_attack_cooldown > 0){
+			return;
+		}
 		if(inAttackCone!=null && attackCooldown<=0){
 			attacked = false;
 			specialatk = special;
@@ -79,7 +83,9 @@ public abstract class Char extends GameObject {
 		}else if(attackCooldown<=0){
 			attackCooldown=ATTACK_DURATION;
 			specialatk = special;
-
+		if(special){
+			special_attack_cooldown = 15f;
+		}
 
 		}
 			

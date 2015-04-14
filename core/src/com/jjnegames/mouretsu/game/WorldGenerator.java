@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 
 
+
+
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -31,7 +34,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.jjnegames.mouretsu.game.objects.Ball;
 import com.jjnegames.mouretsu.game.objects.Buddha;
 import com.jjnegames.mouretsu.game.objects.GameObject;
+import com.jjnegames.mouretsu.game.objects.MingVase;
 import com.jjnegames.mouretsu.game.objects.Rect;
+import com.jjnegames.mouretsu.game.objects.Sushi;
 import com.jjnegames.mouretsu.game.objects.Triangle;
 import com.jjnegames.mouretsu.game.objects.characters.AttackCone;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
@@ -204,6 +209,31 @@ public class WorldGenerator {
 					
 					
 					
+				}else if(map[x][y]== 25){
+					int bit = 0;
+					if(map[x][y]== 25){
+						
+						if(y>0 && map[x][y-1] == 25){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 25){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 25){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 25){
+							bit += 2;
+						}
+					}
+					
+					BodyDef bodyDef5 = new BodyDef();
+					bodyDef5.type = BodyType.DynamicBody;
+					bodyDef5.position.set(x, y);
+					bodyDef5.angularVelocity = 0;
+
+					MingVase m = MingVase.create(world, bodyDef5, 1, 1, TextureBank.mingvase);
+					MGame.stage.addActor(m);
+					
+					
+					
 				}
 			}
 		}
@@ -249,7 +279,24 @@ public class WorldGenerator {
 			            			GrapplingHook hook = (GrapplingHook) x1.getBody().getUserData();
 					            	if(hook.limiter!=null)
 					            		return;
-				            		System.out.println("excuting");
+					            	
+					            	float xx1 = hook.chara.getBody().getWorldCenter().x;
+			            			float yy1 = hook.chara.getBody().getWorldCenter().y;
+			            			
+					            	float xx2 = x1.getBody().getWorldCenter().x;
+					            	float yy2 = x1.getBody().getWorldCenter().y;
+					            	
+					            	float distance =(float) Math.sqrt(Math.pow((xx1 - xx2),2)+ Math.pow((yy1-yy2),2));
+					            	
+					            	System.out.println(distance);
+					            	System.out.println("x1="+ xx1);
+					            	System.out.println("x2="+ xx2);
+					            	System.out.println("y1="+ yy1);
+					            	System.out.println("y2="+ yy2);				            		if(distance > 5){
+				            			((Player) hook.chara).grapple();
+				            			return;
+				            		}
+					    			System.out.println("excuting");
 				            		hook.createRope(0.5f);
 				            		WeldJointDef wj = new WeldJointDef();
 				                	wj.initialize(x1.getBody(), x2.getBody(), x1.getBody().getWorldCenter());
@@ -272,6 +319,19 @@ public class WorldGenerator {
 		            			System.out.println("targetInAttackCone"+ target);
 		            		}
 		            	}
+		            }else if(x1.getBody().getUserData() instanceof Sushi){
+		            	if(x2.getBody().getUserData()!=null){
+		            		if(x2.getBody().getUserData() instanceof Player){
+		            			Player target = (Player)x2.getBody().getUserData();
+		            			Sushi su = (Sushi)x1.getBody().getUserData();
+		            			if(su.del)
+		            				return;
+		            			su.del=true;
+		            			target.health+=50;
+		            			if(target.health>target.max_health)
+		            				target.health=target.max_health;
+		            		}
+		            	}
 		            }
 	            }
 	            
@@ -283,13 +343,33 @@ public class WorldGenerator {
 		            		p.ableToJump = true;
 		            	}
 		            }else if (x2.getBody().getUserData() instanceof GrapplingHook && !x1.isSensor()){
-		            	
+		            
 		            	MGame.functions.add(new Function(){
 		            		public void exec(){
+		            			
 		            			GrapplingHook hook = (GrapplingHook) x2.getBody().getUserData();
 		            			try{
 					            	if(hook.limiter!=null)
 					            		return;
+					            	
+					            	float xx1 = hook.chara.getBody().getWorldCenter().x;
+			            			float yy1 = hook.chara.getBody().getWorldCenter().y;
+			            			
+					            	float xx2 = x2.getBody().getWorldCenter().x;
+					            	float yy2 = x2.getBody().getWorldCenter().y;
+					            	
+					            	float distance =(float) Math.sqrt(Math.pow((xx1 - xx2),2)+ Math.pow((yy1-yy2),2));
+					            	
+					            	System.out.println(distance);
+					            	System.out.println("x1="+ xx1);
+					            	System.out.println("x2="+ xx2);
+					            	System.out.println("y1="+ yy1);
+					            	System.out.println("y2="+ yy2);
+					            	if(distance > 5){
+				            			System.out.println("pitkä matka");
+				            			((Player) hook.chara).grapple();
+				            			return;
+				            		}
 				            		System.out.println("excuting");
 				            		hook.createRope(0.5f);
 				            		WeldJointDef wj = new WeldJointDef();
@@ -311,6 +391,19 @@ public class WorldGenerator {
 		            			attacker.attackingFromRight = !((AttackCone)x2.getBody().getUserData()).directionRight;
 		            			attacker.inAttackCone=target;
 		            			System.out.println("targetInAttackCone2"+ target);
+		            		}
+		            	}
+		            }else if(x2.getBody().getUserData() instanceof Sushi){
+		            	if(x1.getBody().getUserData()!=null){
+		            		if(x1.getBody().getUserData() instanceof Player){
+		            			Player target = (Player)x1.getBody().getUserData();
+		            			Sushi su = (Sushi)x2.getBody().getUserData();
+		            			if(su.del)
+		            				return;
+		            			su.del=true;
+		            			target.health+=50;
+		            			if(target.health>target.max_health)
+		            				target.health=target.max_health;
 		            		}
 		            	}
 		            }

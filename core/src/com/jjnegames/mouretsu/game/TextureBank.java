@@ -11,6 +11,7 @@ public class TextureBank extends AssetManager{
 	public static Texture pelaaja = new Texture(Gdx.files.internal("ninjatest.png"));
 	public static Texture kolmio = new Texture (Gdx.files.internal("images.jpg"));
 	public static Texture bgimage = new Texture (Gdx.files.internal("sininen.png"));
+	public static Texture mingvase = new Texture (Gdx.files.internal("mingvase.png"));
 	
 	public static Texture[] groundtiles = new Texture[]{
 		new Texture (Gdx.files.internal("ground/Tile1.png")),
@@ -39,13 +40,13 @@ public class TextureBank extends AssetManager{
 		house5,
 		house5,
 		house5,
-		house5,
+		new Texture(Gdx.files.internal("house/housetile14.png")),
 		house5,
 		new Texture(Gdx.files.internal("house/housetile8.png")),
 		house5,
 		new Texture(Gdx.files.internal("house/housetile10.png")),
 		house5,
-		house5,
+		new Texture(Gdx.files.internal("house/housetile14.png")),
 		house5,
 		new Texture(Gdx.files.internal("house/housetile14.png")),
 		house5
