@@ -32,13 +32,16 @@ public abstract class Char extends GameObject {
 	public float block_shield=100;
 	public float block_shield_regen=10;
 	public boolean blocking = false;
-	public float attack_damage=25;
+	public float attack_damage=35;
+	public float special_attack_damage=70;
 	public boolean movingRight=true;
 	public float jumpCooldown = 0f;
 	public float attackCooldown = 0f;
 	AnimationHandler animHandler;
 	public boolean attacked = false;
+	public boolean specialatk = false;
 	public boolean dead = false;
+	public float attackrange = 1f;
 	
 	
 	public Char(Body body, Texture texture) {
@@ -67,6 +70,22 @@ public abstract class Char extends GameObject {
 	
 	public void die(){
 		System.out.println("DEAD " +toString());
+	}
+	public static float ATTACK_DURATION=0.7f;
+
+	protected void attack(boolean special) {
+		if(inAttackCone!=null && attackCooldown<=0){
+			attacked = false;
+			specialatk = special;
+			attackCooldown=ATTACK_DURATION;
+		}else if(attackCooldown<=0){
+			attackCooldown=ATTACK_DURATION;
+			specialatk = special;
+
+
+		}
+			
+		
 	}
 	
 	

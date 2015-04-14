@@ -34,7 +34,7 @@ public class Player extends Char {
 	public Player(Body body, Body feet, Body attackConeRight, Body attackConeLeft, Texture texture, float width, float height) {
 		super(body, texture);
 		health=100;
-		
+		attackrange = 0.7f;
 		
 		this.animHandler=new AnimationHandler(new Texture[]{
 				TextureBank.pl_run1,
@@ -110,6 +110,19 @@ public class Player extends Char {
 				TextureBank.pl_idle11,
 				TextureBank.pl_idle12
 
+		}, 1f,
+		new Texture[]{
+				TextureBank.pl_spatk1,
+				TextureBank.pl_spatk2,
+				TextureBank.pl_spatk3,
+				TextureBank.pl_spatk4,
+				TextureBank.pl_spatk5,
+				TextureBank.pl_spatk6,
+				TextureBank.pl_spatk7,
+				TextureBank.pl_spatk8,
+				TextureBank.pl_spatk9,
+				TextureBank.pl_spatk10,
+
 		}, 1);
 		this.feet=feet;
 		this.attackConeRight=attackConeRight;
@@ -125,7 +138,13 @@ public class Player extends Char {
 	protected void childUpdate(float delta) {
 		
 		if(attackCooldown>0){
-			setDrawable(animHandler.updateAtk(delta, !movingRight));
+			if(specialatk){
+				setDrawable(animHandler.updateSpatk(delta, !movingRight));
+				
+			}else{
+				setDrawable(animHandler.updateAtk(delta, !movingRight));
+				
+			}
 		}else if(blocking){
 			setDrawable(animHandler.updateBlock(delta, !movingRight));
 		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
@@ -143,8 +162,11 @@ public class Player extends Char {
 				if(inAttackCone!=null){
 					attacked = true;
 					float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
-					if(distance <= 1){
-						inAttackCone.damage(attack_damage, attackingFromRight);
+					if(distance <= inAttackCone.getWidth()/4+attackrange+this.getWidth()/4){
+						if(specialatk)
+							inAttackCone.damage(special_attack_damage, attackingFromRight);
+						else
+							inAttackCone.damage(attack_damage, attackingFromRight);
 						System.out.println("hit "+inAttackCone.toString());
 
 
@@ -175,11 +197,15 @@ public class Player extends Char {
 			grapple();
 		}
 		if(Gdx.input.isButtonPressed(Buttons.LEFT)){
-			attack();
+			attack(false);
 		}if (Gdx.input.isKeyPressed(Keys.CONTROL_LEFT)){
 			blocking=true;
 		}else{
 			blocking=false;
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.NUM_1)){
+			attack(true);
 		}
 		
 		if(block_shield < max_block_shield){
@@ -188,14 +214,7 @@ public class Player extends Char {
 		
     }
 	
-	private void attack() {
-		if(inAttackCone!=null && attackCooldown<=0){
-			attacked = false;
-			attackCooldown=ATTACK_DURATION;
-		}else if(attackCooldown<=0)
-			attackCooldown=ATTACK_DURATION;
-		
-	}
+	
 
 	private void grapple(){
 		if(hook==null){
