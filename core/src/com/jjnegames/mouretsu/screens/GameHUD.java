@@ -37,7 +37,7 @@ public class GameHUD {
 		}
 	
 		healthImage.setWidth(380*(MGame.player.health/MGame.player.max_health));
-		if(MGame.player.blocking){
+		if(MGame.player.blocking && MGame.player.attackCooldown<=0){
 			armorImage.setVisible(true);
 			armorImage.setWidth(380*(MGame.player.block_shield/MGame.player.max_block_shield));
 		}else{

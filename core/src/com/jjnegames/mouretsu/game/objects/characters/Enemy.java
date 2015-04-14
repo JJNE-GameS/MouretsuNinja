@@ -294,10 +294,11 @@ public class Enemy extends Char	{
 	counter += delta;
 		
 		 if (counter<3){
+			 if(body.getLinearVelocity().x<MAX_MOVE_SPEED)
 			 body.applyForceToCenter(new Vector2(-150*delta,0), true);
 			 movingRight=false;
 		} if (counter>3) {
-			
+			if(body.getLinearVelocity().x>-MAX_MOVE_SPEED)
 			body.applyForceToCenter(new Vector2(150*delta,0), true);
 			movingRight=true;
 		} if (counter>6) {
