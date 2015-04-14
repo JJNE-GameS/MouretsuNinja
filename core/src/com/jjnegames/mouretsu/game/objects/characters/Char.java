@@ -17,6 +17,8 @@ import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.utils.AnimationHandler;
 
 public abstract class Char extends GameObject {
+	
+	protected float MAX_MOVE_SPEED = 4;
 
 	public boolean ableToJump = true;
 	public Body feet;

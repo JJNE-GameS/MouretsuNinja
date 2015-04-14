@@ -83,7 +83,7 @@ public class MGame {
 		background.draw();
 		backgroundObjects.draw();
 		stage.draw();
-		debugger.render(world, camera.combined);
+//		debugger.render(world, camera.combined);
 		hud.render(delta);
 		justClicked=false;
 	}

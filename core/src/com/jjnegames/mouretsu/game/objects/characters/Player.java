@@ -26,7 +26,6 @@ import com.jjnegames.mouretsu.screens.Splash;
 public class Player extends Char {
 	
 	private static final float ATTACK_DELAY = 0.5f;
-
 	public static float ATTACK_DURATION=0.7f;
 	
 	private GrapplingHook hook = null;
@@ -186,9 +185,12 @@ public class Player extends Char {
 		}else if(hook!=null){
 			hook.isReeling=false;
 		} if (Gdx.input.isKeyPressed(Keys.A)){
-			body.applyForceToCenter(new Vector2(-200*delta,0), true);
+			System.out.println();
+			if(body.getLinearVelocity().x>-MAX_MOVE_SPEED)
+				body.applyForceToCenter(new Vector2(-200*delta,0), true);
 			movingRight=false;
 		} if (Gdx.input.isKeyPressed(Keys.D)){
+			if(body.getLinearVelocity().x<MAX_MOVE_SPEED)
 			body.applyForceToCenter(new Vector2(200*delta,0), true);
 			movingRight=true;
 		}
