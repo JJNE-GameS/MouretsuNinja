@@ -91,4 +91,83 @@ public class MapFileReader {
 		
 		return map;
 	}
+	
+public static int[][] LoadBackGroundmap() {	
+	
+		
+		FileHandle csvFile = Gdx.files.internal("backgroundmap.csv");
+		BufferedReader br = null;
+		String line = "";
+		String cvsSplitBy = ";";
+		int d = 0;
+		int a = 0;
+	 
+		try {
+	 
+			br = new BufferedReader(new InputStreamReader(csvFile.read()));
+			
+			while ((line = br.readLine()) != null) {
+	 
+			        // use comma as separator
+				String[] numbers = line.split(cvsSplitBy);
+				a = numbers.length;
+				System.out.println("Numbers=" +Arrays.toString(numbers));
+				d++;
+			}
+			
+			
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		int[][] backgroundmap = new int[a][d];
+		int dd = 0;
+		try {
+			 
+			br = new BufferedReader(new InputStreamReader(csvFile.read()));
+			
+			while ((line = br.readLine()) != null) {
+	 
+			        // use comma as separator
+				String[] numbers = line.split(cvsSplitBy);
+				a = numbers.length;
+				for(int e = 0;e<a;e++){
+					backgroundmap[e][d-dd-1] = Integer.parseInt(numbers[e]);
+				}
+				dd++;
+			}
+			
+			System.out.println("Rows: "+d+ " Colums: "+a+ " Tiles: "+ d*a+"Mappi");
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (br != null) {
+				try {
+					br.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		
+		return backgroundmap;
+	}
 }

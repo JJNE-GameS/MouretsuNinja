@@ -47,13 +47,7 @@ public class SmallEnemy extends Char	{
 				TextureBank.pl_run5,
 				TextureBank.pl_run6,
 				TextureBank.pl_run7,
-				TextureBank.pl_run8,
-				TextureBank.pl_run9,
-				TextureBank.pl_run10,
-				TextureBank.pl_run11,
-				TextureBank.pl_run12,
-				TextureBank.pl_run13,
-				TextureBank.pl_run14
+				TextureBank.pl_run8
 		}, 1f,
 		new Texture[]{
 				
@@ -308,11 +302,11 @@ public class SmallEnemy extends Char	{
 	counter += delta;
 		
 		 if (counter<3 && !(attackCooldown>0)){
-			 if(body.getLinearVelocity().x<MAX_MOVE_SPEED)
+			 if(body.getLinearVelocity().x>-MAX_MOVE_SPEED)
 			 body.applyForceToCenter(new Vector2(-150*delta,0), true);
 			 movingRight=false;
 		} if (counter>3 && !(attackCooldown>0)) {
-			if(body.getLinearVelocity().x>-MAX_MOVE_SPEED)
+			if(body.getLinearVelocity().x<MAX_MOVE_SPEED)
 			body.applyForceToCenter(new Vector2(150*delta,0), true);
 			movingRight=true;
 		} if (counter>6) {

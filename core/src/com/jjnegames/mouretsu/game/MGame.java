@@ -3,7 +3,11 @@ package com.jjnegames.mouretsu.game;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+import sun.java2d.loops.ProcessPath.EndSubPathHandler;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -16,7 +20,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.jjnegames.mouretsu.MouretsuNinja;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.characters.Player;
+import com.jjnegames.mouretsu.screens.EndMenu;
 import com.jjnegames.mouretsu.screens.GameHUD;
+import com.jjnegames.mouretsu.screens.GameScreen;
 
 
 public class MGame {
@@ -74,6 +80,10 @@ public class MGame {
 				camera.position.set(player.getX()+2, player.getY()+3, 0);
 				camera.update();
 				
+				if(player.getBody().getPosition().x > 365f ){
+					((Game)Gdx.app.getApplicationListener()).setScreen(new EndMenu());
+				}
+				
 		if(!paused){
 			world.step(delta, 6, 2);
 			if(!functions.isEmpty())
@@ -83,7 +93,7 @@ public class MGame {
 		background.draw();
 		backgroundObjects.draw();
 		stage.draw();
-//		debugger.render(world, camera.combined);
+		debugger.render(world, camera.combined);
 		hud.render(delta);
 		justClicked=false;
 	}

@@ -12,6 +12,9 @@ import java.util.ArrayList;
 
 
 
+
+
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -32,13 +35,14 @@ import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.jjnegames.mouretsu.game.objects.Ball;
-import com.jjnegames.mouretsu.game.objects.Buddha;
+import com.jjnegames.mouretsu.game.objects.BackGroundBlock;
 import com.jjnegames.mouretsu.game.objects.GameObject;
 import com.jjnegames.mouretsu.game.objects.MingVase;
 import com.jjnegames.mouretsu.game.objects.Rect;
 import com.jjnegames.mouretsu.game.objects.Sushi;
 import com.jjnegames.mouretsu.game.objects.Triangle;
 import com.jjnegames.mouretsu.game.objects.characters.AttackCone;
+import com.jjnegames.mouretsu.game.objects.characters.Boss;
 import com.jjnegames.mouretsu.game.objects.characters.Char;
 import com.jjnegames.mouretsu.game.objects.characters.Juggernaut;
 import com.jjnegames.mouretsu.game.objects.characters.SmallEnemy;
@@ -52,7 +56,9 @@ public class WorldGenerator {
 			Stage stage, OrthographicCamera camera) {
 		
 		 int[][] map = MapFileReader.Loadmap();
-			 
+		 System.out.println("herp");
+		// int[][] backgroundmap = MapFileReader.LoadBackGroundmap();
+		 
 		// Nearest on terävämpi mutta ei toimi hyvin pyöriessä ja Linear on
 		// epäselvempi mutta parempi vaihtoehto pyörivälle objektille
 		TextureBank.alus.setFilter(TextureFilter.MipMapLinearNearest,
@@ -75,34 +81,7 @@ public class WorldGenerator {
 		MGame.player=character_1;
 		stage.addActor(character_1);
 		
-		BodyDef bodyDef3 = new BodyDef();
-		bodyDef3.type = BodyDef.BodyType.DynamicBody;
-		bodyDef3.position.set(10f, 20f);
-		bodyDef3.angularVelocity = 0;
-		Char character_2 = SmallEnemy.create(world, bodyDef3, 1f, 1f,TextureBank.vihollinen);
-		stage.addActor(character_2);
-		
-		BodyDef bodyDef7 = new BodyDef();
-		bodyDef7.type = BodyDef.BodyType.DynamicBody;
-		bodyDef7.position.set(15f, 20f);
-		bodyDef7.angularVelocity = 0;
-		Char character_3 = SmallEnemy.create(world, bodyDef7, 1f, 1f,TextureBank.vihollinen);
-		stage.addActor(character_3);
-		
-		BodyDef bodyDef8 = new BodyDef();
-		bodyDef8.type = BodyDef.BodyType.DynamicBody;
-		bodyDef8.position.set(35f, 20f);
-		bodyDef8.angularVelocity = 0;
-		Char character_4 = Juggernaut.create(world, bodyDef8, 2f, 2f,TextureBank.vihollinen);
-		stage.addActor(character_4);
-		
 
-		BodyDef bodyDef9 = new BodyDef();
-		bodyDef9.type = BodyDef.BodyType.DynamicBody;
-		bodyDef9.position.set(50f, 20f);
-		bodyDef9.angularVelocity = 0;
-		Char character_5 = Juggernaut.create(world, bodyDef9, 3f, 3f,TextureBank.vihollinen);
-		stage.addActor(character_5);
 		
 		
 		BodyDef bodyDef6 = new BodyDef();
@@ -189,6 +168,26 @@ public class WorldGenerator {
 
 					stage.addActor(rectangle_4);
 					
+//				}else if(backgroundmap[x][y]== 14){
+//					int bit = 0;
+//					if(backgroundmap[x][y]== 14){
+//						
+//						if(y>0 && backgroundmap[x][y-1] == 14){
+//							bit += 4;
+//						}if(y<backgroundmap[x].length-1 && backgroundmap[x][y+1]== 14){
+//							bit += 1;
+//						}if(x>0 && backgroundmap[x-1][y]== 14){
+//							bit += 8;
+//						}if(x<backgroundmap.length-1 && backgroundmap[x+1][y]== 14){
+//							bit += 2;
+//						}
+//					}
+//					
+//					BackGroundBlock c = BackGroundBlock.create(x, y, 1, 1, TextureBank.esine2);
+//					MGame.backgroundObjects.addActor(c);
+//					
+					
+					
 				}else if(map[x][y]== 18){
 					int bit = 0;
 					if(map[x][y]== 18){
@@ -204,7 +203,7 @@ public class WorldGenerator {
 						}
 					}
 					
-					Buddha b = Buddha.create(x, y, 1, 1, TextureBank.buddhatiles[bit]);
+					BackGroundBlock b = BackGroundBlock.create(x, y, 1, 1, TextureBank.buddhatiles[bit]);
 					MGame.backgroundObjects.addActor(b);
 					
 					
@@ -231,6 +230,103 @@ public class WorldGenerator {
 
 					MingVase m = MingVase.create(world, bodyDef5, 1, 1, TextureBank.mingvase);
 					MGame.stage.addActor(m);
+					
+					
+					
+				}else if(map[x][y]== 26){
+					int bit = 0;
+					if(map[x][y]== 26){
+						
+						if(y>0 && map[x][y-1] == 26){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 26){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 26){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 26){
+							bit += 2;
+						}
+					}
+					
+					BackGroundBlock e = BackGroundBlock.create(x, y, 1, 1, TextureBank.water);
+					MGame.backgroundObjects.addActor(e);
+					
+					
+					
+					
+				}else if(map[x][y]== 27){
+					int bit = 0;
+					if(map[x][y]== 27){
+						
+						if(y>0 && map[x][y-1] == 27){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 27){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 27){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 27){
+							bit += 2;
+						}
+					}
+					
+					BodyDef bodyDef3 = new BodyDef();
+					bodyDef3.type = BodyDef.BodyType.DynamicBody;
+					bodyDef3.position.set(10f, 20f);
+					bodyDef3.angularVelocity = 0;
+					Char character_2 = SmallEnemy.create(world, bodyDef3, 1f, 1f,TextureBank.vihollinen);
+					stage.addActor(character_2);
+					
+					
+					
+					
+				}else if(map[x][y]== 28){
+					int bit = 0;
+					if(map[x][y]== 28){
+						
+						if(y>0 && map[x][y-1] == 28){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 28){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 28){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 28){
+							bit += 2;
+						}
+					}
+					
+					BodyDef bodyDef8 = new BodyDef();
+					bodyDef8.type = BodyDef.BodyType.DynamicBody;
+					bodyDef8.position.set(35f, 20f);
+					bodyDef8.angularVelocity = 0;
+					Char character_4 = Juggernaut.create(world, bodyDef8, 1f, 1f,TextureBank.vihollinen);
+					stage.addActor(character_4);
+					
+					
+					
+					
+				}else if(map[x][y]== 29){
+					int bit = 0;
+					if(map[x][y]== 29){
+						
+						if(y>0 && map[x][y-1] == 29){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 29){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 29){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 29){
+							bit += 2;
+						}
+					}
+					
+
+					BodyDef bodyDef9 = new BodyDef();
+					bodyDef9.type = BodyDef.BodyType.DynamicBody;
+					bodyDef9.position.set(50f, 20f);
+					bodyDef9.angularVelocity = 0;
+					Char character_5 = Boss.create(world, bodyDef9, 1f, 1f,TextureBank.vihollinen);
+					stage.addActor(character_5);
+					
 					
 					
 					

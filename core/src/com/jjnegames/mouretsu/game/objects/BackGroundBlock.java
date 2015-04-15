@@ -16,10 +16,10 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
 
-public class Buddha extends Image{
+public class BackGroundBlock extends Image{
 	
 	
-	public Buddha(Texture texture,float x, float y, float width, float height) {
+	public BackGroundBlock(Texture texture,float x, float y, float width, float height) {
 		super(texture);
 		
 		this.setX(x+width/2);
@@ -32,9 +32,9 @@ public class Buddha extends Image{
 	}
 
 
-	public static Buddha create(float x, float y, float w, float h, Texture texture) {
+	public static BackGroundBlock create(float x, float y, float w, float h, Texture texture) {
 
-		return new Buddha(texture,x,y,w,h);
+		return new BackGroundBlock(texture,x,y,w,h);
 	}
     
 	

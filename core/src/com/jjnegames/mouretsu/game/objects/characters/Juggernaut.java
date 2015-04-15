@@ -36,6 +36,7 @@ public class Juggernaut extends Char	{
 		health = 200;
 		this.attack_damage = 50;
 		attackrange = 1f;
+		MAX_MOVE_SPEED =  1;
 		this.setOriginX(width/2);
 		this.setOriginY(height/2);
 		this.setWidth(width);
@@ -50,13 +51,7 @@ public class Juggernaut extends Char	{
 				TextureBank.pl_run5,
 				TextureBank.pl_run6,
 				TextureBank.pl_run7,
-				TextureBank.pl_run8,
-				TextureBank.pl_run9,
-				TextureBank.pl_run10,
-				TextureBank.pl_run11,
-				TextureBank.pl_run12,
-				TextureBank.pl_run13,
-				TextureBank.pl_run14
+				TextureBank.pl_run8
 		}, 1f,
 		new Texture[]{
 				
@@ -310,16 +305,18 @@ public class Juggernaut extends Char	{
 		}
 	counter += delta;
 		
-		 if (counter<3){
-			 body.applyForceToCenter(new Vector2(-150*delta,0), true);
-			 movingRight=false;
-		} if (counter>3) {
-			
-			body.applyForceToCenter(new Vector2(150*delta,0), true);
-			movingRight=true;
-		} if (counter>6) {
-			counter = 0;
-		}
+	float pdis = this.getBody().getPosition().x - MGame.player.getBody().getPosition().x;
+	 if (pdis < 4.5 && pdis>0){
+		 if(body.getLinearVelocity().x>-MAX_MOVE_SPEED)
+		 body.applyForceToCenter(new Vector2(-500*delta,0), true);
+		 movingRight=false;
+	}else if (pdis < 0 && pdis >- 7 ) {
+		if(body.getLinearVelocity().x<MAX_MOVE_SPEED)
+		body.applyForceToCenter(new Vector2(500*delta,0), true);
+		movingRight=true;
+	} if (counter>6) {
+		counter = 0;
+	}
 		if(inAttackCone!=null && attackCooldown<=0){
 			float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
 			if(distance <= inAttackCone.getWidth()/4+attackrange+this.getWidth()/4 && inAttackCone instanceof Player){

@@ -36,6 +36,7 @@ public class Boss extends Char	{
 		health = 300;
 		this.attack_damage = 50;
 		attackrange = 2f;
+		MAX_MOVE_SPEED = 2;
 		this.setOriginX(width/2);
 		this.setOriginY(height/2);
 		this.setWidth(width);
@@ -50,13 +51,7 @@ public class Boss extends Char	{
 				TextureBank.pl_run5,
 				TextureBank.pl_run6,
 				TextureBank.pl_run7,
-				TextureBank.pl_run8,
-				TextureBank.pl_run9,
-				TextureBank.pl_run10,
-				TextureBank.pl_run11,
-				TextureBank.pl_run12,
-				TextureBank.pl_run13,
-				TextureBank.pl_run14
+				TextureBank.pl_run8
 		}, 1f,
 		new Texture[]{
 				
@@ -308,14 +303,16 @@ public class Boss extends Char	{
 		}else{
 		setDrawable(animHandler.updateRun(delta, !movingRight));
 		}
-	counter += delta;
-		
-		 if (counter<3){
-			 body.applyForceToCenter(new Vector2(-150*delta,0), true);
+		counter += delta;
+	
+		float pdis = this.getBody().getPosition().x - MGame.player.getBody().getPosition().x;
+		 if (pdis < 4.5 && pdis>0){
+			 if(body.getLinearVelocity().x>-MAX_MOVE_SPEED)
+			 body.applyForceToCenter(new Vector2(-880*delta,0), true);
 			 movingRight=false;
-		} if (counter>3) {
-			
-			body.applyForceToCenter(new Vector2(150*delta,0), true);
+		}else if (pdis < 0 ) {
+			if(body.getLinearVelocity().x<MAX_MOVE_SPEED)
+			body.applyForceToCenter(new Vector2(880*delta,0), true);
 			movingRight=true;
 		} if (counter>6) {
 			counter = 0;
