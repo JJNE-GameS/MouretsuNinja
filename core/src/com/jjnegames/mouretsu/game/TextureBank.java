@@ -97,44 +97,32 @@ public class TextureBank extends AssetManager{
 	public static Texture pl_run5 = new Texture(Gdx.files.internal("walking/walking_5.png"));
 	public static Texture pl_run6 = new Texture(Gdx.files.internal("walking/walking_6.png"));
 	public static Texture pl_run7 = new Texture(Gdx.files.internal("walking/walking_7.png"));
-	public static Texture pl_run8 = new Texture(Gdx.files.internal("walking/walking_8.png"));
+	public static Texture pl_run8 = new Texture(Gdx.files.internal("walking/walking_9.png"));
 	
 	
-	public static Texture pl_atk1 = new Texture(Gdx.files.internal("fedora.jpg"));
-	public static Texture pl_atk2 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_atk3 = new Texture(Gdx.files.internal("sininen.png"));
-	public static Texture pl_atk4 = new Texture(Gdx.files.internal("ninjatest.png"));
-	public static Texture pl_atk5 = new Texture(Gdx.files.internal("images.jpg"));
-	public static Texture pl_atk6 = new Texture(Gdx.files.internal("ground.jpg"));
-	public static Texture pl_atk7 = new Texture(Gdx.files.internal("badlogic.jpg"));
-	public static Texture pl_atk8 = new Texture(Gdx.files.internal("are-you-a-wizard.jpg"));
-	public static Texture pl_atk9 = new Texture(Gdx.files.internal("woods.jpg"));
-	public static Texture pl_atk10 = new Texture(Gdx.files.internal("spurdo.png"));
+	public static Texture pl_atk1 = new Texture(Gdx.files.internal("atk/atk_1.png"));
+	public static Texture pl_atk2 = new Texture(Gdx.files.internal("atk/atk_2.png"));
+	public static Texture pl_atk3 = new Texture(Gdx.files.internal("atk/atk_3.png"));
+	public static Texture pl_atk4 = new Texture(Gdx.files.internal("atk/atk_4.png"));
+	public static Texture pl_atk5 = new Texture(Gdx.files.internal("atk/atk_5.png"));
+
 
 	
-	public static Texture pl_block1 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_block2 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_block3 = new Texture(Gdx.files.internal("alus.png"));
+	public static Texture pl_block1 = new Texture(Gdx.files.internal("block/block_1.png"));
+	public static Texture pl_block2 = new Texture(Gdx.files.internal("block/block_2.png"));
+	public static Texture pl_block3 = new Texture(Gdx.files.internal("block/block_3.png"));
+	public static Texture pl_block4 = new Texture(Gdx.files.internal("block/block_4.png"));
 	
-	public static Texture pl_idle1 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle2 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle3 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle4 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle5 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle6 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle7 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle8 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle9 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle10 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle11 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_idle12 = new Texture(Gdx.files.internal("alus.png"));
+	public static Texture pl_idle1 = new Texture(Gdx.files.internal("idle/idle_1.png"));
+	public static Texture pl_idle2 = new Texture(Gdx.files.internal("idle/idle_2.png"));
+	public static Texture pl_idle3 = new Texture(Gdx.files.internal("idle/idle_3.png"));
+	public static Texture pl_idle4 = new Texture(Gdx.files.internal("idle/idle_4.png"));
+
 	
-	public static Texture pl_jump1 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_jump2 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_jump3 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_jump4 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_jump5 = new Texture(Gdx.files.internal("alus.png"));
-	public static Texture pl_jump6 = new Texture(Gdx.files.internal("alus.png"));
+	public static Texture pl_jump1 = new Texture(Gdx.files.internal("jumping/up_1.png"));
+	public static Texture pl_jump2 = new Texture(Gdx.files.internal("jumping/up_2.png"));
+	public static Texture pl_jump3 = new Texture(Gdx.files.internal("jumping/down_1.png"));
+	public static Texture pl_jump4 = new Texture(Gdx.files.internal("jumping/down_2.png"));
 	
 	public static Texture pl_spatk1 = new Texture(Gdx.files.internal("alus.png"));
 	public static Texture pl_spatk2 = new Texture(Gdx.files.internal("alus.png"));

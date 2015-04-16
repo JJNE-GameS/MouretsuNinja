@@ -53,12 +53,7 @@ public class Player extends Char {
 				TextureBank.pl_atk2,
 				TextureBank.pl_atk3,
 				TextureBank.pl_atk4,
-				TextureBank.pl_atk5,
-				TextureBank.pl_atk6,
-				TextureBank.pl_atk7,
-				TextureBank.pl_atk8,
-				TextureBank.pl_atk9,
-				TextureBank.pl_atk10
+				TextureBank.pl_atk5
 		}, ATTACK_DURATION,
 		new Texture[]{
 				
@@ -72,39 +67,30 @@ public class Player extends Char {
 				
 				TextureBank.pl_block1,
 				TextureBank.pl_block2,
-				TextureBank.pl_block3
+				TextureBank.pl_block3,
+				TextureBank.pl_block4
 		}, 0.5f,
 		new Texture[]{
 				TextureBank.pl_jump1,
 				TextureBank.pl_jump2,
+
+		}, 0.8f,
+		new Texture[]{
 				TextureBank.pl_jump3,
-				TextureBank.pl_jump4,
-				TextureBank.pl_jump5,
-				TextureBank.pl_jump6
+				TextureBank.pl_jump4
 
 		}, 0.8f,
 		new Texture[]{
 				TextureBank.pl_jump1,
 				TextureBank.pl_jump2,
 				TextureBank.pl_jump3,
-				TextureBank.pl_jump4,
-				TextureBank.pl_jump5,
-				TextureBank.pl_jump6
+				TextureBank.pl_jump4
 		}, 0.8f,
 		new Texture[]{
 				TextureBank.pl_idle1,
 				TextureBank.pl_idle2,
 				TextureBank.pl_idle3,
-				TextureBank.pl_idle4,
-				TextureBank.pl_idle5,
-				TextureBank.pl_idle6,
-				TextureBank.pl_idle7,
-				TextureBank.pl_idle8,
-				TextureBank.pl_idle9,
-				TextureBank.pl_idle10,
-				TextureBank.pl_idle11,
-				TextureBank.pl_idle12
-
+				TextureBank.pl_idle4
 		}, 1f,
 		new Texture[]{
 				TextureBank.pl_spatk1,
@@ -142,8 +128,14 @@ public class Player extends Char {
 			}
 		}else if(blocking){
 			setDrawable(animHandler.updateBlock(delta, !movingRight));
-		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
-			setDrawable(animHandler.updateJump(delta, !movingRight));
+		}
+		else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
+			if(getBody().getLinearVelocity().y > 0){
+				setDrawable(animHandler.updateJump(delta, !movingRight));
+			}else{
+				setDrawable(animHandler.updateJumpDown(delta, !movingRight));
+			}
+				
 		}else if(body.getLinearVelocity().x < 0.5 && body.getLinearVelocity().x > -0.5 ){
 			setDrawable(animHandler.updateStand(delta, !movingRight));
 		}else{

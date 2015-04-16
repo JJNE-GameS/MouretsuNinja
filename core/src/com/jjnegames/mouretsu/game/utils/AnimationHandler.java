@@ -27,6 +27,10 @@ public class AnimationHandler {
 	TextureRegionDrawable[] jumpAnimation;
 	TextureRegionDrawable[] jumpAnimationFlipped;
 	
+	float jumpDownDuration;
+	TextureRegionDrawable[] jumpDownAnimation;
+	TextureRegionDrawable[] jumpDownAnimationFlipped;
+	
 	
 	float climbDuration;
 	TextureRegionDrawable[] climbAnimation;
@@ -45,7 +49,7 @@ public class AnimationHandler {
 	
 	public AnimationHandler(Texture[] runAnimation, float runDuration, Texture[] atkAnimation, float atkDuration,
 		Texture[] blockAnimation, float blockDuration, Texture[] criticalBlockAnimation, float criticalBlockDuration,
-		Texture[] jumpAnimation, float jumpDuration, Texture[] climbAnimation, float climbDuration, Texture[] standAnimation, float standDuration, Texture[] spatkAnimation, float spatkDuration){
+		Texture[] jumpAnimation, float jumpDuration,Texture[] jumpDownAnimation, float jumpDownDuration, Texture[] climbAnimation, float climbDuration, Texture[] standAnimation, float standDuration, Texture[] spatkAnimation, float spatkDuration){
 		
 		this.runAnimation = new TextureRegionDrawable[runAnimation.length];
 		this.runAnimationFlipped = new TextureRegionDrawable[runAnimation.length];
@@ -61,6 +65,9 @@ public class AnimationHandler {
 		
 		this.jumpAnimation = new TextureRegionDrawable[jumpAnimation.length];
 		this.jumpAnimationFlipped = new TextureRegionDrawable[jumpAnimation.length];
+		
+		this.jumpDownAnimation = new TextureRegionDrawable[jumpDownAnimation.length];
+		this.jumpDownAnimationFlipped = new TextureRegionDrawable[jumpDownAnimation.length];
 		
 		this.climbAnimation = new TextureRegionDrawable[climbAnimation.length];
 		this.climbAnimationFlipped = new TextureRegionDrawable[climbAnimation.length];
@@ -101,6 +108,12 @@ public class AnimationHandler {
 			flipped.flip(true, false);
 			this.jumpAnimationFlipped[i] = new TextureRegionDrawable(flipped);
 		}
+		for(int i=0;i<jumpDownAnimation.length;i++){
+			this.jumpDownAnimation[i] = new TextureRegionDrawable(new TextureRegion(jumpDownAnimation[i]));
+			TextureRegion flipped = new TextureRegion(jumpDownAnimation[i]);
+			flipped.flip(true, false);
+			this.jumpDownAnimationFlipped[i] = new TextureRegionDrawable(flipped);
+		}
 		for(int i=0;i<climbAnimation.length;i++){
 			this.climbAnimation[i] = new TextureRegionDrawable(new TextureRegion(climbAnimation[i]));
 			TextureRegion flipped = new TextureRegion(climbAnimation[i]);
@@ -125,6 +138,7 @@ public class AnimationHandler {
 		this.blockDuration=blockDuration;
 		this.criticalBlockDuration=criticalBlockDuration;
 		this.jumpDuration=jumpDuration;
+		this.jumpDownDuration=jumpDownDuration;
 		this.climbDuration=climbDuration;
 		this.standDuration=standDuration;
 		this.spatkDuration=spatkDuration;
@@ -212,6 +226,23 @@ public class AnimationHandler {
 			return jumpAnimation[frame];
 		}else{
 			return jumpAnimationFlipped[frame];
+		}
+	}
+	
+	private float jumpDownFrame=0f;
+	public Drawable updateJumpDown(float delta, boolean flipped){
+		while(jumpDownFrame>=jumpDownDuration){
+			jumpDownFrame-=jumpDownDuration;
+		}
+		jumpDownFrame+=delta;
+		
+		int frame = (int) ((jumpDownFrame/jumpDownDuration)*(jumpDownAnimation.length));
+		if(frame==jumpDownAnimation.length)
+			frame=0;
+		if(!flipped){
+			return jumpDownAnimation[frame];
+		}else{
+			return jumpDownAnimationFlipped[frame];
 		}
 	}
 	
