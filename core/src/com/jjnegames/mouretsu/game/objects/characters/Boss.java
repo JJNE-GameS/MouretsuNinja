@@ -105,12 +105,7 @@ public class Boss extends Char	{
 				TextureBank.pl_spatk2,
 				TextureBank.pl_spatk3,
 				TextureBank.pl_spatk4,
-				TextureBank.pl_spatk5,
-				TextureBank.pl_spatk6,
-				TextureBank.pl_spatk7,
-				TextureBank.pl_spatk8,
-				TextureBank.pl_spatk9,
-				TextureBank.pl_spatk10,
+				TextureBank.pl_spatk5
 
 		}, 1);
 		

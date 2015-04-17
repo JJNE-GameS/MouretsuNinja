@@ -56,7 +56,7 @@ public class WorldGenerator {
 			Stage stage, OrthographicCamera camera) {
 		
 		 int[][] map = MapFileReader.Loadmap();
-		 System.out.println("herp");
+		
 		// int[][] backgroundmap = MapFileReader.LoadBackGroundmap();
 		 
 		// Nearest on terävämpi mutta ei toimi hyvin pyöriessä ja Linear on
