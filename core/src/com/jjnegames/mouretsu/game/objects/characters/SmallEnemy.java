@@ -32,22 +32,23 @@ public class SmallEnemy extends Char	{
 	public SmallEnemy(Body body, Texture texture, float width, float height) {
 		super(body,texture);
 		
+		MAX_MOVE_SPEED = 1.5f;
 		attackrange = 0.7f;
 		this.setOriginX(width/2);
-		this.setOriginY(height/2);
+		this.setOriginY((height*1.4f)/2f);
 		this.setWidth(width);
-		this.setHeight(height);
+		this.setHeight((height*1.4f));
+		
+		
 		
 
 		this.animHandler=new AnimationHandler(new Texture[]{
-				TextureBank.pl_run1,
-				TextureBank.pl_run2,
-				TextureBank.pl_run3,
-				TextureBank.pl_run4,
-				TextureBank.pl_run5,
-				TextureBank.pl_run6,
-				TextureBank.pl_run7,
-				TextureBank.pl_run8
+				TextureBank.pl_enemyrun1,
+				TextureBank.pl_enemyrun2,
+				TextureBank.pl_enemyrun3,
+				TextureBank.pl_enemyrun4,
+				TextureBank.pl_enemyrun5,
+				TextureBank.pl_enemyrun6
 		}, 1f,
 		new Texture[]{
 				
@@ -88,10 +89,7 @@ public class SmallEnemy extends Char	{
 
 		}, 0.8f,
 		new Texture[]{
-				TextureBank.pl_idle1,
-				TextureBank.pl_idle2,
-				TextureBank.pl_idle3,
-				TextureBank.pl_idle4
+				TextureBank.pl_enemyrun1
 
 		}, 1f,
 		new Texture[]{
@@ -133,13 +131,13 @@ public class SmallEnemy extends Char	{
 	        CircleShape circleShape1 = new CircleShape();
 	        circleShape1.setRadius(w*0.325f);
 	        circleShape1.getPosition().set(0f, -h/4);
-	        circleShape1.setPosition(new Vector2(0f, h/4));
+	        circleShape1.setPosition(new Vector2(0f, (h/4)-0.1f));
 	        
 	        //Create the second circle shape. It's offset from the center of the body by 2, 0.
 	        CircleShape circleShape2  = new CircleShape();
 	        circleShape2.setRadius(w*0.325f);
 	        circleShape2.getPosition().set(0f, h/4);
-	        circleShape2.setPosition(new Vector2(0f, -h/4));
+	        circleShape2.setPosition(new Vector2(0f, (-h/4)-0.1f));
 	        
 	        FixtureDef fdef= new FixtureDef();
 	        fdef.shape=circleShape1;
@@ -276,9 +274,9 @@ public class SmallEnemy extends Char	{
 		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
 			setDrawable(animHandler.updateJump(delta, !movingRight));
 		}else if(body.getLinearVelocity().x < 0.5 && body.getLinearVelocity().x > -0.5 ){
-			setDrawable(animHandler.updateStand(delta, !movingRight));
+			setDrawable(animHandler.updateStand(delta, movingRight));
 		}else{
-		setDrawable(animHandler.updateRun(delta, !movingRight));
+		setDrawable(animHandler.updateRun(delta, movingRight));
 		}
 	counter += delta;
 		

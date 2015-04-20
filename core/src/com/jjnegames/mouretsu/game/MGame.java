@@ -10,7 +10,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Buttons;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -23,6 +26,7 @@ import com.jjnegames.mouretsu.game.objects.characters.Player;
 import com.jjnegames.mouretsu.screens.EndMenu;
 import com.jjnegames.mouretsu.screens.GameHUD;
 import com.jjnegames.mouretsu.screens.GameScreen;
+import com.sun.prism.GraphicsPipeline.ShaderType;
 
 
 public class MGame {
@@ -39,6 +43,9 @@ public class MGame {
 	public static GameHUD hud = new GameHUD();
 	private Image bgimage;
 	public static boolean gameover;
+	
+	public static ShapeRenderer  sr = new ShapeRenderer();
+	
 	
 	
 	
@@ -78,6 +85,8 @@ public class MGame {
 	public void draw(boolean paused){
 		float delta =  Gdx.graphics.getDeltaTime();
 				camera.position.set(player.getX()+2, player.getY()+3, 0);
+				if(camera.position.x > 358)
+					camera.position.x = 358;
 				camera.update();
 				
 				if(player.getBody().getPosition().x > 365f ){
@@ -93,7 +102,16 @@ public class MGame {
 		background.draw();
 		backgroundObjects.draw();
 		stage.draw();
-		debugger.render(world, camera.combined);
+		
+		if(player.hook != null){
+		sr.setColor(Color.BLACK);
+		sr.setProjectionMatrix(camera.combined);
+		sr.begin(ShapeType.Filled);
+		sr.rectLine(player.getBody().getPosition().x, player.getBody().getPosition().y, player.hook.getBody().getPosition().x, player.hook.getBody().getPosition().y,0.01f);
+		sr.end();
+		}
+		
+//		debugger.render(world, camera.combined);
 		hud.render(delta);
 		justClicked=false;
 	}

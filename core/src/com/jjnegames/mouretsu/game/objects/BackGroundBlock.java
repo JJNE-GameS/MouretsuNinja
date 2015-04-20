@@ -22,7 +22,7 @@ public class BackGroundBlock extends Image{
 	public BackGroundBlock(Texture texture,float x, float y, float width, float height) {
 		super(texture);
 		
-		this.setX(x+width/2);
+		this.setX(x-width/2);
 		this.setY(y-height/2);
 		this.setOriginX(width/2);
 		this.setOriginY(height/2);

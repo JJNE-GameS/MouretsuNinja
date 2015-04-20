@@ -132,6 +132,8 @@ public static int[][] LoadBackGroundmap() {
 			}
 		}
 		
+		System.out.println("Rows: "+d+ " Colums: "+a+ " Tiles: "+ d*a+"Mappi");
+		
 		int[][] backgroundmap = new int[a][d];
 		int dd = 0;
 		try {
@@ -142,7 +144,8 @@ public static int[][] LoadBackGroundmap() {
 	 
 			        // use comma as separator
 				String[] numbers = line.split(cvsSplitBy);
-				a = numbers.length;
+//				a = numbers.length;
+//				System.out.println("a="+a);
 				for(int e = 0;e<a;e++){
 					backgroundmap[e][d-dd-1] = Integer.parseInt(numbers[e]);
 				}

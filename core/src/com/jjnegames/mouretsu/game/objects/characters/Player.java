@@ -28,7 +28,7 @@ public class Player extends Char {
 	private static final float ATTACK_DELAY = 0.5f;
 	public static float ATTACK_DURATION=0.7f;
 	
-	private GrapplingHook hook = null;
+	public GrapplingHook hook = null;
 	public boolean skill1 = true,skill2 = true,skill3 = true,skill4 = true;
 	
 	public Player(Body body, Body feet, Body attackConeRight, Body attackConeLeft, Texture texture, float width, float height) {
@@ -105,9 +105,9 @@ public class Player extends Char {
 		this.attackConeLeft=attackConeLeft;
 
 		this.setOriginX(width/2);
-		this.setOriginY((height*1.4f)/2f);
+		this.setOriginY((height*1.8f)/2f);
 		this.setWidth(width);
-		this.setHeight((height*1.4f));
+		this.setHeight((height*1.37f));
 	}
 
 	@Override
@@ -217,10 +217,10 @@ public class Player extends Char {
 			// Spawnpoint
 			bodyDef.position.set(positionx, positiony);
 			// Rotation speed when spawned
-			
+			bodyDef.angle = (float) (Math.atan2(vY, vX)- Math.PI/2);
 			float dist = (float)Math.sqrt((positionx-targetX)*(positionx-targetX)+(positiony-targetY)*(positiony-targetY));
 			Vector2 linearVelocity = new Vector2(vX*GrapplingHook.SPEED, vY*GrapplingHook.SPEED);
-			hook = GrapplingHook.create(body.getWorld(), bodyDef, 0.1f, TextureBank.alus, this, GROUP_PLAYER);
+			hook = GrapplingHook.create(body.getWorld(), bodyDef, 0.2f, TextureBank.hook, this, GROUP_PLAYER);
 			hook.getBody().setLinearVelocity(linearVelocity);
 			MGame.stage.addActor(hook);
 		}else{
@@ -262,13 +262,13 @@ public class Player extends Char {
         CircleShape circleShape1 = new CircleShape();
         circleShape1.setRadius(w*0.325f);
         circleShape1.getPosition().set(0f, -h/4);
-        circleShape1.setPosition(new Vector2(0f, h/4));
+        circleShape1.setPosition(new Vector2(0f, (h/4)-0.1f));
         
         //Create the second circle shape. It's offset from the center of the body by 2, 0.
         CircleShape circleShape2  = new CircleShape();
         circleShape2.setRadius(w*0.325f);
         circleShape2.getPosition().set(0f, h/4);
-        circleShape2.setPosition(new Vector2(0f, -h/4));
+        circleShape2.setPosition(new Vector2(0f, (-h/4)-0.1f));
         
         FixtureDef fdef= new FixtureDef();
         fdef.shape=circleShape1;

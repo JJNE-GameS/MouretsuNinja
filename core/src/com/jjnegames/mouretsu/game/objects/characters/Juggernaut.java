@@ -44,14 +44,12 @@ public class Juggernaut extends Char	{
 		
 
 		this.animHandler=new AnimationHandler(new Texture[]{
-				TextureBank.pl_run1,
-				TextureBank.pl_run2,
-				TextureBank.pl_run3,
-				TextureBank.pl_run4,
-				TextureBank.pl_run5,
-				TextureBank.pl_run6,
-				TextureBank.pl_run7,
-				TextureBank.pl_run8
+				TextureBank.pl_enemyrun1,
+				TextureBank.pl_enemyrun2,
+				TextureBank.pl_enemyrun3,
+				TextureBank.pl_enemyrun4,
+				TextureBank.pl_enemyrun5,
+				TextureBank.pl_enemyrun6
 		}, 1f,
 		new Texture[]{
 				
@@ -137,13 +135,13 @@ public class Juggernaut extends Char	{
 	        CircleShape circleShape1 = new CircleShape();
 	        circleShape1.setRadius(w*0.325f);
 	        circleShape1.getPosition().set(0f, -h/4);
-	        circleShape1.setPosition(new Vector2(0f, h/4));
+	        circleShape1.setPosition(new Vector2(0f, (h/4)-0.1f));
 	        
 	        //Create the second circle shape. It's offset from the center of the body by 2, 0.
 	        CircleShape circleShape2  = new CircleShape();
 	        circleShape2.setRadius(w*0.325f);
 	        circleShape2.getPosition().set(0f, h/4);
-	        circleShape2.setPosition(new Vector2(0f, -h/4));
+	        circleShape2.setPosition(new Vector2(0f, (-h/4)-0.1f));
 	        
 	        FixtureDef fdef= new FixtureDef();
 	        fdef.shape=circleShape1;

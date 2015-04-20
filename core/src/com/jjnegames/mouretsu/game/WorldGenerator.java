@@ -57,7 +57,7 @@ public class WorldGenerator {
 		
 		 int[][] map = MapFileReader.Loadmap();
 		
-		// int[][] backgroundmap = MapFileReader.LoadBackGroundmap();
+		 int[][] backgroundmap = MapFileReader.LoadBackGroundmap();
 		 
 		// Nearest on terävämpi mutta ei toimi hyvin pyöriessä ja Linear on
 		// epäselvempi mutta parempi vaihtoehto pyörivälle objektille
@@ -168,27 +168,34 @@ public class WorldGenerator {
 
 					stage.addActor(rectangle_4);
 					
-//				}else if(backgroundmap[x][y]== 14){
-//					int bit = 0;
-//					if(backgroundmap[x][y]== 14){
-//						
-//						if(y>0 && backgroundmap[x][y-1] == 14){
-//							bit += 4;
-//						}if(y<backgroundmap[x].length-1 && backgroundmap[x][y+1]== 14){
-//							bit += 1;
-//						}if(x>0 && backgroundmap[x-1][y]== 14){
-//							bit += 8;
-//						}if(x<backgroundmap.length-1 && backgroundmap[x+1][y]== 14){
-//							bit += 2;
-//						}
-//					}
-//					
-//					BackGroundBlock c = BackGroundBlock.create(x, y, 1, 1, TextureBank.esine2);
-//					MGame.backgroundObjects.addActor(c);
-//					
+
 					
 					
-				}else if(map[x][y]== 18){
+				}else if(map[x][y]== 15){
+					int bit = 0;
+					if(map[x][y]== 15){
+						
+						if(y>0 && map[x][y-1] == 15){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 15){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 15){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 15){
+							bit += 2;
+						}
+					}
+					
+					BodyDef bodyDef5 = new BodyDef();
+					bodyDef5.type = BodyType.KinematicBody;
+					bodyDef5.position.set(x, y);
+					bodyDef5.angularVelocity = 0;
+					Rect rectangle_2 = Rect.create(world, bodyDef5, 1f, 1f,TextureBank.bridguwalk);
+			
+
+					stage.addActor(rectangle_2);
+				}
+				else if(map[x][y]== 18){
 					int bit = 0;
 					if(map[x][y]== 18){
 						
@@ -271,7 +278,7 @@ public class WorldGenerator {
 					
 					BodyDef bodyDef3 = new BodyDef();
 					bodyDef3.type = BodyDef.BodyType.DynamicBody;
-					bodyDef3.position.set(10f, 20f);
+					bodyDef3.position.set(x, y);
 					bodyDef3.angularVelocity = 0;
 					Char character_2 = SmallEnemy.create(world, bodyDef3, 1f, 1f,TextureBank.vihollinen);
 					stage.addActor(character_2);
@@ -296,9 +303,9 @@ public class WorldGenerator {
 					
 					BodyDef bodyDef8 = new BodyDef();
 					bodyDef8.type = BodyDef.BodyType.DynamicBody;
-					bodyDef8.position.set(35f, 20f);
+					bodyDef8.position.set(x, y);
 					bodyDef8.angularVelocity = 0;
-					Char character_4 = Juggernaut.create(world, bodyDef8, 1f, 1f,TextureBank.vihollinen);
+					Char character_4 = Juggernaut.create(world, bodyDef8, 2f, 2f,TextureBank.vihollinen);
 					stage.addActor(character_4);
 					
 					
@@ -322,19 +329,55 @@ public class WorldGenerator {
 
 					BodyDef bodyDef9 = new BodyDef();
 					bodyDef9.type = BodyDef.BodyType.DynamicBody;
-					bodyDef9.position.set(50f, 20f);
+					bodyDef9.position.set(x, y);
 					bodyDef9.angularVelocity = 0;
-					Char character_5 = Boss.create(world, bodyDef9, 1f, 1f,TextureBank.vihollinen);
+					Char character_5 = Boss.create(world, bodyDef9, 3f, 3f,TextureBank.vihollinen);
 					stage.addActor(character_5);
 					
 					
 					
 					
+				} 
+				 if(backgroundmap[x][y]== 14){
+				int bit = 0;
+				if(backgroundmap[x][y]== 14){
+					
+					if(y>0 && backgroundmap[x][y-1] == 14){
+						bit += 4;
+					}if(y<backgroundmap[x].length-1 && backgroundmap[x][y+1]== 14){
+						bit += 1;
+					}if(x>0 && backgroundmap[x-1][y]== 14){
+						bit += 8;
+					}if(x<backgroundmap.length-1 && backgroundmap[x+1][y]== 14){
+						bit += 2;
+					}
 				}
+				
+				BackGroundBlock c = BackGroundBlock.create(x, y, 1, 1, TextureBank.esine2);
+				MGame.backgroundObjects.addActor(c);
+				 }
+				if(backgroundmap[x][y]== 50){
+					int bit = 0;
+					if(backgroundmap[x][y]== 50){
+						
+						if(y>0 && backgroundmap[x][y-1] == 50){
+							bit += 4;
+						}if(y<backgroundmap[x].length-1 && backgroundmap[x][y+1]== 50){
+							bit += 1;
+						}if(x>0 && backgroundmap[x-1][y]== 50){
+							bit += 8;
+						}if(x<backgroundmap.length-1 && backgroundmap[x+1][y]== 50){
+							bit += 2;
+						}
+					}
+					
+					BackGroundBlock g = BackGroundBlock.create(x, y, 1, 1, TextureBank.bridgetiles[bit]);
+					MGame.backgroundObjects.addActor(g);
+					
 			}
 		}
 		
-
+		}
 		 BodyDef bodyDef4 = new BodyDef();
 		 bodyDef4.type=BodyType.KinematicBody;
 		 bodyDef4.position.set(11f, 3f);

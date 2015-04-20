@@ -13,6 +13,9 @@ public class TextureBank extends AssetManager{
 	public static Texture bgimage = new Texture (Gdx.files.internal("background.png"));
 	public static Texture mingvase = new Texture (Gdx.files.internal("mingvase.png"));
 	public static Texture water = new Texture (Gdx.files.internal("water.png"));
+	public static Texture bridguwalk = new Texture (Gdx.files.internal("bridge/bridge_groundtile1_001.png"));
+	public static Texture hook = new Texture (Gdx.files.internal("hook.png"));
+	
 	
 	public static Texture[] groundtiles = new Texture[]{
 		new Texture (Gdx.files.internal("ground/Tile1.png")),
@@ -52,23 +55,23 @@ public class TextureBank extends AssetManager{
 		new Texture(Gdx.files.internal("house/housetile14.png")),
 		house5
 	};
-	
+	public static Texture bridgu = new Texture(Gdx.files.internal("bridge/bridgetile_v005.png"));
 	public static Texture[] bridgetiles = new Texture[]{
-		alus,
-		new Texture(Gdx.files.internal("ninjatest.png")),
-		new Texture(Gdx.files.internal("are-you-a-wizard.jpg")),
-		new Texture (Gdx.files.internal("images.jpg")),
-		new Texture(Gdx.files.internal("ninjatest.png")),
-		new Texture(Gdx.files.internal("are-you-a-wizard.jpg")),
-		new Texture (Gdx.files.internal("images.jpg")),
-		new Texture(Gdx.files.internal("ninjatest.png")),
-		new Texture(Gdx.files.internal("are-you-a-wizard.jpg")),
-		new Texture (Gdx.files.internal("images.jpg")),
-		new Texture(Gdx.files.internal("ninjatest.png")),
-		new Texture(Gdx.files.internal("are-you-a-wizard.jpg")),
-		new Texture (Gdx.files.internal("images.jpg")),
-		new Texture(Gdx.files.internal("ninjatest.png")),
-		new Texture(Gdx.files.internal("are-you-a-wizard.jpg"))
+		bridgu,
+		bridgu,
+		new Texture(Gdx.files.internal("bridge/bridge_sidetile1_003.png")),
+		bridgu,
+		bridgu,
+		bridgu,
+		bridgu,
+		bridgu,
+		new Texture(Gdx.files.internal("bridge/bridge_sidetile2_002.png")),
+		bridgu,
+		bridgu,
+		bridgu,
+		bridgu,
+		bridgu,
+		bridgu
 	};
 	
 	public static Texture buddha = new Texture(Gdx.files.internal("buddha/budsta0.png"));
@@ -98,6 +101,14 @@ public class TextureBank extends AssetManager{
 	public static Texture pl_run6 = new Texture(Gdx.files.internal("walking/walk_6.png"));
 	public static Texture pl_run7 = new Texture(Gdx.files.internal("walking/walk_7.png"));
 	public static Texture pl_run8 = new Texture(Gdx.files.internal("walking/walk_8.png"));
+	
+	public static Texture pl_enemyrun1 = new Texture(Gdx.files.internal("walking/enemywalk_1.png"));
+	public static Texture pl_enemyrun2 = new Texture(Gdx.files.internal("walking/enemywalk_2.png"));
+	public static Texture pl_enemyrun3 = new Texture(Gdx.files.internal("walking/enemywalk_3.png"));
+	public static Texture pl_enemyrun4 = new Texture(Gdx.files.internal("walking/enemywalk_4.png"));
+	public static Texture pl_enemyrun5 = new Texture(Gdx.files.internal("walking/enemywalk_5.png"));
+	public static Texture pl_enemyrun6 = new Texture(Gdx.files.internal("walking/enemywalk_6.png"));
+
 	
 	
 	public static Texture pl_atk1 = new Texture(Gdx.files.internal("atk/atk_1.png"));
