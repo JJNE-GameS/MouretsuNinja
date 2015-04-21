@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.QueryCallback;
 import com.badlogic.gdx.physics.box2d.Shape;
+import com.badlogic.gdx.physics.box2d.Transform;
 import com.badlogic.gdx.physics.box2d.World;
 import com.jjnegames.mouretsu.game.MGame;
 import com.jjnegames.mouretsu.game.objects.GameObject;
@@ -44,9 +45,30 @@ public abstract class Char extends GameObject {
 	public boolean dead = false;
 	public float attackrange = 1f;
 	
+	float yOffset=0;
+	
+	
 	
 	public Char(Body body, Texture texture) {
 		super(body,texture);
+	}
+	
+	
+	@Override
+	public void act(float delta){
+		Transform tf = body.getTransform();
+		Vector2 pos = tf.getPosition();
+		float ang = tf.getRotation();
+		ang*=180/Math.PI;
+		this.setPosition((pos.x-(getWidth()/2)), pos.y-(getHeight()/2)+yOffset);
+		this.setRotation(ang);
+		
+	
+		
+	
+		
+		childUpdate(delta);
+		
 	}
 	
 	public void damage(float amount, boolean fromRight) {

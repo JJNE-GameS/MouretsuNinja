@@ -50,9 +50,9 @@ public class GameHUD {
 			
 			texture1 = new Texture(Gdx.files.internal("hud/background_hud.png"));
 			texture2 = new Texture(Gdx.files.internal("hud/skill1.png"));
-			texture3 = new Texture(Gdx.files.internal("hud/skill2.png"));
-			texture4 = new Texture(Gdx.files.internal("hud/smokebomb2.png"));
-			texture5 = new Texture(Gdx.files.internal("hud/dash.png"));
+			texture3 = new Texture(Gdx.files.internal("hud/locked.png"));
+			texture4 = new Texture(Gdx.files.internal("hud/locked.png"));
+			texture5 = new Texture(Gdx.files.internal("hud/locked.png"));
 			texture6 = new Texture(Gdx.files.internal("hud/nohealth.png"));
 			texture7 = new Texture(Gdx.files.internal("hud/health.png"));
 			texture8 = new Texture(Gdx.files.internal("hud/armor.png"));
@@ -77,19 +77,19 @@ public class GameHUD {
 			skillImage1.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.429f, backgroundImage.getHeight()*0.045f);
 			stage.addActor(skillImage1);
 			
-			skillImage2.setWidth(240);
-			skillImage2.setHeight(70);
-			skillImage2.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.27f, backgroundImage.getHeight()*0.045f);
+			skillImage2.setWidth(100);
+			skillImage2.setHeight(60);
+			skillImage2.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*-0.15f, backgroundImage.getHeight()*0.07f);
 			stage.addActor(skillImage2);
 			
-			skillImage3.setWidth(240);
-			skillImage3.setHeight(70);
-			skillImage3.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.115f, backgroundImage.getHeight()*0.035f);
+			skillImage3.setWidth(100);
+			skillImage3.setHeight(60);
+			skillImage3.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*0.15f, backgroundImage.getHeight()*0.07f);
 			stage.addActor(skillImage3);
 			
-			skillImage4.setWidth(240);
-			skillImage4.setHeight(70);
-			skillImage4.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*-0.046f, backgroundImage.getHeight()*0.045f);
+			skillImage4.setWidth(100);
+			skillImage4.setHeight(60);
+			skillImage4.setPosition(MouretsuNinja.WIDTH/2 - backgroundImage.getWidth()*-0.02f, backgroundImage.getHeight()*0.07f);
 			stage.addActor(skillImage4);
 			
 			noHealthImage.setWidth(380);

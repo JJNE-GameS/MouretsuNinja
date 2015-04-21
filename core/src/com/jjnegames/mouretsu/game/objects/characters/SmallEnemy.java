@@ -24,8 +24,8 @@ import com.jjnegames.mouretsu.game.utils.AnimationHandler;
 
 public class SmallEnemy extends Char	{
 		
-		private static final float ATTACK_DURATION = 1.5f;
-		private static final float ATTACK_DELAY = 1.2f;
+		private static final float ATTACK_DURATION = 1.9f;
+		private static final float ATTACK_DELAY = 1.8f;
 		float counter = 0;
 		boolean oikeelle = false;
 		
@@ -36,8 +36,9 @@ public class SmallEnemy extends Char	{
 		attackrange = 0.7f;
 		this.setOriginX(width/2);
 		this.setOriginY((height*1.4f)/2f);
-		this.setWidth(width);
-		this.setHeight((height*1.4f));
+		this.setWidth(width*1.2f);
+		this.setHeight((height*1.7f));
+		yOffset=+0.17f;
 		
 		
 		
@@ -52,11 +53,18 @@ public class SmallEnemy extends Char	{
 		}, 1f,
 		new Texture[]{
 				
-				TextureBank.pl_atk1,
-				TextureBank.pl_atk2,
-				TextureBank.pl_atk3,
-				TextureBank.pl_atk4,
-				TextureBank.pl_atk5
+				TextureBank.pl_enemyatk1,
+				TextureBank.pl_enemyatk2,
+				TextureBank.pl_enemyatk3,
+				TextureBank.pl_enemyatk4,
+				TextureBank.pl_enemyatk5,
+				TextureBank.pl_enemyatk6,
+				TextureBank.pl_enemyatk7,
+				TextureBank.pl_enemyatk8,
+				TextureBank.pl_enemyatk9,
+				TextureBank.pl_enemyatk10,
+				TextureBank.pl_enemyatk11
+			
 		}, ATTACK_DURATION,
 		new Texture[]{
 				
@@ -74,18 +82,14 @@ public class SmallEnemy extends Char	{
 				TextureBank.pl_block3
 		}, 0.5f,
 		new Texture[]{
-				TextureBank.pl_jump1,
-				TextureBank.pl_jump2,
-				TextureBank.pl_jump3,
-				TextureBank.pl_jump4
+				TextureBank.pl_enemyrun1
 		}, 0.8f,
 		new Texture[]{
-				TextureBank.pl_jump1,
-				TextureBank.pl_jump2		
+				TextureBank.pl_enemyrun1
+		
 		}, 0.8f,
 		new Texture[]{
-				TextureBank.pl_jump3,
-				TextureBank.pl_jump4
+				TextureBank.pl_enemyrun1
 
 		}, 0.8f,
 		new Texture[]{
@@ -93,12 +97,7 @@ public class SmallEnemy extends Char	{
 
 		}, 1f,
 		new Texture[]{
-				TextureBank.pl_spatk1,
-				TextureBank.pl_spatk2,
-				TextureBank.pl_spatk3,
-				TextureBank.pl_spatk4,
-				TextureBank.pl_spatk5
-
+				TextureBank.pl_enemyrun1
 		}, 1);
 		
 	}
@@ -268,11 +267,11 @@ public class SmallEnemy extends Char	{
 			return;
 		}
 		if(attackCooldown>0){
-			setDrawable(animHandler.updateAtk(delta, !movingRight));
+			setDrawable(animHandler.updateAtk(delta, movingRight));
 		}else if(blocking){
-			setDrawable(animHandler.updateBlock(delta, !movingRight));
+			setDrawable(animHandler.updateBlock(delta, movingRight));
 		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
-			setDrawable(animHandler.updateJump(delta, !movingRight));
+			setDrawable(animHandler.updateJump(delta, movingRight));
 		}else if(body.getLinearVelocity().x < 0.5 && body.getLinearVelocity().x > -0.5 ){
 			setDrawable(animHandler.updateStand(delta, movingRight));
 		}else{

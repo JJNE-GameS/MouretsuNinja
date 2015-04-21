@@ -382,6 +382,7 @@ public class Player extends Char {
 	@Override
 	public void die(){
 		((Game)Gdx.app.getApplicationListener()).getScreen().pause();
+		health=-1;
 		MGame.gameover = true;
 	}
 

@@ -41,7 +41,8 @@ public class Juggernaut extends Char	{
 		this.setOriginY(height/2);
 		this.setWidth(width);
 		this.setHeight(height);
-		
+		yOffset=-0.17f;
+
 
 		this.animHandler=new AnimationHandler(new Texture[]{
 				TextureBank.pl_enemyrun1,
@@ -53,57 +54,52 @@ public class Juggernaut extends Char	{
 		}, 1f,
 		new Texture[]{
 				
-				TextureBank.pl_atk1,
-				TextureBank.pl_atk2,
-				TextureBank.pl_atk3,
-				TextureBank.pl_atk4,
-				TextureBank.pl_atk5
+				TextureBank.pl_enemyatk1,
+				TextureBank.pl_enemyatk2,
+				TextureBank.pl_enemyatk3,
+				TextureBank.pl_enemyatk4,
+				TextureBank.pl_enemyatk5,
+				TextureBank.pl_enemyatk6,
+				TextureBank.pl_enemyatk7,
+				TextureBank.pl_enemyatk8,
+				TextureBank.pl_enemyatk9,
+				TextureBank.pl_enemyatk10,
+				TextureBank.pl_enemyatk11
+			
 		}, ATTACK_DURATION,
-		new Texture[]{
-				
-				TextureBank.pl_block1,
-				TextureBank.pl_block2,
-				TextureBank.pl_block3
-
-				
-		}, 0.5f,
 		new Texture[]{
 				
 				TextureBank.pl_block1,
 				TextureBank.pl_block2,
 				TextureBank.pl_block3,
 				TextureBank.pl_block4
+
+				
 		}, 0.5f,
 		new Texture[]{
-				TextureBank.pl_jump1,
-				TextureBank.pl_jump2
+				
+				TextureBank.pl_block1,
+				TextureBank.pl_block2,
+				TextureBank.pl_block3
+		}, 0.5f,
+		new Texture[]{
+				TextureBank.pl_enemyrun1
 		}, 0.8f,
 		new Texture[]{
-				TextureBank.pl_jump3,
-				TextureBank.pl_jump4
+				TextureBank.pl_enemyrun1
+		
+		}, 0.8f,
+		new Texture[]{
+				TextureBank.pl_enemyrun1
 
 		}, 0.8f,
 		new Texture[]{
-				TextureBank.pl_jump1,
-				TextureBank.pl_jump2,
-				TextureBank.pl_jump3,
-				TextureBank.pl_jump4
-		}, 0.8f,
-		new Texture[]{
-				TextureBank.pl_idle1,
-				TextureBank.pl_idle2,
-				TextureBank.pl_idle3,
-				TextureBank.pl_idle4
+				TextureBank.pl_enemyrun1
 
-		},1f,
+		}, 1f,
 		new Texture[]{
-				TextureBank.pl_spatk1,
-				TextureBank.pl_spatk2,
-				TextureBank.pl_spatk3,
-				TextureBank.pl_spatk4,
-				TextureBank.pl_spatk5
-
-		}, 1);;
+				TextureBank.pl_enemyrun1
+		}, 1);
 		
 	}
 	
@@ -283,7 +279,7 @@ public class Juggernaut extends Char	{
 		setDrawable(animHandler.updateRun(delta, !movingRight));
 		}
 	counter += delta;
-		
+		if(!(Math.abs(MGame.player.getBody().getPosition().y- getBody().getPosition().y) > 2f)){
 	float pdis = this.getBody().getPosition().x - MGame.player.getBody().getPosition().x;
 	 if (pdis < 4.5 && pdis>0){
 		 if(body.getLinearVelocity().x>-MAX_MOVE_SPEED)
@@ -296,6 +292,7 @@ public class Juggernaut extends Char	{
 	} if (counter>6) {
 		counter = 0;
 	}
+		}
 		if(inAttackCone!=null && attackCooldown<=0){
 			float distance =(float) Math.sqrt(Math.pow((body.getPosition().x - inAttackCone.getBody().getPosition().x),2)+ Math.pow((body.getPosition().y- inAttackCone.getBody().getPosition().y),2));
 			if(distance <= inAttackCone.getWidth()/4+attackrange+this.getWidth()/4 && inAttackCone instanceof Player){

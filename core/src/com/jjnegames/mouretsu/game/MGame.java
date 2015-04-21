@@ -87,6 +87,8 @@ public class MGame {
 				camera.position.set(player.getX()+2, player.getY()+3, 0);
 				if(camera.position.x > 358)
 					camera.position.x = 358;
+				if(camera.position.x < 7)
+					camera.position.x = 7;
 				camera.update();
 				
 				if(player.getBody().getPosition().x > 365f ){

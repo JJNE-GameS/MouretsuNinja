@@ -15,6 +15,9 @@ public class TextureBank extends AssetManager{
 	public static Texture water = new Texture (Gdx.files.internal("water.png"));
 	public static Texture bridguwalk = new Texture (Gdx.files.internal("bridge/bridge_groundtile1_001.png"));
 	public static Texture hook = new Texture (Gdx.files.internal("hook.png"));
+	public static Texture tree = new Texture (Gdx.files.internal("tree.png"));
+	public static Texture sushi = new Texture (Gdx.files.internal("Sushi.png"));
+	public static Texture torch = new Texture (Gdx.files.internal("torch.png"));
 	
 	
 	public static Texture[] groundtiles = new Texture[]{
@@ -34,6 +37,25 @@ public class TextureBank extends AssetManager{
 		new Texture(Gdx.files.internal("ground/Tile14.png")),
 		new Texture(Gdx.files.internal("ground/Tile15.png")),
 		new Texture (Gdx.files.internal("ground/Tile16.png"))
+	};
+	
+	public static Texture[] walltiles = new Texture[]{
+		new Texture (Gdx.files.internal("wall/housebg_003.png")),
+		new Texture (Gdx.files.internal("wall/housebg_003.png")),
+		new Texture (Gdx.files.internal("wall/housebg_003.png")),
+		new Texture (Gdx.files.internal("wall/housebg_right.png")),
+		new Texture (Gdx.files.internal("wall/housebg_003.png")),
+		new Texture (Gdx.files.internal("wall/housebg_003.png")),
+		new Texture (Gdx.files.internal("wall/housebg_botright.png")),
+		new Texture(Gdx.files.internal("wall/housebg_right.png")),
+		new Texture(Gdx.files.internal("wall/housebg_003.png")),
+		new Texture (Gdx.files.internal("wall/housebg_left.png")),
+		new Texture (Gdx.files.internal("wall/housebg_003.png")),
+		new Texture (Gdx.files.internal("wall/housebg_003.png")),
+		new Texture (Gdx.files.internal("wall/housebg_botleft.png")),
+		new Texture(Gdx.files.internal("wall/housebg_left.png")),
+		new Texture(Gdx.files.internal("wall/housebg_bot.png")),
+		new Texture (Gdx.files.internal("wall/housebg_003.png"))
 	};
 	
 	public static Texture house5 = new Texture(Gdx.files.internal("house/housetile5.png"));
@@ -102,12 +124,12 @@ public class TextureBank extends AssetManager{
 	public static Texture pl_run7 = new Texture(Gdx.files.internal("walking/walk_7.png"));
 	public static Texture pl_run8 = new Texture(Gdx.files.internal("walking/walk_8.png"));
 	
-	public static Texture pl_enemyrun1 = new Texture(Gdx.files.internal("walking/enemywalk_1.png"));
-	public static Texture pl_enemyrun2 = new Texture(Gdx.files.internal("walking/enemywalk_2.png"));
-	public static Texture pl_enemyrun3 = new Texture(Gdx.files.internal("walking/enemywalk_3.png"));
-	public static Texture pl_enemyrun4 = new Texture(Gdx.files.internal("walking/enemywalk_4.png"));
-	public static Texture pl_enemyrun5 = new Texture(Gdx.files.internal("walking/enemywalk_5.png"));
-	public static Texture pl_enemyrun6 = new Texture(Gdx.files.internal("walking/enemywalk_6.png"));
+	public static Texture pl_enemyrun1 = new Texture(Gdx.files.internal("walking/ewalk1.png"));
+	public static Texture pl_enemyrun2 = new Texture(Gdx.files.internal("walking/ewalk2.png"));
+	public static Texture pl_enemyrun3 = new Texture(Gdx.files.internal("walking/ewalk3.png"));
+	public static Texture pl_enemyrun4 = new Texture(Gdx.files.internal("walking/ewalk4.png"));
+	public static Texture pl_enemyrun5 = new Texture(Gdx.files.internal("walking/ewalk5.png"));
+	public static Texture pl_enemyrun6 = new Texture(Gdx.files.internal("walking/ewalk6.png"));
 
 	
 	
@@ -116,6 +138,19 @@ public class TextureBank extends AssetManager{
 	public static Texture pl_atk3 = new Texture(Gdx.files.internal("atk/atk_3.png"));
 	public static Texture pl_atk4 = new Texture(Gdx.files.internal("atk/atk_4.png"));
 	public static Texture pl_atk5 = new Texture(Gdx.files.internal("atk/atk_5.png"));
+	
+	public static Texture pl_enemyatk1 = new Texture(Gdx.files.internal("enemyatk/enemyatk1.png"));
+	public static Texture pl_enemyatk2 = new Texture(Gdx.files.internal("enemyatk/enemyatk2.png"));
+	public static Texture pl_enemyatk3 = new Texture(Gdx.files.internal("enemyatk/enemyatk3.png"));
+	public static Texture pl_enemyatk4 = new Texture(Gdx.files.internal("enemyatk/enemyatk4.png"));
+	public static Texture pl_enemyatk5 = new Texture(Gdx.files.internal("enemyatk/enemyatk5.png"));
+	public static Texture pl_enemyatk6 = new Texture(Gdx.files.internal("enemyatk/enemyatk6.png"));
+	public static Texture pl_enemyatk7 = new Texture(Gdx.files.internal("enemyatk/enemyatk7.png"));
+	public static Texture pl_enemyatk8 = new Texture(Gdx.files.internal("enemyatk/enemyatk8.png"));
+	public static Texture pl_enemyatk9 = new Texture(Gdx.files.internal("enemyatk/enemyatk9.png"));
+	public static Texture pl_enemyatk10 = new Texture(Gdx.files.internal("enemyatk/enemyatk10.png"));
+	public static Texture pl_enemyatk11 = new Texture(Gdx.files.internal("enemyatk/enemyatk11.png"));
+
 
 
 	

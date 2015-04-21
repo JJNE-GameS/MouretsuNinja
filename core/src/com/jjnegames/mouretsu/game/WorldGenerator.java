@@ -15,6 +15,7 @@ import java.util.ArrayList;
 
 
 
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -34,6 +35,7 @@ import com.badlogic.gdx.physics.box2d.joints.DistanceJoint;
 import com.badlogic.gdx.physics.box2d.joints.DistanceJointDef;
 import com.badlogic.gdx.physics.box2d.joints.WeldJointDef;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.jjnegames.mouretsu.game.objects.Ball;
 import com.jjnegames.mouretsu.game.objects.BackGroundBlock;
 import com.jjnegames.mouretsu.game.objects.GameObject;
@@ -69,7 +71,7 @@ public class WorldGenerator {
 		bodyDef.type = BodyDef.BodyType.DynamicBody;
 		
 		// Spawnpoint
-		bodyDef.position.set(3f, 20f);
+		bodyDef.position.set(2f, 26f);
 		// Rotation speed when spawned
 		bodyDef.angularVelocity = 0;
 		bodyDef.linearDamping=0.5f;
@@ -195,27 +197,7 @@ public class WorldGenerator {
 
 					stage.addActor(rectangle_2);
 				}
-				else if(map[x][y]== 18){
-					int bit = 0;
-					if(map[x][y]== 18){
-						
-						if(y>0 && map[x][y-1] == 18){
-							bit += 4;
-						}if(y<map[x].length-1 && map[x][y+1]== 18){
-							bit += 1;
-						}if(x>0 && map[x-1][y]== 18){
-							bit += 8;
-						}if(x<map.length-1 && map[x+1][y]== 18){
-							bit += 2;
-						}
-					}
-					
-					BackGroundBlock b = BackGroundBlock.create(x, y, 1, 1, TextureBank.buddhatiles[bit]);
-					MGame.backgroundObjects.addActor(b);
-					
-					
-					
-				}else if(map[x][y]== 25){
+				else if(map[x][y]== 25){
 					int bit = 0;
 					if(map[x][y]== 25){
 						
@@ -338,6 +320,26 @@ public class WorldGenerator {
 					
 					
 				} 
+				if(backgroundmap[x][y]== 6){
+					int bit = 0;
+					if(backgroundmap[x][y]== 6){
+						
+						if(y>0 && (backgroundmap[x][y-1] == 6 || backgroundmap[x][y-1] == 14)){
+							bit += 4;
+						}if(y<backgroundmap[x].length-1 && (backgroundmap[x][y+1]== 6 || backgroundmap[x][y+1] == 14)){
+							bit += 1;
+						}if(x>0 && (backgroundmap[x-1][y]== 6 || backgroundmap[x-1][y] == 14)){
+							bit += 8;
+						}if(x<backgroundmap.length-1 && (backgroundmap[x+1][y]== 6 || backgroundmap[x+1][y] == 14)){
+							bit += 2;
+						}
+					}
+					
+					BackGroundBlock g = BackGroundBlock.create(x, y, 1, 1, TextureBank.walltiles[bit]);
+					MGame.backgroundObjects.addActor(g);
+					
+			}
+				
 				 if(backgroundmap[x][y]== 14){
 				int bit = 0;
 				if(backgroundmap[x][y]== 14){
@@ -353,9 +355,11 @@ public class WorldGenerator {
 					}
 				}
 				
-				BackGroundBlock c = BackGroundBlock.create(x, y, 1, 1, TextureBank.esine2);
+				BackGroundBlock c = BackGroundBlock.create(x, y, 1, 1, TextureBank.torch);
 				MGame.backgroundObjects.addActor(c);
 				 }
+				 
+				 
 				if(backgroundmap[x][y]== 50){
 					int bit = 0;
 					if(backgroundmap[x][y]== 50){
@@ -375,6 +379,33 @@ public class WorldGenerator {
 					MGame.backgroundObjects.addActor(g);
 					
 			}
+				
+				
+				
+				
+				
+				//special needs child
+				if(map[x][y]== 18){
+					int bit = 0;
+					if(map[x][y]== 18){
+						
+						if(y>0 && map[x][y-1] == 18){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 18){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 18){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 18){
+							bit += 2;
+						}
+					}
+					
+					BackGroundBlock b = BackGroundBlock.create(x, y, 1, 1, TextureBank.buddhatiles[bit]);
+					MGame.backgroundObjects.addActor(b);
+					
+					
+					
+				}
 		}
 		
 		}
@@ -386,7 +417,10 @@ public class WorldGenerator {
 		 Triangle triangle = Triangle.create(world, bodyDef4, 0.5f, 0.5f, TextureBank.alus);
 		 stage.addActor(triangle);
 		
-
+		Image tree = new Image(TextureBank.tree);
+		tree.setPosition(352, 10);
+		tree.setSize(15, 10);
+		MGame.backgroundObjects.addActor(tree);
 		world.setContactListener(createContactListener());
 	}
 	
@@ -465,6 +499,8 @@ public class WorldGenerator {
 		            			Sushi su = (Sushi)x1.getBody().getUserData();
 		            			if(su.del)
 		            				return;
+		            			if(System.currentTimeMillis()-su.createTime < 2000)
+		            				return;
 		            			su.del=true;
 		            			target.health+=50;
 		            			if(target.health>target.max_health)
@@ -538,6 +574,8 @@ public class WorldGenerator {
 		            			Player target = (Player)x1.getBody().getUserData();
 		            			Sushi su = (Sushi)x2.getBody().getUserData();
 		            			if(su.del)
+		            				return;
+		            			if(System.currentTimeMillis()-su.createTime < 400)
 		            				return;
 		            			su.del=true;
 		            			target.health+=50;

@@ -14,10 +14,12 @@ public class Sushi extends Ball {
 
 	public Sushi(Body body, Texture texture, float radius) {
 		super(body, texture, radius);
+		createTime=System.currentTimeMillis();
 		
 	}
 	
 	public boolean del=false;
+	public long createTime;
 	public static Sushi create(float x, float y){
 		
 		BodyDef bodyDef8 = new BodyDef();
@@ -43,7 +45,7 @@ public class Sushi extends Ball {
         fdef.isSensor=true;
         // Create a body in the world using our definition
 
-        Sushi s = new Sushi(body, TextureBank.esine3, 0.15f);
+        Sushi s = new Sushi(body, TextureBank.sushi, 0.15f);
         body.setUserData(s);
 		return s;
 	

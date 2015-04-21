@@ -41,7 +41,8 @@ public class Boss extends Char	{
 		this.setOriginY(height/2);
 		this.setWidth(width);
 		this.setHeight(height);
-		
+		yOffset=-0.35f;
+
 
 		this.animHandler=new AnimationHandler(new Texture[]{
 				TextureBank.pl_enemyrun1,
@@ -53,58 +54,51 @@ public class Boss extends Char	{
 		}, 1f,
 		new Texture[]{
 				
-				TextureBank.pl_atk1,
-				TextureBank.pl_atk2,
-				TextureBank.pl_atk3,
-				TextureBank.pl_atk4,
-				TextureBank.pl_atk5
+				TextureBank.pl_enemyatk1,
+				TextureBank.pl_enemyatk2,
+				TextureBank.pl_enemyatk3,
+				TextureBank.pl_enemyatk4,
+				TextureBank.pl_enemyatk5,
+				TextureBank.pl_enemyatk6,
+				TextureBank.pl_enemyatk7,
+				TextureBank.pl_enemyatk8,
+				TextureBank.pl_enemyatk9,
+				TextureBank.pl_enemyatk10,
+				TextureBank.pl_enemyatk11
+			
 		}, ATTACK_DURATION,
-		new Texture[]{
-				
-				TextureBank.pl_block1,
-				TextureBank.pl_block2,
-				TextureBank.pl_block3
-
-				
-		}, 0.5f,
 		new Texture[]{
 				
 				TextureBank.pl_block1,
 				TextureBank.pl_block2,
 				TextureBank.pl_block3,
 				TextureBank.pl_block4
+
+				
 		}, 0.5f,
 		new Texture[]{
-				TextureBank.pl_jump1,
-				TextureBank.pl_jump2
 				
+				TextureBank.pl_block1,
+				TextureBank.pl_block2,
+				TextureBank.pl_block3
+		}, 0.5f,
+		new Texture[]{
+				TextureBank.pl_enemyrun1
+		}, 0.8f,
+		new Texture[]{
+				TextureBank.pl_enemyrun1
+		
+		}, 0.8f,
+		new Texture[]{
+				TextureBank.pl_enemyrun1
 
 		}, 0.8f,
 		new Texture[]{
-				TextureBank.pl_jump3,
-				TextureBank.pl_jump4
-
-		}, 0.8f,
-		new Texture[]{
-				TextureBank.pl_jump1,
-				TextureBank.pl_jump2,
-				TextureBank.pl_jump3,
-				TextureBank.pl_jump4
-		}, 0.8f,
-		new Texture[]{
-				TextureBank.pl_idle1,
-				TextureBank.pl_idle2,
-				TextureBank.pl_idle3,
-				TextureBank.pl_idle4
+				TextureBank.pl_enemyrun1
 
 		}, 1f,
 		new Texture[]{
-				TextureBank.pl_spatk1,
-				TextureBank.pl_spatk2,
-				TextureBank.pl_spatk3,
-				TextureBank.pl_spatk4,
-				TextureBank.pl_spatk5
-
+				TextureBank.pl_enemyrun1
 		}, 1);
 		
 	}
@@ -274,7 +268,7 @@ public class Boss extends Char	{
 			return;
 		}
 		if(attackCooldown>0){
-			setDrawable(animHandler.updateAtk(delta, !movingRight));
+			setDrawable(animHandler.updateAtk(delta, movingRight));
 		}else if(blocking){
 			setDrawable(animHandler.updateBlock(delta, !movingRight));
 		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
