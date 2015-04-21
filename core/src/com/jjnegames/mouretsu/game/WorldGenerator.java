@@ -339,6 +339,46 @@ public class WorldGenerator {
 					MGame.backgroundObjects.addActor(g);
 					
 			}
+				if(backgroundmap[x][y]== 7){
+					int bit = 0;
+					if(backgroundmap[x][y]== 7){
+						
+						if(y>0 && (backgroundmap[x][y-1] == 7 || backgroundmap[x][y-1] == 14)){
+							bit += 4;
+						}if(y<backgroundmap[x].length-1 && (backgroundmap[x][y+1]== 6 || backgroundmap[x][y+1] == 14)){
+							bit += 1;
+						}if(x>0 && (backgroundmap[x-1][y]== 7 || backgroundmap[x-1][y] == 14)){
+							bit += 8;
+						}if(x<backgroundmap.length-1 && (backgroundmap[x+1][y]== 7 || backgroundmap[x+1][y] == 14)){
+							bit += 2;
+						}
+					}
+					
+					BackGroundBlock g = BackGroundBlock.create(x, y, 1, 1, TextureBank.cave);
+					MGame.backgroundObjects.addActor(g);
+					
+			}
+				
+				if(backgroundmap[x][y]== 16){
+					int bit = 0;
+					if(backgroundmap[x][y]== 16){
+						
+						if(y>0 && (backgroundmap[x][y-1] == 16 || backgroundmap[x][y-1] == 14)){
+							bit += 4;
+						}if(y<backgroundmap[x].length-1 && (backgroundmap[x][y+1]== 16 || backgroundmap[x][y+1] == 14)){
+							bit += 1;
+						}if(x>0 && (backgroundmap[x-1][y]== 16 || backgroundmap[x-1][y] == 14)){
+							bit += 8;
+						}if(x<backgroundmap.length-1 && (backgroundmap[x+1][y]== 16 || backgroundmap[x+1][y] == 14)){
+							bit += 2;
+						}
+					}
+					
+					BackGroundBlock g = BackGroundBlock.create(x, y, 1, 1, TextureBank.torch1);
+					MGame.backgroundObjects.addActor(g);
+					
+			}
+				
 				
 				 if(backgroundmap[x][y]== 14){
 				int bit = 0;
@@ -358,6 +398,28 @@ public class WorldGenerator {
 				BackGroundBlock c = BackGroundBlock.create(x, y, 1, 1, TextureBank.torch);
 				MGame.backgroundObjects.addActor(c);
 				 }
+				 
+				 
+
+					if(backgroundmap[x][y]== 19){
+						int bit = 0;
+						if(backgroundmap[x][y]== 19){
+							
+							if(y>0 && (backgroundmap[x][y-1] == 19 || backgroundmap[x][y-1] == 14)){
+								bit += 4;
+							}if(y<backgroundmap[x].length-1 && (backgroundmap[x][y+1]== 19 || backgroundmap[x][y+1] == 14)){
+								bit += 1;
+							}if(x>0 && (backgroundmap[x-1][y]== 19 || backgroundmap[x-1][y] == 14)){
+								bit += 8;
+							}if(x<backgroundmap.length-1 && (backgroundmap[x+1][y]== 19 || backgroundmap[x+1][y] == 14)){
+								bit += 2;
+							}
+						}
+						
+						BackGroundBlock g = BackGroundBlock.create(x, y, 1, 1, TextureBank.cavetop);
+						MGame.backgroundObjects.addActor(g);
+						
+				}
 				 
 				 
 				if(backgroundmap[x][y]== 50){
@@ -418,7 +480,7 @@ public class WorldGenerator {
 		 stage.addActor(triangle);
 		
 		Image tree = new Image(TextureBank.tree);
-		tree.setPosition(352, 10);
+		tree.setPosition(352, 15);
 		tree.setSize(15, 10);
 		MGame.backgroundObjects.addActor(tree);
 		world.setContactListener(createContactListener());

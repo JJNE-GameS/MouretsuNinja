@@ -25,7 +25,7 @@ import com.jjnegames.mouretsu.game.utils.AnimationHandler;
 public class Boss extends Char	{
 		
 		private static final float ATTACK_DURATION = 2f;
-		private static final float ATTACK_DELAY = 1.5f;
+		private static final float ATTACK_DELAY = 1.9f;
 		float counter = 0;
 		boolean oikeelle = false;
 		
@@ -274,9 +274,9 @@ public class Boss extends Char	{
 		}else if(body.getLinearVelocity().y > 0.5 || body.getLinearVelocity().y < -0.5 || !ableToJump){
 			setDrawable(animHandler.updateJump(delta, !movingRight));
 		}else if(body.getLinearVelocity().x < 0.5 && body.getLinearVelocity().x > -0.5 ){
-			setDrawable(animHandler.updateStand(delta, !movingRight));
+			setDrawable(animHandler.updateStand(delta, movingRight));
 		}else{
-		setDrawable(animHandler.updateRun(delta, !movingRight));
+		setDrawable(animHandler.updateRun(delta, movingRight));
 		}
 		counter += delta;
 	
