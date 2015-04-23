@@ -71,7 +71,7 @@ public class WorldGenerator {
 		bodyDef.type = BodyDef.BodyType.DynamicBody;
 		
 		// Spawnpoint
-		bodyDef.position.set(80f, 26f);
+		bodyDef.position.set(2f, 26f);
 		// Rotation speed when spawned
 		bodyDef.angularVelocity = 0;
 		bodyDef.linearDamping=0.5f;
