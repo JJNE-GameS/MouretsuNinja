@@ -21,6 +21,7 @@ public class TextureBank extends AssetManager{
 	public static Texture torch1 = new Texture (Gdx.files.internal("torch1.png"));
 	public static Texture cave = new Texture (Gdx.files.internal("cavebg_002.png"));
 	public static Texture cavetop = new Texture (Gdx.files.internal("cavebg_top.png"));
+	public static Texture door = new Texture (Gdx.files.internal("door.png"));
 	
 	public static Texture[] groundtiles = new Texture[]{
 		new Texture (Gdx.files.internal("ground/Tile1.png")),

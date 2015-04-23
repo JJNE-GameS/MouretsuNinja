@@ -71,7 +71,7 @@ public class WorldGenerator {
 		bodyDef.type = BodyDef.BodyType.DynamicBody;
 		
 		// Spawnpoint
-		bodyDef.position.set(2f, 26f);
+		bodyDef.position.set(80f, 26f);
 		// Rotation speed when spawned
 		bodyDef.angularVelocity = 0;
 		bodyDef.linearDamping=0.5f;
@@ -173,7 +173,27 @@ public class WorldGenerator {
 
 					
 					
-				}else if(map[x][y]== 15){
+				}else if(map[x][y]== 11){
+					int bit = 0;
+					if(map[x][y]== 11){
+						
+						if(y>0 && map[x][y-1] == 11){
+							bit += 4;
+						}if(y<map[x].length-1 && map[x][y+1]== 11){
+							bit += 1;
+						}if(x>0 && map[x-1][y]== 11){
+							bit += 8;
+						}if(x<map.length-1 && map[x+1][y]== 11){
+							bit += 2;
+						}
+					}
+
+					BackGroundBlock e = BackGroundBlock.create(x, y, 1, 1, TextureBank.door);
+					MGame.backgroundObjects.addActor(e);
+				}
+					
+					
+					else if(map[x][y]== 15){
 					int bit = 0;
 					if(map[x][y]== 15){
 						
